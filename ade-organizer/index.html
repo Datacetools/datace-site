@@ -106,7 +106,7 @@
     .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.2);}
     @media(max-width:768px){.footer-grid{grid-template-columns:1fr;gap:32px;}.footer-bottom{flex-direction:column;gap:8px;text-align:center;}}
   </style>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="c1dd6816-ca2c-47ad-a958-3777906252fb"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com,fattura.datacetools.com,zip.datacetools.com,scadenzef24.datacetools.com,bonifici.datacetools.com"></script>
 </head>
 
 <body class="font-sans antialiased" style="background:#060E1F;color:white;">
@@ -156,7 +156,7 @@
         Carica il file ZIP dell'Agenzia delle Entrate e scarica un Excel strutturato con le fatture organizzate per anno e mese. Nessuna installazione, nessun dato salvato.
       </p>
       <div class="flex flex-wrap gap-3">
-        <a href="https://zip.datacetools.com/" class="btn-primary">
+        <a data-umami-event="apri-strumento" data-umami-event-tool="zip" href="https://zip.datacetools.com/" class="btn-primary">
           Organizza ora
           <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
@@ -355,7 +355,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Come si organizza lo ZIP di Fatture e Corrispettivi?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Carica il file ZIP su <a href="https://zip.datacetools.com/" style="color:#93c5fd;">zip.datacetools.com</a>. Archivio Fatture AdE analizza automaticamente tutti gli XML interni e restituisce un Excel strutturato e un archivio organizzato per anno e mese.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Carica il file ZIP su <a data-umami-event="apri-strumento" data-umami-event-tool="zip" href="https://zip.datacetools.com/" style="color:#93c5fd;">zip.datacetools.com</a>. Archivio Fatture AdE analizza automaticamente tutti gli XML interni e restituisce un Excel strutturato e un archivio organizzato per anno e mese.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
