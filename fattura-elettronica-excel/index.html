@@ -13,7 +13,7 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta name="description" content="Converti fatture elettroniche XML e .p7m in Excel: fornitore, cliente, righe, riepiloghi IVA e scadenze. Elaborate in memoria, non conservate da Datace." />
+  <meta name="description" content="Converti fatture elettroniche XML e .p7m in Excel: fornitore, cliente, righe, riepiloghi IVA e scadenze. File non salvati." />
   <meta name="keywords" content="convertire fattura elettronica excel, fattura xml in excel, fatturapa excel, leggere fattura elettronica xml, estrarre dati fattura xml, fattura p7m excel, fattura elettronica in excel online" />
   <link rel="canonical" href="https://datacetools.com/fattura-elettronica-excel/" />
 
@@ -21,7 +21,7 @@
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://datacetools.com/fattura-elettronica-excel/" />
   <meta property="og:title"       content="Fattura elettronica XML in Excel online | Datace" />
-  <meta property="og:description" content="Estrai automaticamente i dati dalle fatture elettroniche XML e trasformali in file Excel pronti all'uso. Nessuna installazione. File elaborati temporaneamente in memoria, non conservati da Datace." />
+  <meta property="og:description" content="Estrai automaticamente i dati dalle fatture elettroniche XML e trasformali in file Excel pronti all'uso. Nessuna installazione. File non salvati." />
   <meta property="og:image" content="https://datacetools.com/images/og-datace.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -47,7 +47,7 @@
       "Esporta su 5 fogli Excel: Riepilogo Fatture, Dettaglio Righe, Riepilogo IVA, Notifiche SdI, Allegati",
       "Elabora fino a 50 fatture contemporaneamente",
       "Gestisce i lotti con più fatture nello stesso file",
-      "Documenti elaborati temporaneamente in memoria, non conservati da Datace"
+      "File non salvati"
     ],
     "publisher": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" }
   }
@@ -90,10 +90,10 @@
     "mainEntity": [
       { "@type": "Question", "name": "Come si converte una fattura elettronica XML in Excel?", "acceptedAnswer": { "@type": "Answer", "text": "Carica il file XML su fattura.datacetools.com, il sistema legge il tracciato FatturaPA ed estrae automaticamente tutti i dati, scaricando un file Excel strutturato su 5 fogli. Bastano pochi secondi." } },
       { "@type": "Question", "name": "Sono supportati i file .p7m firmati digitalmente?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Sono supportate sia le fatture XML semplici sia quelle .xml.p7m firmate digitalmente, come quelle scaricate dallo SdI o dal cassetto fiscale." } },
-      { "@type": "Question", "name": "I file delle fatture vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "No. I file vengono caricati solo per generare l'Excel, elaborati temporaneamente in memoria e non conservati da Datace. Non uso database per conservarli." } },
+      { "@type": "Question", "name": "I file delle fatture vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "No. I tuoi file non vengono salvati. Li usiamo solo per generare l'Excel e non restano nei nostri sistemi. Non usiamo database per conservarli." } },
       { "@type": "Question", "name": "Posso convertire più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, fino a 50 file contemporaneamente. Tutte le fatture vengono unificate in un unico Excel. Sono gestiti anche i file XML che contengono più fatture (lotti)." } },
       { "@type": "Question", "name": "Quali dati vengono estratti dalla fattura?", "acceptedAnswer": { "@type": "Answer", "text": "Fornitore e cliente con partita IVA e codice fiscale, tipo, numero e data documento, le righe di dettaglio con quantità e prezzi, i riepiloghi IVA per aliquota con natura ed esigibilità, e le scadenze di pagamento." } },
-      { "@type": "Question", "name": "In quanto tempo viene generato l'Excel?", "acceptedAnswer": { "@type": "Answer", "text": "In meno di un minuto. Il file viene elaborato temporaneamente in memoria e il download parte automaticamente non appena la conversione è completata." } }
+      { "@type": "Question", "name": "In quanto tempo viene generato l'Excel?", "acceptedAnswer": { "@type": "Answer", "text": "In meno di un minuto: il download parte automaticamente non appena la conversione è completata." } }
     ]
   }
   </script>
@@ -219,7 +219,7 @@
           Converti Fattura Elettronica<br/><span class="grad-text">XML in Excel Online</span>
         </h1>
         <p style="font-size:1.05rem;color:var(--muted);line-height:1.8;" class="mb-8 max-w-xl">
-          Estrai automaticamente i dati dalle fatture elettroniche XML e trasformali in file Excel pronti all'uso. Nessuna installazione. File elaborati temporaneamente in memoria, non conservati da Datace.
+          Estrai automaticamente i dati dalle fatture elettroniche XML e trasformali in file Excel pronti all'uso. Nessuna installazione. File non salvati.
         </p>
         <div class="flex flex-wrap gap-3">
           <a href="https://fattura.datacetools.com/" class="btn-primary">
@@ -288,8 +288,8 @@
 <!-- STATS BAR -->
 <div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
   <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">In memoria</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">elaborazione temporanea<br/>per generare l'output</div></div>
-    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Non conservati</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Datace non salva<br/>i documenti caricati</div></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Non salvati</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">usati solo per generare<br/>il risultato</div></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Nessun archivio</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">nessun database<br/>per i documenti caricati</div></div>
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">50</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Fatture elaborabili<br/>in un colpo solo</div></div>
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">5</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Fogli Excel<br/>strutturati</div></div>
   </div>
@@ -371,7 +371,7 @@
       </div>
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <div><p style="font-size:14px;font-weight:600;">Elaborazione temporanea in memoria</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Datace non conserva i documenti caricati</p></div>
+        <div><p style="font-size:14px;font-weight:600;">File non salvati</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Datace non salva i documenti caricati</p></div>
       </div>
     </div>
   </div>
@@ -496,7 +496,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">I file delle fatture vengono salvati?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. I file vengono caricati solo per generare l'Excel, elaborati temporaneamente in memoria e non conservati da Datace. Non uso database per conservarli.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. I tuoi file non vengono salvati. Li usiamo solo per generare l'Excel e non restano nei nostri sistemi. Non usiamo database per conservarli.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
@@ -517,7 +517,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">In quanto tempo viene generato l'Excel?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">In meno di un minuto. Il file viene elaborato temporaneamente in memoria e il download parte automaticamente non appena la conversione è completata.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">In meno di un minuto: il download parte automaticamente non appena la conversione è completata.</div>
       </details>
     </div>
   </div>

@@ -65,7 +65,7 @@
           { "@type": "Question", "name": "Il CUC è uguale per tutte le banche?", "acceptedAnswer": { "@type": "Answer", "text": "No. Ogni banca assegna il suo: con conti in due banche l'azienda ha due CUC, e nel file va quello della banca da cui partono i bonifici." } },
           { "@type": "Question", "name": "Dove trovo il CUC?", "acceptedAnswer": { "@type": "Answer", "text": "Nel corporate banking della tua banca, tra i dati dell'azienda; di norma nel contratto di corporate banking; dal consulente paghe o dal gestionale che già prepara i flussi per la banca; oppure chiedendolo alla banca." } },
           { "@type": "Question", "name": "Cosa significa l'errore «Il contenuto dell'elemento InitgPty non è completo»?", "acceptedAnswer": { "@type": "Answer", "text": "Che nel file manca il CUC: l'elemento InitgPty è il blocco che identifica chi invia la distinta, e lo schema CBI richiede che contenga il codice. Inserisci il CUC e rigenera il file." } },
-          { "@type": "Question", "name": "Datace conserva il mio CUC?", "acceptedAnswer": { "@type": "Answer", "text": "No. Il CUC lo scrivi nel tuo modello Excel e resta nel tuo file: Datace lo usa solo per generare l'XML e non lo conserva." } }
+          { "@type": "Question", "name": "Datace salva il mio CUC?", "acceptedAnswer": { "@type": "Answer", "text": "No. Il CUC lo scrivi nel tuo modello Excel e resta nel tuo file: Datace lo usa solo per generare l'XML e non lo salva." } }
         ]
       },
       {
@@ -207,7 +207,7 @@
       <div class="nota">Il CUC si cerca <strong>una volta per banca</strong>. Dopo, si riusa per tutte le distinte successive.</div>
 
       <h2>Come si usa con Bonifici massivi XML</h2>
-      <p>Con <a href="/bonifici-massivi-xml/">Bonifici massivi XML</a> il CUC si scrive nel foglio <strong>Distinta</strong> del modello Excel, insieme ai dati dell'azienda e all'IBAN di addebito. Compili la Distinta una volta, ti tieni il file e lo riusi ogni mese: il CUC resta nel tuo file, Datace non lo conserva.</p>
+      <p>Con <a href="/bonifici-massivi-xml/">Bonifici massivi XML</a> il CUC si scrive nel foglio <strong>Distinta</strong> del modello Excel, insieme ai dati dell'azienda e all'IBAN di addebito. Compili la Distinta una volta, ti tieni il file e lo riusi ogni mese: il CUC resta nel tuo file, Datace non lo salva.</p>
       <p>Se il CUC manca, lo strumento <strong>non genera il file</strong> e te lo dice subito, invece di farti scoprire l'errore in banca.</p>
     </article>
 
@@ -216,7 +216,7 @@
       <div class="card">
         <h3 class="font-bold mb-4 text-sm" style="color:#0f2040;">Bonifici massivi XML</h3>
         <ul class="flex flex-col gap-2 text-sm" style="color:#475569;">
-          <li>✓ Da Excel a file XML SEPA (CBI)</li><li>✓ Stipendi, fornitori, rimborsi</li><li>✓ Controllo IBAN e importi</li><li>✓ Verifica del file prima di scaricarlo</li><li>✓ Gratis, senza registrazione</li><li>✓ Dati non conservati</li>
+          <li>✓ Da Excel a file XML SEPA (CBI)</li><li>✓ Stipendi, fornitori, rimborsi</li><li>✓ Controllo IBAN e importi</li><li>✓ Verifica del file prima di scaricarlo</li><li>✓ Gratis, senza registrazione</li><li>✓ File non salvati</li>
         </ul>
         <a href="https://bonifici.datacetools.com/" class="mt-5 flex items-center justify-center gap-2 text-white text-sm font-semibold px-4 py-2.5 rounded-xl" style="background:#1c3461;">Apri Bonifici massivi XML →</a>
       </div>
@@ -242,7 +242,7 @@
       <details class="faq-q"><summary>Il CUC è uguale per tutte le banche?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>No. Ogni banca assegna il suo: con conti in due banche l'azienda ha due CUC, e nel file va quello della banca da cui partono i bonifici.</p></details>
       <details class="faq-q"><summary>Dove trovo il CUC?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Nel corporate banking della tua banca, tra i dati dell'azienda; di norma nel contratto di corporate banking; dal consulente paghe o dal gestionale che già prepara i flussi per la banca; oppure chiedendolo alla banca.</p></details>
       <details class="faq-q"><summary>Cosa significa l'errore «Il contenuto dell'elemento InitgPty non è completo»?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Che nel file manca il CUC: l'elemento InitgPty è il blocco che identifica chi invia la distinta, e lo schema CBI richiede che contenga il codice. Inserisci il CUC e rigenera il file.</p></details>
-      <details class="faq-q"><summary>Datace conserva il mio CUC?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>No. Il CUC lo scrivi nel tuo modello Excel e resta nel tuo file: Datace lo usa solo per generare l'XML e non lo conserva.</p></details>
+      <details class="faq-q"><summary>Datace salva il mio CUC?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>No. Il CUC lo scrivi nel tuo modello Excel e resta nel tuo file: Datace lo usa solo per generare l'XML e non lo salva.</p></details>
     </div>
   </div>
 </section>

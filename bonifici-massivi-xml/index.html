@@ -13,7 +13,7 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta name="description" content="Crea gratis il file XML dei bonifici massivi da Excel: stipendi, fornitori, rimborsi. Formato SEPA CBI, controllo IBAN e importi. File non conservati." />
+  <meta name="description" content="Crea gratis il file XML dei bonifici massivi da Excel: stipendi, fornitori, rimborsi. Formato SEPA CBI, controllo IBAN e importi. File non salvati." />
   <meta name="keywords" content="bonifici massivi xml, file xml bonifici, distinta bonifici sepa, bonifici multipli excel, xml sepa cbi, bonifici stipendi xml, creare file xml bonifici, CBIPaymentRequest" />
   <link rel="canonical" href="https://datacetools.com/bonifici-massivi-xml/" />
 
@@ -21,7 +21,7 @@
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://datacetools.com/bonifici-massivi-xml/" />
   <meta property="og:title"       content="Bonifici massivi da Excel a XML SEPA (CBI) gratis | Datace" />
-  <meta property="og:description" content="Dal modello Excel al file XML dei bonifici massivi, pronto da caricare nell'home banking. Gratis, senza registrazione, file non conservati da Datace." />
+  <meta property="og:description" content="Dal modello Excel al file XML dei bonifici massivi, pronto da caricare nell'home banking. Gratis, senza registrazione, file non salvati." />
   <meta property="og:image" content="https://datacetools.com/images/og-datace.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -48,7 +48,7 @@
       "Anteprima della distinta con il totale prima di scaricare",
       "Stipendi, fornitori, pensioni, premi e altre tipologie",
       "Gratis, senza registrazione",
-      "File elaborati temporaneamente in memoria, non conservati da Datace"
+      "File non salvati"
     ],
     "publisher": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" }
   }
@@ -93,7 +93,7 @@
       { "@type": "Question", "name": "Quale formato genera lo strumento?", "acceptedAnswer": { "@type": "Answer", "text": "Il formato CBI CBIPaymentRequest.00.04.01, cioè la versione italiana dello standard europeo ISO 20022 pain.001 per i bonifici SEPA, usata dagli home banking delle banche italiane." } },
       { "@type": "Question", "name": "Cos'è il CUC e dove lo trovo?", "acceptedAnswer": { "@type": "Answer", "text": "Il CUC (Codice Unico CBI) è il codice che identifica l'azienda nei file per la banca. Lo assegna la banca ed è diverso per ogni banca. Si trova tra i dati dell'azienda nel corporate banking, di norma nel contratto, oppure si chiede alla banca." } },
       { "@type": "Question", "name": "Lo strumento invia i bonifici alla banca?", "acceptedAnswer": { "@type": "Answer", "text": "No. Genera solo il file XML: sei tu a importarlo nell'home banking e ad autorizzarlo. Datace non ha accesso al tuo conto." } },
-      { "@type": "Question", "name": "I dati dei beneficiari vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "No. Il file Excel viene elaborato temporaneamente in memoria solo per generare l'XML e non viene conservato da Datace. Non c'è registrazione e non c'è un database dei beneficiari." } },
+      { "@type": "Question", "name": "I dati dei beneficiari vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "No. Il file Excel serve solo a generare l'XML: non viene salvato e non resta nei nostri sistemi. Non c'è registrazione e non c'è un database dei beneficiari." } },
       { "@type": "Question", "name": "È gratuito?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, è gratuito e non richiede registrazione. Ogni file può contenere fino a 10.000 bonifici." } }
     ]
   }
@@ -220,7 +220,7 @@
           Bonifici massivi<br/><span class="grad-text">da Excel a XML SEPA</span>
         </h1>
         <p style="font-size:1.05rem;color:var(--muted);line-height:1.8;" class="mb-8 max-w-xl">
-          Compila il modello Excel con i beneficiari e scarica il file XML in formato CBI, pronto da caricare nell'home banking. Stipendi, fornitori, rimborsi: una distinta, una firma. File elaborati temporaneamente in memoria, non conservati da Datace.
+          Compila il modello Excel con i beneficiari e scarica il file XML in formato CBI, pronto da caricare nell'home banking. Stipendi, fornitori, rimborsi: una distinta, una firma. File non salvati.
         </p>
         <div class="flex flex-wrap gap-3">
           <a href="https://bonifici.datacetools.com/" class="btn-primary">
@@ -291,7 +291,7 @@
 <div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
   <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Gratis</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">nessun abbonamento,<br/>nessuna registrazione</div></div>
-    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Non conservati</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Datace non salva<br/>i dati dei beneficiari</div></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Non salvati</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Datace non salva<br/>i dati dei beneficiari</div></div>
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">1</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">file per tutta<br/>la distinta</div></div>
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">CBI 00.04.01</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">lo standard XML<br/>delle banche italiane</div></div>
   </div>
@@ -373,7 +373,7 @@
       </div>
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <div><p style="font-size:14px;font-weight:600;">Elaborazione temporanea in memoria</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Datace non conserva i dati dei beneficiari</p></div>
+        <div><p style="font-size:14px;font-weight:600;">File non salvati</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Datace non salva i dati dei beneficiari</p></div>
       </div>
     </div>
   </div>
@@ -467,7 +467,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">I dati dei beneficiari vengono salvati?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Il file Excel viene elaborato temporaneamente in memoria solo per generare l'XML e non viene conservato da Datace. Non c'è registrazione e non c'è un database dei beneficiari.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Il file Excel serve solo a generare l'XML: non viene salvato e non resta nei nostri sistemi. Non c'è registrazione e non c'è un database dei beneficiari.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">

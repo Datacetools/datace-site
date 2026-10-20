@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta name="description" content="Carica i PDF F24 e ottieni una stima indicativa delle prossime uscite: Excel, cashflow mensile e calendario .ics opzionale. File non conservati." />
+  <meta name="description" content="Carica i PDF F24 e ottieni una stima indicativa delle prossime uscite: Excel, cashflow mensile e calendario .ics opzionale. File non salvati." />
   <meta name="keywords" content="scadenze fiscali F24, stima scadenze IRPEF IVA INPS, cashflow fiscale, calendario scadenze fiscali, F24 scadenzario, pianificazione fiscale" />
   <link rel="canonical" href="https://datacetools.com/scadenzef24/" />
   <meta property="og:type" content="website" />
@@ -33,7 +33,7 @@
     "operatingSystem": "All",
     "description": "Strumento online per stimare scadenze fiscali indicative a partire dallo storico F24 PDF. Genera un cashflow fiscale con semaforo, export Excel su 3 fogli e calendario .ics.",
     "inLanguage": "it",
-    "featureList": ["Stima scadenze IRPEF, IVA, INPS, IMU dai tuoi F24","Cashflow fiscale mensile con semaforo colorato","Export Excel su 3 fogli: Prossime Scadenze, Cashflow Mensile, Storico","Calendario .ics per Google Calendar, Outlook e Apple Calendar","Orizzonte di stima 3, 6 o 12 mesi","Elaborazione fino a 20 PDF contemporaneamente","File elaborati temporaneamente in memoria, non conservati da Datace"],
+    "featureList": ["Stima scadenze IRPEF, IVA, INPS, IMU dai tuoi F24","Cashflow fiscale mensile con semaforo colorato","Export Excel su 3 fogli: Prossime Scadenze, Cashflow Mensile, Storico","Calendario .ics per Google Calendar, Outlook e Apple Calendar","Orizzonte di stima 3, 6 o 12 mesi","Elaborazione fino a 20 PDF contemporaneamente","File non salvati"],
     "publisher": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" }
   }
   </script>
@@ -70,7 +70,7 @@
       { "@type": "Question", "name": "Cosa succede se carico un solo F24?", "acceptedAnswer": { "@type": "Answer", "text": "Anche con un solo F24 il sistema genera scadenze indicative per i codici tributo presenti. Gli importi saranno basati su quel singolo documento. Caricare più F24 storici rende la stima più completa." } },
       { "@type": "Question", "name": "Cosa contiene il file Excel?", "acceptedAnswer": { "@type": "Answer", "text": "L'Excel è strutturato su 3 fogli: Prossime Scadenze (lista ordinata per data con colori urgenza e giorni mancanti), Cashflow Mensile (riepilogo mensile con righe colorate per carico), Storico caricato (i dati grezzi estratti dai PDF)." } },
       { "@type": "Question", "name": "Cos’è il file .ics?", "acceptedAnswer": { "@type": "Answer", "text": "Il file .ics è un formato calendario standard compatibile con Google Calendar, Outlook e Apple Calendar. Importandolo crei automaticamente un evento per ogni scadenza fiscale, con data, descrizione e importo stimato." } },
-      { "@type": "Question", "name": "I dati vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "I PDF vengono elaborati temporaneamente in memoria e non conservati da Datace. Non uso database per conservarli." } }
+      { "@type": "Question", "name": "I dati vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "I tuoi PDF non vengono salvati. Li usiamo solo per generare il risultato e non restano nei nostri sistemi. Non usiamo database per conservarli." } }
     ]
   }
   </script>
@@ -176,9 +176,9 @@
 <!-- STATS BAR -->
 <div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
   <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-    <div class="stats-cell"><div class="stat-num">In memoria</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">File elaborati temporaneamente<br/>non conservati da Datace</div></div>
-    <div class="stats-cell" style="border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">Nessun archivio</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Nessun database Datace<br/>per i documenti caricati</div></div>
-    <div class="stats-cell" style="border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">Codici F24</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Ricorrenze indicative<br/>da verificare</div></div>
+    <div class="stats-cell"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Non salvati</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">usati solo per generare<br/>il risultato</div></div>
+    <div class="stats-cell" style="border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Nessun archivio</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Nessun database Datace<br/>per i documenti caricati</div></div>
+    <div class="stats-cell" style="border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Codici F24</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Ricorrenze indicative<br/>da verificare</div></div>
     <div class="stats-cell" style="border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">3</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Fogli Excel<br/>strutturati</div></div>
   </div>
 </div>
@@ -263,7 +263,7 @@
       </div>
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <div><p style="font-size:14px;font-weight:600;">Elaborazione temporanea in memoria</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Datace non conserva i documenti caricati, nessun database Datace</p></div>
+        <div><p style="font-size:14px;font-weight:600;">File non salvati</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Datace non salva i documenti caricati, nessun database Datace</p></div>
       </div>
     </div>
   </div>
@@ -395,7 +395,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">I dati vengono salvati?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">I PDF vengono elaborati temporaneamente in memoria e non conservati da Datace. Non uso database per conservarli. Vedi la <a href="/privacy/" style="color:#93c5fd;">Privacy Policy</a> per i dettagli tecnici.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">I tuoi PDF non vengono salvati. Li usiamo solo per generare il risultato e non restano nei nostri sistemi. Non usiamo database per conservarli. Vedi la <a href="/privacy/" style="color:#93c5fd;">Privacy Policy</a> per i dettagli tecnici.</div>
       </details>
     </div>
   </div>
