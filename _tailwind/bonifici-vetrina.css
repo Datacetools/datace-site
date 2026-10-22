@@ -1,0 +1,27 @@
+﻿/* SORGENTE del CSS di /bonifici-massivi-xml/ (la vetrina). Si ricompila dalla radice del
+   sito, con la CLI autonoma di Tailwind v4, ogni volta che nella pagina cambia una classe:
+
+     tailwindcss -i _tailwind/bonifici-vetrina.css -o bonifici-massivi-xml/tailwind.css --minify
+
+   Sostituisce il CDN di Tailwind e Google Fonts: stessi colori di tailwind.config e lo
+   stesso file di Inter che serviva Google (latin, pesi 400-800, licenza SIL OFL). */
+@import "tailwindcss" source(none);
+@source "../bonifici-massivi-xml/index.html";
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --color-brand: #1c3461; --color-brand-light: #2a9db5; --color-brand-dark: #0f2040; --color-brand-50: #eef4fb; --color-brand-gold: #F59E0B;
+  --font-sans: Inter, system-ui, sans-serif;
+}
+
+@layer base {
+  button:not(:disabled) { cursor: pointer; }
+}

@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Il file Excel non esce dal browser: nessuna richiesta verso altri indirizzi oltre
+       alle statistiche (Umami) e al modulo di feedback (Formspree). GitHub Pages non
+       manda header, quindi la CSP sta qui. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://gateway.umami.is https://formspree.io; worker-src 'self'; base-uri 'self'" />
+
+  <!-- SEO primario -->
+  <title>Datace — Bonifici massivi XML | Crea il file SEPA (CBI) da Excel</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231c3461'/%3E%3Crect x='10' y='11' width='28' height='6' rx='3' fill='%23F59E0B'/%3E%3Crect x='10' y='21' width='20' height='6' rx='3' fill='white'/%3E%3Crect x='10' y='31' width='12' height='6' rx='3' fill='white' fill-opacity='0.35'/%3E%3C/svg%3E">
+  <meta name="description" content="Compila il modello Excel con i beneficiari e scarica il file XML SEPA in formato CBI, pronto da caricare nell'home banking per i bonifici massivi: stipendi, fornitori, rimborsi. Gratis, senza registrazione." />
+  <meta name="keywords" content="bonifici massivi xml, file xml bonifici, distinta bonifici sepa, bonifici multipli excel, xml sepa cbi, bonifici stipendi xml, CBIPaymentRequest" />
+  <!-- Su Google si fa trovare la vetrina, datacetools.com/bonifici-massivi-xml/,
+       che porta qui col suo pulsante: lo strumento non le fa concorrenza. Come privacy. -->
+  <meta name="robots" content="noindex, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://datacetools.com/bonifici-massivi-xml/app/" />
+  <meta property="og:title"       content="Datace — Bonifici massivi XML | Crea il file SEPA (CBI) da Excel" />
+  <meta property="og:description" content="Stipendi e fornitori in un solo file XML per la banca. Il file Excel resta sul tuo computer. Gratis, senza registrazione." />
+  <meta name="twitter:card"       content="summary" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Datace — Bonifici massivi XML",
+    "url": "https://datacetools.com/bonifici-massivi-xml/app/",
+    "description": "Strumento gratuito che, nel browser, trasforma un modello Excel con i beneficiari nel file XML SEPA dei bonifici massivi, nel formato CBI (CBIPaymentRequest.00.04.01). Il file non viene inviato ai server.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "priceCurrency": "EUR" },
+    "inLanguage": "it",
+    "featureList": ["Modello Excel pronto da compilare","XML SEPA in formato CBI 00.04.01","Controllo IBAN e importi riga per riga","Anteprima della distinta prima di scaricare","Stipendi, fornitori, pensioni e altre tipologie","Il file non lascia il tuo computer","Elaborazione nel browser"],
+    "author": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Datace",
+    "url": "https://datacetools.com",
+    "description": "Datace crea strumenti di document processing e data automation per aziende e professionisti italiani.",
+    "inLanguage": "it"
+  }
+  </script>
+
+  <!-- Tailwind compilato da questa pagina (sorgente: _tailwind/bonifici-app.css).
+       Nessuna richiesta a terzi: né CDN né font esterni. -->
+  <link rel="stylesheet" href="tailwind.css" />
+
+  <style>
+    :root {
+      --navy:   #060E1F; --navy2: #0A1628; --navy3: #0F2040;
+      --gold:   #F59E0B; --gold2: #FBBF24; --teal: #1d7a94;
+      --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+      --muted:  rgba(255,255,255,0.45);
+    }
+    * { box-sizing: border-box; }
+    body { background: var(--navy); color: white; }
+
+    /* Logo bars */
+    .logo-bar { transform-box: fill-box; transform-origin: left center; }
+    .logo-bar-1 { animation: barStream 2.8s ease-in-out infinite 0s; }
+    .logo-bar-2 { animation: barStream 2.8s ease-in-out infinite .22s; }
+    .logo-bar-3 { animation: barStream 2.8s ease-in-out infinite .44s; }
+    @keyframes barStream {
+      0%,100% { transform: scaleX(1);    opacity: 1;   }
+      30%     { transform: scaleX(0.32); opacity: 0.5; }
+      60%     { transform: scaleX(1);    opacity: 1;   }
+    }
+
+    /* Dark card */
+    .dark-card {
+      background: linear-gradient(135deg, rgba(15,32,64,.85), rgba(6,14,31,.95));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    /* Drop zone */
+    #drop-zone {
+      border: 2px dashed rgba(255,255,255,.15);
+      border-radius: 16px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    #drop-zone:hover, #drop-zone.drag-over {
+      border-color: var(--teal);
+      background: rgba(29,122,148,.08);
+    }
+
+    /* Preview table */
+    /* ~20 righe visibili (intestazione + 20 × 32px), le altre scorrono */
+    #preview-wrap { max-height: 672px; overflow-y: auto; overflow-x: auto; }
+    #preview-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
+    #preview-wrap::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
+    #preview-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 3px; }
+    .th { color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95); }
+
+    /* Footer grid */
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: start; }
+    .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 16px; }
+    .footer-link { display: block; font-size: 14px; color: rgba(255,255,255,.45); margin-bottom: 10px; text-decoration: none; transition: color .2s ease; }
+    .footer-link:hover { color: white; }
+    .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: rgba(255,255,255,.2); }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    /* Condizioni non accettate: zona di caricamento e pulsanti spenti */
+  #carica { border: 0; padding: 0; margin: 0; min-width: 0; }
+  #carica:disabled > :not(.frase-privacy) { opacity: .45; }  /* la frase sulla privacy resta leggibile */
+  #carica:disabled #drop-zone { cursor: not-allowed; }
+</style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com,fattura.datacetools.com,zip.datacetools.com,scadenzef24.datacetools.com,bonifici.datacetools.com"></script>
+</head>
+
+<body class="min-h-screen font-sans" style="background:#060E1F;color:white;">
+
+<!-- ─── HEADER ─────────────────────────────────────────────────────────── -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-4xl mx-auto px-6 py-3 flex items-center gap-3">
+
+    <!-- Logo Datace -->
+    <a href="https://datacetools.com" class="flex items-center gap-3 shrink-0">
+      <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.35);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+
+    <!-- Separatore + tool name -->
+    <div style="width:1px;height:32px;background:rgba(255,255,255,.1);" class="mx-2 hidden sm:block"></div>
+    <div class="hidden sm:flex flex-col leading-tight">
+      <span style="color:white;font-weight:700;font-size:15px;">Bonifici massivi XML</span>
+      <span style="color:var(--muted);font-size:11px;">Da Excel a XML SEPA (CBI) · pronto per l'home banking</span>
+    </div>
+
+    <!-- Privacy badge -->
+    <div class="ml-auto hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);">
+      <svg class="w-3 h-3" style="color:#86efac;" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+      </svg>
+      <span style="color:#86efac;font-size:11px;font-weight:600;">Resta sul tuo PC</span>
+    </div>
+  </div>
+</header>
+
+
+<!-- ─── MAIN ────────────────────────────────────────────────────────────── -->
+<main class="max-w-4xl mx-auto px-4 py-10 space-y-6">
+
+  <!-- Browser non adatti (controllo.js): al posto dello strumento, uno di questi due -->
+  <p id="safari" role="alert" hidden class="dark-card p-6" style="font-size:15px;color:#fcd34d;">Safari e i browser di iPhone e iPad non sono ancora supportati. Apri questa pagina da un computer con Chrome, Edge, Firefox, Brave o Opera.</p>
+  <p id="non-supportato" role="alert" hidden class="dark-card p-6" style="font-size:15px;color:#fcd34d;">Questo browser non è supportato. Apri questa pagina con Chrome, Edge, Firefox, Brave o Opera.</p>
+
+  <div id="strumento" class="space-y-6">
+  <!-- CARD 1: MODELLO -->
+  <section class="dark-card p-8">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+        <span style="font-weight:800;font-size:14px;color:var(--gold);">1</span>
+      </div>
+      <div class="flex-1">
+        <h2 style="font-size:17px;font-weight:700;margin-bottom:4px;">Scarica il modello e compilalo</h2>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Due fogli: <strong style="color:white;">Distinta</strong> (chi paga: ragione sociale, IBAN di addebito, CUC, tipologia e data) e <strong style="color:white;">Beneficiari</strong> (una riga per bonifico). Compila la Distinta una volta e riusa il file ogni mese.</p>
+      </div>
+      <a href="modello_bonifici_massivi.xlsx" download="modello_bonifici_massivi.xlsx"
+         class="shrink-0 flex items-center justify-center gap-2 py-3 px-5 rounded-xl font-bold text-sm transition-all duration-200"
+         style="background:white;color:#0f2040;box-shadow:0 4px 20px rgba(255,255,255,.1);"
+         onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Scarica modello Excel
+      </a>
+    </div>
+    <!-- Il CUC è il dato che quasi nessuno conosce: lo si dice PRIMA di compilare -->
+    <a href="#cuc" class="mt-5 flex items-start gap-2 text-sm rounded-xl px-4 py-3" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#fcd34d;text-decoration:none;">
+      <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+      </svg>
+      <span>Ti servirà il <strong>CUC</strong> della tua banca: è obbligatorio, e senza la banca rifiuta il file. <span style="text-decoration:underline;">Cos'è e dove trovarlo</span></span>
+    </a>
+  </section>
+
+
+  <!-- CARD 2: CARICA -->
+  <section class="dark-card p-8">
+
+    <div class="flex items-center gap-5 mb-6">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+        <span style="font-weight:800;font-size:14px;color:var(--gold);">2</span>
+      </div>
+      <div>
+        <h2 style="font-size:17px;font-weight:700;margin-bottom:4px;">Carica il modello compilato</h2>
+        <p style="font-size:13px;color:var(--muted);">Un file .xlsx · Max 5 MB · Ogni IBAN e ogni importo vengono verificati prima di generare l'XML</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;">Non hai il modello? <a href="modello_bonifici_massivi.xlsx" download="modello_bonifici_massivi.xlsx" style="color:#F59E0B;text-decoration:underline;">Scaricalo qui</a>.</p>
+      </div>
+    </div>
+
+    <!-- Condizioni: senza la spunta il fieldset resta spento e il file non si legge.
+         Non c'è server: la spunta la controlla solo questa pagina. -->
+
+    <label style="display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5;color:rgba(255,255,255,.75);margin-bottom:16px;cursor:pointer;text-align:left;">
+      <input id="accetto" type="checkbox" autocomplete="off" onchange="document.getElementById('carica').disabled = !this.checked"
+             style="margin-top:3px;width:16px;height:16px;flex-shrink:0;accent-color:#F59E0B;cursor:pointer;">
+      <span>Ho letto e accetto le <a href="https://datacetools.com/condizioni/" target="_blank" rel="noopener" style="color:#F59E0B;text-decoration:underline;">Condizioni d'uso e di trattamento dei dati</a>, compresi gli articoli 7 e 8 che approvo in modo specifico, e l'<a href="https://datacetools.com/privacy/" target="_blank" rel="noopener" style="color:#F59E0B;text-decoration:underline;">Informativa</a>. Confermo di poter usare questo file e che non contiene dati sanitari o altri dati particolari.</span>
+    </label>
+    <fieldset id="carica" disabled>
+
+    <!-- Drop Zone -->
+    <div id="drop-zone"
+         class="p-10 text-center"
+         onclick="document.getElementById('file-input').click()"
+         ondragover="handleDragOver(event)"
+         ondragleave="handleDragLeave(event)"
+         ondrop="handleDrop(event)">
+
+      <svg class="mx-auto w-12 h-12 mb-4" style="color:rgba(255,255,255,.2);" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p style="font-weight:600;color:rgba(255,255,255,.7);">Trascina qui il file Excel</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:4px;">oppure <span style="color:var(--teal);text-decoration:underline;">clicca per selezionare</span></p>
+    </div>
+
+    <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.6);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;text-align:center;"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg><span><strong style="color:white;">Il file non lascia il tuo computer.</strong> Lo legge il tuo browser: Datace non lo riceve. Non caricare dati sanitari o altri dati particolari.</span> <a href="https://datacetools.com/privacy/" style="color:#F59E0B;text-decoration:underline;">Privacy</a></p>
+    <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.5);margin-top:6px;text-align:center;">Funziona con Chrome, Edge, Firefox, Brave e Opera.</p>
+    <input id="file-input" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+           class="hidden" onchange="handleFileSelect(this.files)" />
+
+    <!-- File scelto -->
+    <div id="file-list" class="mt-4 space-y-2 hidden"></div>
+
+    <!-- CTA -->
+    <button id="btn-genera"
+            onclick="genera()"
+            disabled
+            class="mt-6 w-full py-3.5 px-6 rounded-xl font-bold text-sm transition-all duration-200"
+            style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.3);cursor:not-allowed;border:1px solid rgba(255,255,255,.08);">
+      <span class="flex items-center justify-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Genera e verifica XML
+      </span>
+    </button>
+    <p class="frase-privacy" style="font-size:11px;color:rgba(255,255,255,.45);margin-top:8px;text-align:center;">Statistiche di visita senza cookie: mai il contenuto dei tuoi file.</p>
+
+    </fieldset>
+
+    <!-- Progress / Status -->
+    <div id="status-area" class="mt-4 hidden">
+      <div id="status-loading" class="hidden flex-col items-center gap-3 py-4">
+        <div class="relative w-24 h-24">
+          <svg class="w-24 h-24 -rotate-90" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8"/>
+            <circle id="progress-ring" cx="50" cy="50" r="40"
+                    fill="none" stroke="#F59E0B" stroke-width="8"
+                    stroke-linecap="round"
+                    stroke-dasharray="251.2"
+                    stroke-dashoffset="251.2"
+                    style="transition: stroke-dashoffset 0.4s ease;"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span id="progress-pct" class="text-2xl font-bold leading-none" style="color:var(--gold);">0%</span>
+          </div>
+        </div>
+        <span id="status-msg" style="font-size:13px;color:var(--muted);">Elaborazione in corso…</span>
+      </div>
+      <div id="status-success" class="hidden animate-bounce-in flex items-center gap-2 text-sm rounded-xl px-4 py-3" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#86efac;">
+        <svg class="w-5 h-5 shrink-0" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span id="success-msg">XML scaricato con successo!</span>
+      </div>
+      <div id="status-error" class="hidden flex items-start gap-2 text-sm rounded-xl px-4 py-3" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;">
+        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#fca5a5;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <div class="min-w-0">
+          <span id="error-msg">Errore durante l'elaborazione.</span>
+          <ul id="error-list" class="mt-2 space-y-1 hidden" style="font-size:12px;color:rgba(252,165,165,.85);"></ul>
+          <button id="error-log" onclick="scaricaLog()" class="hidden"
+                  style="margin-top:12px;font-size:12px;font-weight:600;color:#fca5a5;background:transparent;border:1px solid rgba(252,165,165,.35);border-radius:8px;padding:6px 12px;cursor:pointer;">
+            Scarica log errori (.txt)
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ANTEPRIMA DISTINTA -->
+  <section id="preview-section" class="dark-card p-6 hidden">
+    <div class="flex items-center justify-between mb-4">
+      <h2 style="font-size:16px;font-weight:700;">Controlla la distinta</h2>
+      <span id="preview-count" class="text-xs px-3 py-1 rounded-full font-semibold" style="background:rgba(245,158,11,.1);color:var(--gold);border:1px solid rgba(245,158,11,.2);"></span>
+    </div>
+    <div id="preview-distinta" class="grid sm:grid-cols-3 gap-3 mb-4"></div>
+    <!-- Avvisi: cose sospette che NON bloccano il file (codice fiscale, due righe uguali):
+         al click su Genera il pop-up di conferma li spiega e chiede se continuare. -->
+    <div id="preview-avvisi" class="hidden mb-4 flex items-start gap-2 text-sm rounded-xl px-4 py-3" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#fcd34d;">
+      <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+      </svg>
+      <div class="min-w-0">
+        <span>Da controllare: prima di generare il file ti verrà chiesto se continuare.</span>
+        <ul id="avvisi-list" class="mt-2 space-y-1" style="font-size:12px;color:rgba(252,211,77,.85);"></ul>
+      </div>
+    </div>
+    <div id="preview-wrap" class="rounded-xl overflow-hidden" style="border:1px solid var(--border);">
+      <table class="w-full table-fixed text-xs text-left" style="min-width:680px;">
+        <colgroup>
+          <col style="width:7%"><col style="width:26%"><col style="width:31%"><col style="width:22%"><col style="width:14%">
+        </colgroup>
+        <thead>
+          <tr style="background:rgba(28,52,97,.5);">
+            <th class="th px-3 py-2 truncate">Riga</th>
+            <th class="th px-3 py-2 truncate">Intestatario</th>
+            <th class="th px-3 py-2 truncate">IBAN</th>
+            <th class="th px-3 py-2 truncate">Descrizione</th>
+            <th class="th px-3 py-2 text-right truncate">Importo €</th>
+          </tr>
+        </thead>
+        <tbody id="preview-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+
+  </div><!-- /strumento -->
+
+  <!-- IL CUC: cos'è e dove trovarlo. Obbligatorio per lo schema CBI (provato in
+       banca: senza, il file è scartato con errore di schema su InitgPty/Id).
+       I messaggi d'errore sul CUC rimandano qui per nome. -->
+  <section id="cuc" class="dark-card p-6" style="scroll-margin-top:90px;">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+        <svg class="w-5 h-5" style="color:var(--gold);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+        </svg>
+      </div>
+      <h2 style="font-size:16px;font-weight:700;">Il CUC: cos'è e dove trovarlo</h2>
+    </div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px;">Il <strong style="color:white;">CUC</strong> (Codice Unico CBI) è un codice di lettere e numeri con cui la banca riconosce la tua azienda nei file di bonifici. È <strong style="color:white;">obbligatorio</strong>: lo richiede lo standard CBI, e senza la banca scarta il file prima ancora di leggerlo.</p>
+
+    <div class="grid sm:grid-cols-2 gap-3 mb-5">
+      <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:12px 14px;">
+        <p style="font-size:13px;font-weight:600;margin-bottom:2px;">È diverso per ogni banca</p>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;">Con conti in due banche hai due CUC: usa quello della banca dell'<strong style="color:white;">IBAN di addebito</strong>.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:12px 14px;">
+        <p style="font-size:13px;font-weight:600;margin-bottom:2px;">Non è un altro codice</p>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;">Non è la partita IVA né una parte dell'IBAN: non si ricava dai dati che hai già, lo assegna la banca.</p>
+      </div>
+    </div>
+
+    <p style="font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px;">Dove trovarlo</p>
+    <ol class="space-y-3">
+      <!-- Solo percorsi DOCUMENTATI: Sella dalla sua FAQ ufficiale. Quelli di altre
+           banche si aggiungono quando qualcuno li ha visti davvero, mai a intuito. -->
+      <li class="flex gap-3 items-start">
+        <span class="shrink-0" style="width:24px;height:24px;border-radius:8px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--gold);">1</span>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;"><strong style="color:white;">Nel tuo corporate banking</strong>: accedi al servizio aziende della tua banca e cerca il CUC tra i <strong style="color:white;">dati dell'azienda</strong> (a volte è chiamato «Codice CBI»). Per esempio in Banca Sella è nella sezione «Dati aziendali» di SBS CBI Remote Banking.</p>
+      </li>
+      <li class="flex gap-3 items-start">
+        <span class="shrink-0" style="width:24px;height:24px;border-radius:8px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--gold);">2</span>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;"><strong style="color:white;">Nel contratto</strong> di corporate banking: di norma il CUC è riportato lì.</p>
+      </li>
+      <li class="flex gap-3 items-start">
+        <span class="shrink-0" style="width:24px;height:24px;border-radius:8px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--gold);">3</span>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;"><strong style="color:white;">Da chi prepara già i pagamenti</strong>: il consulente paghe o il gestionale che oggi manda i flussi alla banca lo ha già configurato.</p>
+      </li>
+      <li class="flex gap-3 items-start">
+        <span class="shrink-0" style="width:24px;height:24px;border-radius:8px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--gold);">4</span>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;"><strong style="color:white;">Alla tua banca</strong>: chiedilo alla filiale o al gestore (alcune banche chiedono di indicare il codice SIA dell'azienda). Se lo sportello non lo conosce, chiedi dell'assistenza <strong style="color:white;">corporate banking / CBI</strong>.</p>
+      </li>
+    </ol>
+    <p style="font-size:12px;color:rgba(255,255,255,.35);margin-top:14px;">Il CUC che scrivi nel modello resta nel tuo file: Datace non lo conserva.
+      <a href="https://datacetools.com/guida/codice-cuc-cbi-dove-trovarlo/" target="_blank" rel="noopener" style="color:#93c5fd;text-decoration:underline;margin-left:4px;">Leggi la guida completa sul CUC</a></p>
+  </section>
+
+
+  <!-- COME FUNZIONA -->
+  <section class="dark-card p-6">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:20px;">Come funziona</h2>
+    <div class="grid sm:grid-cols-3 gap-5">
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+          <span style="font-weight:800;font-size:14px;color:var(--gold);">1</span>
+        </div>
+        <div>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Compila</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Nel modello Excel: i dati di chi paga nel foglio Distinta, un bonifico per riga nel foglio Beneficiari</p>
+        </div>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+          <span style="font-weight:800;font-size:14px;color:var(--gold);">2</span>
+        </div>
+        <div>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Controlla</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Ogni IBAN e ogni importo vengono verificati, e vedi la distinta con il totale. Gli errori arrivano tutti insieme, con la riga</p>
+        </div>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(29,122,148,.2);border:1px solid rgba(29,122,148,.3);">
+          <span style="font-weight:800;font-size:14px;color:#2a9db5;">3</span>
+        </div>
+        <div>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Carica in banca</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Scarichi l'XML SEPA in formato CBI e lo importi nell'home banking, dove lo autorizzi con la tua firma. Datace non invia nulla alla banca</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- FEEDBACK -->
+  <section class="dark-card p-6 text-center">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">Lascia un feedback</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:32px;">Hai usato Bonifici massivi XML? Dicci cosa ne pensi, ci aiuta a migliorare.</p>
+    <form action="https://formspree.io/f/mreddazr" method="POST" class="space-y-3 text-left">
+      <input type="hidden" name="tool" value="Bonifici massivi XML" />
+      <input type="text" name="name" placeholder="Nome (opzionale)"
+             class="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+             style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:white;"
+             onfocus="this.style.borderColor='rgba(29,122,148,.6)'" onblur="this.style.borderColor='rgba(255,255,255,.07)'" />
+      <textarea name="message" rows="3" placeholder="Il tuo feedback..." required
+                class="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none resize-none"
+                style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:white;"
+                onfocus="this.style.borderColor='rgba(29,122,148,.6)'" onblur="this.style.borderColor='rgba(255,255,255,.07)'"></textarea>
+      <button type="submit"
+              class="w-full py-2.5 px-6 rounded-xl font-bold text-sm transition-all duration-200"
+              style="background:white;color:#0f2040;"
+              onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        Invia feedback
+      </button>
+    </form>
+  </section>
+
+  <!-- CONTATTI -->
+  <section class="dark-card p-6 text-center">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">Il tuo caso è diverso?</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Formato particolare, altro gestionale, report da preparare ogni mese: posso costruire una soluzione su misura. Per segnalazioni, supporto o per raccontarmi il tuo caso:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+      <a href="https://www.linkedin.com/in/davide-sgroia/" target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="tool-bonifici" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;" onmouseover="this.style.background='rgba(255,255,255,.1)';this.style.borderColor='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        Profilo LinkedIn
+      </a>
+      <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="tool-bonifici" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Raccontami il tuo caso
+      </a>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,.4);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="tool-bonifici" style="color:#F59E0B;">info@datacetools.com</a></p>
+  </section>
+
+</main>
+
+
+<!-- ─── POP-UP VERIFICA ──────────────────────────────────────────────────── -->
+<!-- Compare dopo ogni generazione: l'XML è stato riletto (DOMParser del browser) e
+     confrontato con l'Excel (verifica() in bonifici.min.js). Se la verifica non passa
+     il file non esce e qui non si arriva: si vede l'errore rosso. -->
+<div id="verifica" class="hidden fixed inset-0 z-[60] items-center justify-center px-4"
+     style="background:rgba(4,8,15,.75);backdrop-filter:blur(6px);"
+     role="dialog" aria-modal="true" aria-labelledby="verifica-titolo"
+     onclick="if (event.target === this) chiudiVerifica()">
+  <div class="dark-card w-full max-w-lg p-7 animate-bounce-in" style="border-color:rgba(34,197,94,.25);">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);">
+        <svg class="w-6 h-6" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
+      <div>
+        <h2 id="verifica-titolo" style="font-size:17px;font-weight:700;">Verifica superata</h2>
+        <p style="font-size:12px;color:var(--muted);">Il file XML è stato riletto da capo e confrontato con il tuo Excel</p>
+      </div>
+    </div>
+    <ul id="verifica-lista" class="space-y-2 mb-5"></ul>
+    <div class="rounded-xl px-4 py-3 mb-5" style="background:rgba(255,255,255,.03);border:1px solid var(--border);">
+      <p style="font-size:12px;color:var(--muted);line-height:1.6;"><strong style="color:white;">Dopo:</strong> importa <span id="verifica-file" style="color:white;font-family:monospace;"></span> nell'home banking (bonifici da file / disposizioni XML SEPA) e autorizzalo lì. Datace non invia nulla alla banca.</p>
+    </div>
+    <div class="flex flex-col-reverse sm:flex-row gap-3">
+      <button onclick="chiudiVerifica()"
+              class="sm:w-1/3 py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200"
+              style="background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);"
+              onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='transparent'">
+        Chiudi
+      </button>
+      <button id="verifica-scarica" onclick="scaricaXml()"
+              class="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm transition-all duration-200"
+              style="background:white;color:#0f2040;"
+              onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Scarica XML
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── POP-UP DI CONFERMA: righe a 0 e avvisi ─────────────────────────── -->
+<!-- Al click su "Genera", prima di generare, uno dopo l'altro:
+     1. righe con importo 0 o vuoto: la banca un bonifico da 0 € non lo accetta, quindi
+        restano fuori, ma solo se l'utente lo conferma. Il motore rifiuta comunque una
+        generazione con righe a zero senza conferma (escludi).
+     Lo stesso riquadro, con il solo pulsante «Ho capito», spiega i file troppo pesanti.
+     2. avvisi (codice fiscale, doppioni): spiegati per tipo. Qui la barriera è solo
+        nel browser: un avviso non blocca il file, chiede soltanto. -->
+<div id="conferma" class="hidden fixed inset-0 z-[60] items-center justify-center px-4"
+     style="background:rgba(4,8,15,.75);backdrop-filter:blur(6px);"
+     role="dialog" aria-modal="true" aria-labelledby="conferma-titolo"
+     onclick="if (event.target === this) chiudiConferma()">
+  <div class="dark-card w-full max-w-lg p-7 animate-bounce-in" style="border-color:rgba(245,158,11,.3);">
+    <h2 id="conferma-titolo" style="font-size:17px;font-weight:700;margin-bottom:4px;"></h2>
+    <p id="conferma-testo" style="font-size:13px;color:var(--muted);margin-bottom:16px;"></p>
+    <ul id="conferma-lista" class="space-y-1 mb-5 rounded-xl px-4 py-3"
+        style="max-height:320px;overflow-y:auto;font-size:13px;font-family:monospace;color:#fcd34d;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);"></ul>
+    <button id="conferma-log" onclick="scaricaLog()" class="mb-5"
+            style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7);background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:6px 12px;cursor:pointer;">
+      Scarica log errori (.txt)
+    </button>
+    <div class="flex flex-col-reverse sm:flex-row gap-3">
+      <button id="conferma-no" onclick="chiudiConferma()"
+              class="sm:w-1/3 py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200"
+              style="background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);"
+              onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='transparent'">
+        No, mi fermo
+      </button>
+      <button id="conferma-continua" onclick="continuaConferma()"
+              class="flex-1 py-3 px-6 rounded-xl font-bold text-sm transition-all duration-200"
+              style="background:white;color:#0f2040;"
+              onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/ade-organizer/" class="footer-link">Fatture e Corrispettivi AdE</a>
+        <a href="/scadenzef24/" class="footer-link">Scadenze F24</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/chi-siamo" class="footer-link">Chi sono</a>
+        <a href="/privacy" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+
+
+<!-- Controllo del browser prima di tutto (vecchio stile: gira ovunque), poi il motore -->
+<script src="controllo.js"></script>
+<script type="module" src="motore.min.js"></script>
+
+<!-- ─── JAVASCRIPT ────────────────────────────────────────────────────────── -->
+<script>
+/* ── Statistiche senza dati: stesso vocabolario degli altri strumenti ─────────
+   Solo le chiavi in ALLOWED_PARAMS, valori in fasce o da elenchi chiusi.
+   Mai nomi di file, contenuti, importi, P.IVA, IBAN o numero di righe. */
+const TOOL = "bonifici";
+const ALLOWED_PARAMS = ["tool","stage","error_code","file_type","file_count","file_size_bucket","processing_time_bucket"];
+const ALLOWED_STAGES = ["upload_validation","unknown"];
+const ALLOWED_ERROR_CODES = ["file_too_large","invalid_file","template_not_recognized","data_to_fix","rate_limited","server_error","network_error","unknown"];
+function safeTrack(event, params) {
+  if (!window.umami || typeof window.umami.track !== "function") return;  // funziona anche senza Umami
+  const clean = {};
+  for (const k of ALLOWED_PARAMS) {
+    const v = params ? params[k] : undefined;
+    if (v !== undefined && v !== null) clean[k] = v;
+  }
+  if (clean.stage && !ALLOWED_STAGES.includes(clean.stage)) clean.stage = "unknown";
+  if (clean.error_code && !ALLOWED_ERROR_CODES.includes(clean.error_code)) clean.error_code = "unknown";
+  try { window.umami.track(event, clean); } catch (_) {}
+}
+function sizeBucket(bytes) {
+  if (bytes < 1048576)  return "<1MB";
+  if (bytes < 10485760) return "1-10MB";
+  if (bytes < 52428800) return "10-50MB";
+  return "50MB+";
+}
+function timeBucket(ms) {
+  if (ms < 5000)  return "<5s";
+  if (ms < 30000) return "5-30s";
+  return "30s+";
+}
+/* Un file rifiutato: il server dice se non è il modello o se sono i dati da correggere. */
+async function codiceErrore(res) {
+  try {
+    const c = (await res.clone().json()).codice;
+    if (c === 'modello') return 'template_not_recognized';
+    if (c === 'dati') return 'data_to_fix';
+  } catch (_) {}
+  return errorCodeFromStatus(res.status);
+}
+
+function errorCodeFromStatus(s) {
+  if (s === 413) return "file_too_large";
+  if (s === 429) return "rate_limited";
+  if (s >= 500)  return "server_error";
+  if (s === 400 || s === 422) return "invalid_file";
+  return "unknown";
+}
+let _t0 = 0;
+window.addEventListener("load", () => safeTrack("tool_opened", { tool: TOOL }));
+
+/* ── State ───────────────────────────────────────────────────────────── */
+// Il file scelto, e se l'anteprima l'ha passato: l'XML si genera solo da un
+// file senza errori, così il pulsante non promette quello che il server rifiuta.
+let selectedFile = null;
+let fileValido = false;
+const MAX_FILE_BYTES = 5 * 1024 * 1024;   // lo stesso tetto che applica il server
+const MAX_ERRORI_MOSTRATI = 50;           // a schermo; nel log ci sono tutti
+// Quello che il server ha detto dell'ultimo file: va nel log scaricabile.
+// `escluse` = righe con importo 0 o vuoto, fuori dall'XML solo dopo conferma.
+let esito = { errori: [], avvisi: [], escluse: [] };
+const esitoVuoto = () => ({ errori: [], avvisi: [], escluse: [] });
+
+/* ── File selection ──────────────────────────────────────────────────── */
+function handleFileSelect(files) { if (files.length) setFile(files[0]); }
+
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  document.getElementById('drop-zone').classList.remove('drag-over');
+}
+
+function isXlsx(f) { return f.name.toLowerCase().endsWith('.xlsx'); }
+
+/* Il motore gira nel browser (motore.js + Web Worker): stesse risposte delle vecchie
+   rotte /anteprima e /genera, così il resto della pagina non cambia. */
+const motorePronto = new Promise(r => { window.__motorePronto = r; });
+async function ilMotore() { return window.motore || motorePronto; }  // non "motore": window.motore è il modulo
+
+/* Testi dei messaggi di questa pagina: il motore dà gli
+   stessi testi del Python di prima, qui si mostrano quelli nuovi. */
+const MSG_PIU_DI_10000 = 'Il foglio Beneficiari contiene più di 10.000 bonifici: il limite è di 10.000 per file. Dividi la distinta in due file.';
+const MSG_TROPPE_RIGHE = 'Il foglio Beneficiari ha troppe righe, anche vuote o formattate. Se i bonifici sono meno di 10.000, scarica di nuovo il modello e incolla solo i valori.';
+const MSG_OLTRE_5MB = 'Il file supera 5 MB. Scarica di nuovo il modello e incolla solo i valori: i bonifici occupano pochi KB.';
+const MSG_PESANTE = 'Questo file è troppo pesante per essere letto. Di solito dipende da immagini, da molti fogli o da formattazioni arrivate fino in fondo al foglio. Scarica di nuovo il modello e incolla solo i valori.';
+function testoErrore(e) {
+  if (e === 'Beneficiari: al massimo 10000 bonifici per file.') return MSG_PIU_DI_10000;
+  if (e === 'Beneficiari: il foglio ha troppe righe (al massimo 10000 bonifici).') return MSG_TROPPE_RIGHE;
+  if (/^Distinta: la data di esecuzione .* è già passata\.$/.test(e)) return e + ' Il controllo usa la data del tuo computer.';
+  return e;
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  if (document.getElementById('carica').disabled) return;  // condizioni non accettate
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  const f = Array.from(e.dataTransfer.files).find(isXlsx);
+  if (!f) { showError('Nessun file Excel rilevato. Trascina il modello compilato (.xlsx).'); return; }
+  setFile(f);
+}
+
+function setFile(f) {
+  stopProgress(); clearStatus();
+  document.getElementById('file-input').value = '';   // riscegliere lo stesso file deve funzionare
+  if (!isXlsx(f)) { showError('Il file deve essere un Excel .xlsx: usa il modello scaricato da qui.'); return; }
+  if (f.size > MAX_FILE_BYTES) { mostraInfo('File troppo grande', MSG_OLTRE_5MB); return; }
+  selectedFile = f; fileValido = false; xmlPronto = null; esito = esitoVuoto();
+  renderFile(); updateButton();
+  safeTrack("file_selected", { tool: TOOL, file_type: "xlsx", file_count: [f].length, file_size_bucket: sizeBucket([f].reduce((s, f) => s + (f.size || 0), 0)) });
+  loadPreview();
+}
+
+function removeFile() {
+  selectedFile = null; fileValido = false; xmlPronto = null; esito = esitoVuoto();
+  renderFile(); updateButton(); clearStatus();
+  document.getElementById('preview-section').classList.add('hidden');
+}
+
+function renderFile() {
+  const wrap = document.getElementById('file-list');
+  if (!selectedFile) { wrap.classList.add('hidden'); return; }
+  wrap.classList.remove('hidden');
+  wrap.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:8px 12px;">
+      <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+        <svg class="w-4 h-4 shrink-0" style="color:#2a9db5;" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/>
+        </svg>
+        <span style="font-size:13px;color:rgba(255,255,255,.8);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(selectedFile.name)}</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.3);flex-shrink:0;">${formatBytes(selectedFile.size)}</span>
+      </div>
+      <button onclick="removeFile()" style="color:rgba(255,255,255,.3);margin-left:12px;flex-shrink:0;transition:color .2s;background:none;border:none;cursor:pointer;"
+              onmouseover="this.style.color='#fca5a5'" onmouseout="this.style.color='rgba(255,255,255,.3)'" title="Rimuovi">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>`;
+}
+
+/* ── Button state ────────────────────────────────────────────────────── */
+function updateButton() {
+  const btn = document.getElementById('btn-genera');
+  if (!fileValido) {
+    btn.disabled = true;
+    btn.style.cssText = 'background:rgba(255,255,255,.06);color:rgba(255,255,255,.25);cursor:not-allowed;border:1px solid rgba(255,255,255,.06);';
+  } else {
+    btn.disabled = false;
+    btn.style.cssText = 'background:white;color:#0f2040;cursor:pointer;border:none;box-shadow:0 4px 20px rgba(255,255,255,.1);';
+    btn.onmouseover = () => btn.style.opacity = '0.85';
+    btn.onmouseout  = () => btn.style.opacity = '1';
+  }
+}
+
+/* Il corpo di una risposta d'errore → messaggio + elenco degli errori del file. */
+async function mostraErroreRisposta(res) {
+  let msg = `Errore ${res.status}`, errori = [];
+  try {
+    const err = await res.json();
+    // File troppo grande o troppo pesante: la finestra della pagina, non l'elenco rosso
+    if (res.status === 413) { mostraInfo('File troppo pesante', err.codice === 'pesante' ? MSG_PESANTE : MSG_OLTRE_5MB); return; }
+    msg = err.detail || msg; errori = (err.errori || []).map(testoErrore);
+    if (err.errori) esito = { errori, avvisi: err.avvisi || [], escluse: err.escluse || [] };
+  } catch (_) {}
+  if (typeof msg !== 'string') msg = 'Il file non è valido: usa il modello scaricato da questa pagina.';
+  showError(msg, errori);
+}
+
+/* ── Preview ─────────────────────────────────────────────────────────── */
+let _previewSeq = 0;
+
+async function loadPreview() {
+  if (!selectedFile) return;
+  // Due anteprime in volo possono tornare in ordine inverso: vale solo l'ultima chiesta.
+  const seq = ++_previewSeq;
+  document.getElementById('preview-section').classList.add('hidden');
+  try {
+    const res = await (await ilMotore()).anteprima(selectedFile);
+    if (seq !== _previewSeq) return;
+    if (!res.ok) { safeTrack("processing_error", { tool: TOOL, stage: "upload_validation", error_code: await codiceErrore(res) }); await mostraErroreRisposta(res); return; }
+    const data = await res.json();
+    esito = { errori: [], avvisi: data.avvisi || [], escluse: data.escluse || [] };
+    fileValido = true; updateButton();
+    renderPreview(data);
+  } catch (err) {
+    if (seq === _previewSeq) showError('Il file non si legge: usa il modello scaricato da questa pagina.');
+    console.error(err);
+  }
+}
+
+const euro = v => Number(v).toLocaleString('it-IT', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+function renderPreview(data) {
+  const d = data.distinta;
+  const box = (t, v, extra = '', cella = '') => `
+    <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:12px 14px;min-width:0;${cella}">
+      <p style="font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px;">${t}</p>
+      <p style="font-size:13px;color:white;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;${extra}" title="${escHtml(v)}">${escHtml(v)}</p>
+    </div>`;
+  const data_it = d.data.split('-').reverse().join('/');
+  document.getElementById('preview-distinta').innerHTML =
+    box('Ordinante', d.nome) +
+    box('IBAN di addebito', d.iban, 'font-family:monospace;') +
+    box('CUC', d.cuc, 'font-family:monospace;') +
+    box('Tipologia', d.tipologia + (d.tipologia_nome ? ' - ' + d.tipologia_nome : '')) +
+    box('Esecuzione', data_it + (d.esito ? ' · con esito' : ' · senza esito')) +
+    box('Bonifici', data.bonifici + ((data.escluse || []).length ? ` · ${data.escluse.length} esclus${data.escluse.length === 1 ? 'a' : 'e'}` : ''),
+        'color:var(--gold);font-weight:700;') +
+    // Settima casella su una griglia da tre: il totale prende la riga intera
+    // (1 / -1 vale anche da telefono, dove la colonna è una sola).
+    box('Totale', '€ ' + euro(data.totale), 'color:var(--gold);font-weight:700;', 'grid-column:1 / -1;');
+  // Un blocco per tipo: qui titolo e righe, la spiegazione la dà il pop-up di conferma.
+  const avvisi = data.avvisi || [];
+  document.getElementById('avvisi-list').innerHTML = avvisi.map(b =>
+    `<li><strong>${escHtml(b.titolo)}</strong>${b.voci.map(v => `<br>· ${escHtml(v)}`).join('')}</li>`).join('');
+  document.getElementById('preview-avvisi').classList.toggle('hidden', avvisi.length === 0);
+  const nEsc = (data.escluse || []).length;
+  document.getElementById('preview-count').textContent =
+    `${data.bonifici} ${data.bonifici === 1 ? 'bonifico' : 'bonifici'}` +
+    (nEsc ? ` · ${nEsc} ${nEsc === 1 ? 'esclusa' : 'escluse'}` : '');
+  // Le righe a importo 0 o vuoto restano al loro posto, in grigio: si vede quali
+  // sono e che non contano nel totale.
+  const tutte = data.righe.concat((data.escluse || []).map(e => ({ ...e, esclusa: true })))
+                          .sort((a, b) => a.riga - b.riga);
+  document.getElementById('preview-body').innerHTML = tutte.map(r => r.esclusa ? `
+    <tr style="border-bottom:1px solid rgba(255,255,255,.04);opacity:.45;" title="Esclusa dal file: ${escHtml(r.motivo)}">
+      <td class="px-3 py-2 truncate overflow-hidden" style="font-size:11px;">${r.riga}</td>
+      <td class="px-3 py-2 truncate overflow-hidden" style="font-size:11px;text-decoration:line-through;">${escHtml(r.nome)}</td>
+      <td class="px-3 py-2 truncate overflow-hidden" style="font-size:11px;font-family:monospace;text-decoration:line-through;">${escHtml(r.iban)}</td>
+      <td class="px-3 py-2 truncate overflow-hidden" style="font-size:11px;" title="${escHtml(r.causale)}">${escHtml(r.causale)}</td>
+      <td class="px-3 py-2 text-right truncate overflow-hidden" style="font-size:11px;font-style:italic;">esclusa · ${escHtml(r.motivo)}</td>
+    </tr>` : `
+    <tr style="border-bottom:1px solid rgba(255,255,255,.04);" onmouseover="this.style.background='rgba(255,255,255,.03)'" onmouseout="this.style.background=''">
+      <td class="px-3 py-2 truncate overflow-hidden" style="font-size:11px;color:rgba(255,255,255,.35);">${r.riga}</td>
+      <td class="px-3 py-2 truncate overflow-hidden" style="font-size:11px;color:rgba(255,255,255,.7);" title="${escHtml(r.nome)}">${escHtml(r.nome)}</td>
+      <td class="px-3 py-2 truncate overflow-hidden" style="font-size:11px;font-family:monospace;color:rgba(255,255,255,.7);">${escHtml(r.iban)}</td>
+      <td class="px-3 py-2 truncate overflow-hidden" style="font-size:11px;color:rgba(255,255,255,.6);" title="${escHtml(r.causale)}">${escHtml(r.causale)}</td>
+      <td class="px-3 py-2 text-right truncate overflow-hidden" style="font-size:11px;font-family:monospace;font-weight:700;color:var(--gold);">${euro(r.importo)}</td>
+    </tr>`).join('');
+  document.getElementById('preview-section').classList.remove('hidden');
+}
+
+/* ── Cerchio progresso ───────────────────────────────────────────────── */
+const CIRCUMFERENCE = 2 * Math.PI * 40;
+let _progressTimer = null, _currentPct = 0;
+
+function setRingPct(pct) {
+  pct = Math.min(100, Math.max(0, Math.round(pct)));
+  _currentPct = pct;
+  const offset = CIRCUMFERENCE * (1 - pct / 100);
+  const ring   = document.getElementById('progress-ring');
+  const label  = document.getElementById('progress-pct');
+  if (ring)  ring.style.strokeDashoffset = offset;
+  if (label) label.textContent = pct + '%';
+  if (ring)  ring.style.stroke = pct >= 100 ? '#86efac' : '#F59E0B';
+}
+
+function startFakeProgress() {
+  _currentPct = 0; setRingPct(0); clearTimeout(_progressTimer);
+  const schedule = [{target:30,step:1,interval:60},{target:60,step:0.8,interval:90},{target:80,step:0.4,interval:150},{target:90,step:0.2,interval:250}];
+  let phaseIdx = 0;
+  function tick() {
+    const phase = schedule[phaseIdx];
+    if (_currentPct < phase.target) { setRingPct(_currentPct + phase.step); _progressTimer = setTimeout(tick, phase.interval); }
+    else if (phaseIdx < schedule.length - 1) { phaseIdx++; _progressTimer = setTimeout(tick, schedule[phaseIdx].interval); }
+  }
+  _progressTimer = setTimeout(tick, 50);
+}
+
+function finishProgress(onDone) {
+  clearTimeout(_progressTimer);
+  function raceToEnd() {
+    if (_currentPct < 100) { setRingPct(_currentPct + 2); _progressTimer = setTimeout(raceToEnd, 20); }
+    else { clearTimeout(_progressTimer); setTimeout(() => { if (onDone) onDone(); }, 300); }
+  }
+  raceToEnd();
+}
+
+function stopProgress() { clearTimeout(_progressTimer); setRingPct(0); }
+
+/* ── Genera (XML preparato e verificato, NON ancora scaricato) ──────── */
+// Il file resta in memoria finché l'utente non preme "Scarica XML" nel pop-up:
+// prima vede la verifica, poi decide. Un nuovo file caricato lo butta.
+let xmlPronto = null;   // { blob, filename, n, totale }
+
+async function genera(escluseOk = false, avvisiOk = false) {
+  if (!selectedFile || !fileValido) return;
+  // Righe a importo 0 o vuoto: prima si chiede, il server senza conferma rifiuta.
+  if (esito.escluse.length && !escluseOk) { mostraEscluse(() => genera(true, avvisiOk)); return; }
+  // Avvisi: si spiegano e si chiede, ma il server non li blocca.
+  if (esito.avvisi.length && !avvisiOk) { mostraAvvisi(() => genera(escluseOk, true)); return; }
+  clearStatus();
+  setLoading(true, 'Generazione XML…'); startFakeProgress();
+  _t0 = performance.now();
+  safeTrack("processing_started", { tool: TOOL, file_count: 1 });
+  try {
+    const res = await (await ilMotore()).genera(selectedFile, escluseOk);
+    if (!res.ok) { safeTrack("processing_error", { tool: TOOL, stage: "unknown", error_code: await codiceErrore(res), processing_time_bucket: timeBucket(performance.now() - _t0) }); stopProgress(); setLoading(false); await mostraErroreRisposta(res); return; }
+    const blob     = await res.blob();
+    const n        = res.headers.get('X-Bonifici') || '?';
+    const totale   = res.headers.get('X-Totale');
+    const dispHdr  = res.headers.get('Content-Disposition') || '';
+    const match    = dispHdr.match(/filename\*?=(?:UTF-8'')?([^\s;]+)/i);
+    const filename = match ? decodeURIComponent(match[1]) : 'bonifici.xml';
+    let controlli = [];
+    try { controlli = JSON.parse(decodeURIComponent(res.headers.get('X-Verifica') || '')); } catch (_) {}
+    finishProgress(() => {
+      xmlPronto = { blob, filename, n, totale };
+      setLoading(false);
+      showSuccess(`XML pronto e verificato: ${n} bonifici${totale ? ' per € ' + euro(totale) : ''}. Se chiudi il riquadro senza scaricarlo, premi di nuovo "Genera e verifica XML".`);
+      mostraVerifica(controlli, filename);
+    });
+  } catch (err) {
+    stopProgress(); setLoading(false);
+    safeTrack("processing_error", { tool: TOOL, stage: "unknown", error_code: "unknown", processing_time_bucket: timeBucket(performance.now() - _t0) });
+    showError('Errore nella generazione del file XML.');
+    console.error(err);
+  }
+}
+
+/* ── Pop-up verifica ─────────────────────────────────────────────────── */
+function mostraVerifica(controlli, filename) {
+  document.getElementById('verifica-lista').innerHTML = controlli.map(c => `
+    <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:rgba(255,255,255,.8);">
+      <svg class="w-4 h-4 shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+      <span>${escHtml(c)}</span>
+    </li>`).join('');
+  document.getElementById('verifica-file').textContent = filename;
+  const box = document.getElementById('verifica');
+  box.classList.remove('hidden'); box.classList.add('flex');
+  document.getElementById('verifica-scarica').focus();
+}
+
+function scaricaXml() {
+  if (!xmlPronto) return;
+  const { blob, filename, n, totale } = xmlPronto;
+  const url  = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url; link.download = filename; link.click();
+  safeTrack("download_started", { tool: TOOL }); safeTrack("processing_success", { tool: TOOL });
+  URL.revokeObjectURL(url);
+  chiudiVerifica();
+  clearStatus();
+  showSuccess(`XML scaricato: ${filename}, ${n} bonifici${totale ? ' per € ' + euro(totale) : ''}. Ora importalo nell'home banking e autorizzalo lì.`);
+}
+
+function chiudiVerifica() {
+  const box = document.getElementById('verifica');
+  box.classList.add('hidden'); box.classList.remove('flex');
+}
+
+/* ── Pop-up di conferma: righe con importo 0 o vuoto, poi avvisi ─────── */
+let dopoConferma = null;   // cosa fa "Sì": rilancia genera() con la conferma in più
+
+function mostraConferma(titolo, testoHtml, listaHtml, pulsante, continua) {
+  for (const id of ['conferma-lista', 'conferma-log', 'conferma-no']) document.getElementById(id).style.display = '';
+  document.getElementById('conferma-titolo').textContent = titolo;
+  document.getElementById('conferma-testo').innerHTML = testoHtml;
+  document.getElementById('conferma-lista').innerHTML = listaHtml;
+  document.getElementById('conferma-continua').textContent = pulsante;
+  dopoConferma = continua;
+  const box = document.getElementById('conferma');
+  box.classList.remove('hidden'); box.classList.add('flex');
+  document.getElementById('conferma-continua').focus();
+}
+
+function mostraEscluse(continua) {
+  const n = esito.escluse.length;
+  mostraConferma(
+    n === 1 ? '1 riga ha importo 0 o vuoto' : `${n} righe hanno importo 0 o vuoto`,
+    'La banca non accetta bonifici da 0 €. Se continui, l\'XML esce <strong style="color:white;">senza queste righe</strong>; nel tuo Excel restano come sono.',
+    esito.escluse.map(e => `<li>${escHtml(e.testo)}</li>`).join(''),
+    'Sì, continua senza queste righe', continua);
+}
+
+function mostraAvvisi(continua) {
+  const n = esito.avvisi.reduce((t, b) => t + b.voci.length, 0);
+  mostraConferma(
+    n === 1 ? '1 avviso da controllare' : `${n} avvisi da controllare`,
+    'Il file si può generare, ma prima controlla questi punti nel tuo Excel. Se li correggi, ricarica il file.',
+    esito.avvisi.map(b => `
+      <li style="font-family:inherit;margin-bottom:12px;">
+        <div style="font-weight:700;">${escHtml(b.titolo)} (${b.voci.length})</div>
+        <div style="color:rgba(255,255,255,.75);margin:4px 0 6px;">${escHtml(b.spiegazione)}</div>
+        <ul style="font-family:monospace;font-size:12px;">${b.voci.map(v => `<li>· ${escHtml(v)}</li>`).join('')}</ul>
+      </li>`).join(''),
+    'Sì, genera comunque', continua);
+}
+
+/* Solo un messaggio (file troppo pesante): lo stesso riquadro, con il solo «Ho capito». */
+function mostraInfo(titolo, testo) {
+  clearStatus();
+  mostraConferma(titolo, escHtml(testo), '', 'Ho capito', null);
+  for (const id of ['conferma-lista', 'conferma-log', 'conferma-no']) document.getElementById(id).style.display = 'none';
+}
+
+function continuaConferma() {
+  const continua = dopoConferma;
+  chiudiConferma();
+  if (continua) continua();
+}
+
+function chiudiConferma() {
+  dopoConferma = null;
+  const box = document.getElementById('conferma');
+  box.classList.add('hidden'); box.classList.remove('flex');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { chiudiVerifica(); chiudiConferma(); } });
+
+/* ── Log errori (.txt) ───────────────────────────────────────────────── */
+// Fatto qui nel browser con quello che il server ha già mandato: niente si
+// salva sul server. Dentro c'è TUTTO, anche gli errori oltre i 50 a schermo.
+const haLog = () => esito.errori.length + esito.avvisi.length + esito.escluse.length > 0;
+
+function scaricaLog() {
+  if (!haLog()) return;
+  const sezione = (titolo, voci) =>
+    [`${titolo} (${voci.length})`, ...(voci.length ? voci.map(v => '- ' + v) : ['- nessuno']), ''];
+  // Una riga a zero può comparire sia fra gli errori (rifiuto di /genera) sia fra
+  // le escluse: nel log una volta sola.
+  const testiEscluse = esito.escluse.map(e => e.testo);
+  const righe = [
+    'Bonifici massivi XML · Datace · log errori',
+    `File: ${selectedFile ? selectedFile.name : '-'}`,
+    `Creato il: ${new Date().toLocaleString('it-IT')}`,
+    '',
+    ...sezione('ERRORI BLOCCANTI: da correggere, senza l\'XML non esce', esito.errori.filter(e => !testiEscluse.includes(e))),
+    // Avvisi a blocchi, come nel pop-up: titolo, spiegazione, righe.
+    `AVVISI: da controllare, non bloccano (${esito.avvisi.reduce((t, b) => t + b.voci.length, 0)})`,
+    ...(esito.avvisi.length
+      ? esito.avvisi.flatMap(b => [`* ${b.titolo} (${b.voci.length})`, `  ${b.spiegazione}`, ...b.voci.map(v => '  - ' + v)])
+      : ['- nessuno']),
+    '',
+    ...sezione('RIGHE ESCLUSE: importo 0 o vuoto, non vanno nell\'XML', testiEscluse),
+  ];
+  const blob = new Blob([righe.join('\r\n')], { type: 'text/plain;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url; link.download = 'log_errori_bonifici.txt'; link.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ── UI helpers ──────────────────────────────────────────────────────── */
+function setLoading(on, msg) {
+  const area    = document.getElementById('status-area');
+  const loading = document.getElementById('status-loading');
+  const btn     = document.getElementById('btn-genera');
+  area.classList.remove('hidden');
+  if (on) {
+    loading.classList.remove('hidden'); loading.classList.add('flex');
+    document.getElementById('status-msg').textContent = msg || 'Elaborazione…';
+    btn.disabled = true;
+  } else {
+    loading.classList.add('hidden'); loading.classList.remove('flex');
+    btn.disabled = !fileValido;
+  }
+}
+
+function clearStatus() {
+  ['status-success','status-error','status-loading','status-area'].forEach(id =>
+    document.getElementById(id).classList.add('hidden'));
+}
+
+function showSuccess(msg) {
+  const area = document.getElementById('status-area');
+  const el   = document.getElementById('status-success');
+  document.getElementById('success-msg').textContent = msg;
+  area.classList.remove('hidden'); el.classList.remove('hidden');
+}
+
+/* `errori`: l'elenco riga per riga che manda il server, sotto il messaggio. */
+function showError(msg, errori = []) {
+  const area  = document.getElementById('status-area');
+  const el    = document.getElementById('status-error');
+  const lista = document.getElementById('error-list');
+  document.getElementById('error-msg').textContent = msg;
+  const voci = errori.slice(0, MAX_ERRORI_MOSTRATI).map(e => `<li>· ${escHtml(e)}</li>`);
+  const altri = errori.length - MAX_ERRORI_MOSTRATI;
+  if (altri > 0) voci.push(`<li>· … e altri ${altri}: li trovi tutti nel log</li>`);
+  document.getElementById('error-log').classList.toggle('hidden', !haLog());
+  // Un errore sul CUC porta con sé la strada per risolverlo
+  if (errori.some(e => e.includes('CUC')))
+    voci.push(`<li class="mt-1"><a href="#cuc" style="color:#fcd34d;text-decoration:underline;">→ Il CUC: cos'è e dove trovarlo</a></li>`);
+  lista.innerHTML = voci.join('');
+  lista.classList.toggle('hidden', voci.length === 0);
+  area.classList.remove('hidden'); el.classList.remove('hidden');
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024)    return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

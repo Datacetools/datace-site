@@ -1,0 +1,24 @@
+﻿/* SORGENTE del CSS di /bonifici-massivi-xml/app/ (le cartelle con "_" non escono online).
+   Si ricompila dalla radice del sito, con la CLI autonoma di Tailwind v4, ogni volta che
+   nella pagina si aggiunge o si toglie una classe:
+
+     tailwindcss -i _tailwind/bonifici-app.css -o bonifici-massivi-xml/app/tailwind.css --minify
+
+   Il prodotto si committa: su GitHub Pages non c'è nessun passo di build. */
+@import "tailwindcss" source(none);
+@source "../bonifici-massivi-xml/app/index.html";
+
+@theme {
+  --animate-bounce-in: bounceIn 0.4s ease-out;
+
+  @keyframes bounceIn {
+    0%   { transform: scale(0.8); opacity: 0; }
+    60%  { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+}
+
+/* Dalla v4 i pulsanti hanno il cursore normale: qui restano con la manina. */
+@layer base {
+  button:not(:disabled) { cursor: pointer; }
+}
