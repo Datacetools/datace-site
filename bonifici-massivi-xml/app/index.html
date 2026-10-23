@@ -114,10 +114,6 @@
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
     }
-    /* Condizioni non accettate: zona di caricamento e pulsanti spenti */
-  #carica { border: 0; padding: 0; margin: 0; min-width: 0; }
-  #carica:disabled > :not(.frase-privacy) { opacity: .45; }  /* la frase sulla privacy resta leggibile */
-  #carica:disabled #drop-zone { cursor: not-allowed; }
 </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com,fattura.datacetools.com,zip.datacetools.com,scadenzef24.datacetools.com,bonifici.datacetools.com"></script>
 </head>
@@ -216,15 +212,6 @@
       </div>
     </div>
 
-    <!-- Condizioni: senza la spunta il fieldset resta spento e il file non si legge.
-         Non c'è server: la spunta la controlla solo questa pagina. -->
-
-    <label style="display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5;color:rgba(255,255,255,.75);margin-bottom:16px;cursor:pointer;text-align:left;">
-      <input id="accetto" type="checkbox" autocomplete="off" onchange="document.getElementById('carica').disabled = !this.checked"
-             style="margin-top:3px;width:16px;height:16px;flex-shrink:0;accent-color:#F59E0B;cursor:pointer;">
-      <span>Ho letto e accetto le <a href="https://datacetools.com/condizioni/" target="_blank" rel="noopener" style="color:#F59E0B;text-decoration:underline;">Condizioni d'uso e di trattamento dei dati</a>, compresi gli articoli 7 e 8 che approvo in modo specifico, e l'<a href="https://datacetools.com/privacy/" target="_blank" rel="noopener" style="color:#F59E0B;text-decoration:underline;">Informativa</a>. Confermo di poter usare questo file e che non contiene dati sanitari o altri dati particolari.</span>
-    </label>
-    <fieldset id="carica" disabled>
 
     <!-- Drop Zone -->
     <div id="drop-zone"
@@ -265,8 +252,6 @@
       </span>
     </button>
     <p class="frase-privacy" style="font-size:11px;color:rgba(255,255,255,.45);margin-top:8px;text-align:center;">Statistiche di navigazione senza cookie. Il contenuto dei file non viene registrato.</p>
-
-    </fieldset>
 
     <!-- Progress / Status -->
     <div id="status-area" class="mt-4 hidden">
@@ -716,7 +701,6 @@ function testoErrore(e) {
 
 function handleDrop(e) {
   e.preventDefault();
-  if (document.getElementById('carica').disabled) return;  // condizioni non accettate
   document.getElementById('drop-zone').classList.remove('drag-over');
   const f = Array.from(e.dataTransfer.files).find(isXlsx);
   if (!f) { showError('Nessun file Excel trovato. Trascina qui il modello compilato (.xlsx).'); return; }
