@@ -65,7 +65,7 @@
           { "@type": "Question", "name": "Come apro un file .p7m di una fattura?", "acceptedAnswer": { "@type": "Answer", "text": "Un file .xml.p7m è una Fattura Elettronica XML firmata digitalmente (CAdES). Fattura elettronica in Excel estrae automaticamente il contenuto XML dal file firmato e ne legge i dati, senza bisogno di software esterni per la verifica della firma." } },
           { "@type": "Question", "name": "I miei dati vengono salvati o condivisi?", "acceptedAnswer": { "@type": "Answer", "text": "I tuoi file non vengono salvati. Li usiamo solo per generare l'Excel e non restano nei nostri sistemi. Non usiamo database per conservarli." } },
           { "@type": "Question", "name": "Posso caricare più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Fattura elettronica in Excel accetta fino a 50 file per richiesta, ciascuno fino a 10 MB. Anche un singolo file XML può contenere più fatture (lotti): ognuna viene riportata separatamente nell'Excel finale." } },
-          { "@type": "Question", "name": "Quali tipi di documento sono supportati?", "acceptedAnswer": { "@type": "Answer", "text": "Fattura elettronica in Excel riconosce tutti i tipi documento del tracciato FatturaPA: TD01 fattura, TD04 nota di credito, TD05 nota di debito, TD06 parcella, TD24 fattura differita e i codici per reverse charge e autofatture (TD16-TD23), oltre alle nature IVA N1-N7 e alle modalità di pagamento MP01-MP23." } }
+          { "@type": "Question", "name": "Quali tipi di documento sono supportati?", "acceptedAnswer": { "@type": "Answer", "text": "Fattura elettronica in Excel riconosce i tipi di documento ordinari del tracciato FatturaPA: TD01 fattura, TD04 nota di credito, TD05 nota di debito, TD06 parcella, TD24 fattura differita e i codici per reverse charge e autofatture (TD16-TD23), oltre alle nature IVA N1-N7 e alle modalità di pagamento MP01-MP23. Le fatture semplificate (TD07, TD08, TD09) non vengono lette: lo strumento le scarta indicando il motivo." } }
         ]
       },
       {
@@ -187,11 +187,11 @@
       </ul>
       <p>I file devono essere nel formato <strong>FatturaPA 1.2</strong>, quello scaricabile dal Sistema di Interscambio (SdI), dalla tua PEC, dal cassetto fiscale dell'Agenzia delle Entrate o dal tuo gestionale. Anche i file firmati digitalmente (.xml.p7m) sono supportati.</p>
 
-      <h2 id="step-1">Passo 1 &mdash; Apri Fattura elettronica in Excel</h2>
+      <h2 id="step-1">Passo 1: Apri Fattura elettronica in Excel</h2>
       <p>Vai su <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="https://fattura.datacetools.com">Fattura elettronica in Excel</a>. Non serve installare nulla: la pagina si apre direttamente con l'area di caricamento.</p>
-      <h2 id="step-2">Passo 2 &mdash; Carica i file XML o .p7m</h2>
-      <p>Trascina i file nell'area centrale oppure clicca sul pulsante per aprire il selettore file. Puoi caricare fino a <strong>50 file alla volta</strong>, ciascuno fino a 10 MB. Puoi mescolare fatture XML semplici e file firmati .xml.p7m, di fornitori e periodi diversi, nello stesso batch. Un singolo XML che contiene un lotto di più fatture viene gestito automaticamente.</p>
-      <h2 id="step-3">Passo 3 &mdash; Elaborazione automatica</h2>
+      <h2 id="step-2">Passo 2: Carica i file XML o .p7m</h2>
+      <p>Trascina i file nell'area centrale oppure clicca sul pulsante per aprire il selettore file. Puoi caricare fino a <strong>50 file alla volta</strong>, ciascuno fino a 10 MB. Puoi mescolare fatture XML semplici e file firmati .xml.p7m, di fornitori e periodi diversi, nella stessa elaborazione. Un singolo XML che contiene un lotto di più fatture viene gestito automaticamente.</p>
+      <h2 id="step-3">Passo 3: Elaborazione automatica</h2>
       <p>Il sistema elabora ogni file FatturaPA e, per ciascuna fattura, estrae:</p>
       <ul>
         <li>Fornitore (cedente/prestatore) e cliente (cessionario/committente): denominazione, partita IVA e codice fiscale</li>
@@ -201,7 +201,7 @@
         <li>Modalità di pagamento (MP01-MP23), scadenze e importi</li>
         <li>Importo totale del documento</li>
       </ul>
-      <h2 id="step-4">Passo 4 &mdash; Scarica il file Excel</h2>
+      <h2 id="step-4">Passo 4: Scarica il file Excel</h2>
       <p>Clicca su <strong>Scarica Excel</strong>. Il file .xlsx che ricevi contiene cinque fogli:</p>
       <ul>
         <li><strong>Riepilogo Fatture</strong>: una riga per fattura, con fornitore, cliente, tipo, numero, data, imponibile, imposta e totale</li>
@@ -226,7 +226,7 @@
       <div class="card">
         <h3 class="font-bold mb-4 text-sm" style="color:#0f2040;">Fattura elettronica in Excel supporta</h3>
         <ul class="flex flex-col gap-2 text-sm" style="color:#475569;">
-          <li>✓ Fattura Elettronica XML (FatturaPA 1.2)</li><li>✓ File firmati .xml.p7m (CAdES)</li><li>✓ Tutti i tipi documento (TD01-TD27)</li><li>✓ Fino a 50 file per richiesta</li><li>✓ Lotti multi-fattura nello stesso XML</li><li>✓ Excel con fogli strutturati</li>
+          <li>✓ Fattura Elettronica XML (FatturaPA 1.2)</li><li>✓ File firmati .xml.p7m (CAdES)</li><li>✓ Tipi documento ordinari (le semplificate TD07-TD09 non sono lette)</li><li>✓ Fino a 50 file per richiesta</li><li>✓ Lotti multi-fattura nello stesso XML</li><li>✓ Excel con fogli strutturati</li>
         </ul>
         <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="https://fattura.datacetools.com/" class="mt-5 flex items-center justify-center gap-2 text-white text-sm font-semibold px-4 py-2.5 rounded-xl" style="background:#1c3461;">Apri Fattura elettronica in Excel →</a>
       </div>
@@ -250,7 +250,7 @@
       <details class="faq-q"><summary>Come apro un file .p7m di una fattura?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Un file .xml.p7m è una Fattura Elettronica XML firmata digitalmente (CAdES). Fattura elettronica in Excel estrae automaticamente il contenuto XML dal file firmato e ne legge i dati, senza bisogno di software esterni per la verifica della firma.</p></details>
       <details class="faq-q"><summary>I miei dati vengono salvati o condivisi?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>I tuoi file non vengono salvati. Li usiamo solo per generare l'Excel e non restano nei nostri sistemi. Non usiamo database per conservarli.</p></details>
       <details class="faq-q"><summary>Posso caricare più fatture insieme?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Sì. Fattura elettronica in Excel accetta fino a 50 file per richiesta, ciascuno fino a 10 MB. Anche un singolo file XML può contenere più fatture (lotti): ognuna viene riportata separatamente nell'Excel finale.</p></details>
-      <details class="faq-q"><summary>Quali tipi di documento sono supportati?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Fattura elettronica in Excel riconosce tutti i tipi documento del tracciato FatturaPA: TD01 fattura, TD04 nota di credito, TD05 nota di debito, TD06 parcella, TD24 fattura differita e i codici per reverse charge e autofatture (TD16-TD23), oltre alle nature IVA N1-N7 e alle modalità di pagamento MP01-MP23.</p></details>
+      <details class="faq-q"><summary>Quali tipi di documento sono supportati?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Fattura elettronica in Excel riconosce i tipi di documento ordinari del tracciato FatturaPA: TD01 fattura, TD04 nota di credito, TD05 nota di debito, TD06 parcella, TD24 fattura differita e i codici per reverse charge e autofatture (TD16-TD23), oltre alle nature IVA N1-N7 e alle modalità di pagamento MP01-MP23. Le fatture semplificate (TD07, TD08, TD09) non vengono lette: lo strumento le scarta indicando il motivo.</p></details>
     </div>
   </div>
 </section>
@@ -259,18 +259,18 @@
 <section style="background:#f8fafc;border-top:1px solid #e5e7eb;" class="px-6 py-14">
   <div class="max-w-3xl mx-auto" style="background:white;border:1px solid #e5e7eb;border-radius:18px;padding:32px;text-align:center;">
     <h2 class="text-2xl font-extrabold mb-3" style="color:#0f2040;">Il tuo caso è diverso?</h2>
-    <p style="font-size:15px;color:#475569;line-height:1.7;margin-bottom:24px;">Formato particolare, altro gestionale, report da preparare ogni mese: posso costruire una soluzione su misura. Per segnalazioni, supporto o per raccontarmi il tuo caso:</p>
+    <p style="font-size:15px;color:#475569;line-height:1.7;margin-bottom:24px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Raccontaci il tuo caso:</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
       <a href="https://www.linkedin.com/in/davide-sgroia/" target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="guida-fattura" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#0f2040;border:1px solid #0f2040;color:white;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
         <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-        Profilo LinkedIn
+        Profilo LinkedIn di Davide Sgroia
       </a>
-      <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20fattura%20elettronica&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="guida-fattura" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+      <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20fattura%20elettronica&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="guida-fattura" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        Raccontami il tuo caso
+        Scrivici il tuo caso
       </a>
     </div>
-    <p style="font-size:13px;color:#64748b;margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20fattura%20elettronica&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="guida-fattura" style="color:#b45309;">info@datacetools.com</a></p>
+    <p style="font-size:13px;color:#64748b;margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20fattura%20elettronica&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="guida-fattura" style="color:#b45309;">info@datacetools.com</a></p>
   </div>
 </section>
 

@@ -34,7 +34,7 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Datace — Fattura Elettronica in Excel",
+    "name": "Datace: Fattura Elettronica in Excel",
     "url": "https://fattura.datacetools.com/",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "All",
@@ -73,11 +73,11 @@
     "name": "Come convertire una Fattura Elettronica XML in Excel",
     "description": "Procedura per estrarre i dati da una o più fatture elettroniche XML e scaricare un file Excel strutturato con fornitori, clienti, righe e riepiloghi IVA.",
     "totalTime": "PT1M",
-    "tool": { "@type": "HowToTool", "name": "Datace — Fattura Elettronica in Excel", "url": "https://fattura.datacetools.com/" },
+    "tool": { "@type": "HowToTool", "name": "Datace: Fattura Elettronica in Excel", "url": "https://fattura.datacetools.com/" },
     "step": [
       { "@type": "HowToStep", "position": 1, "name": "Carica le fatture XML", "text": "Vai su fattura.datacetools.com e trascina uno o più file XML o .p7m delle tue fatture elettroniche nella zona di caricamento. Puoi caricare fino a 50 file contemporaneamente." },
       { "@type": "HowToStep", "position": 2, "name": "Estrazione automatica", "text": "Il motore legge il tracciato FatturaPA e riconosce automaticamente fornitore, cliente, righe di dettaglio, riepiloghi IVA e dati di pagamento." },
-      { "@type": "HowToStep", "position": 3, "name": "Scarica l'Excel", "text": "Clicca su Elabora e scarica Excel. Il file viene generato e scaricato immediatamente con 5 fogli: Riepilogo Fatture, Dettaglio Righe, Riepilogo IVA, Notifiche SdI e Allegati." }
+      { "@type": "HowToStep", "position": 3, "name": "Scarica l'Excel", "text": "Clicca su Elabora e scarica Excel. Il file viene generato e scaricato con 5 fogli: Riepilogo Fatture, Dettaglio Righe, Riepilogo IVA, Notifiche SdI e Allegati." }
     ]
   }
   </script>
@@ -88,12 +88,12 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "Come si converte una fattura elettronica XML in Excel?", "acceptedAnswer": { "@type": "Answer", "text": "Carica il file XML su fattura.datacetools.com, il sistema legge il tracciato FatturaPA ed estrae automaticamente tutti i dati, scaricando un file Excel strutturato su 5 fogli. Bastano pochi secondi." } },
+      { "@type": "Question", "name": "Come si converte una fattura elettronica XML in Excel?", "acceptedAnswer": { "@type": "Answer", "text": "Carica il file XML su fattura.datacetools.com, il sistema legge il tracciato FatturaPA ed estrae automaticamente tutti i dati, scaricando un file Excel strutturato su 5 fogli. Senza installazioni." } },
       { "@type": "Question", "name": "Sono supportati i file .p7m firmati digitalmente?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Sono supportate sia le fatture XML semplici sia quelle .xml.p7m firmate digitalmente, come quelle scaricate dallo SdI o dal cassetto fiscale." } },
       { "@type": "Question", "name": "I file delle fatture vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "No. I tuoi file non vengono salvati. Li usiamo solo per generare l'Excel e non restano nei nostri sistemi. Non usiamo database per conservarli." } },
       { "@type": "Question", "name": "Posso convertire più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, fino a 50 file contemporaneamente. Tutte le fatture vengono unificate in un unico Excel. Sono gestiti anche i file XML che contengono più fatture (lotti)." } },
       { "@type": "Question", "name": "Quali dati vengono estratti dalla fattura?", "acceptedAnswer": { "@type": "Answer", "text": "Fornitore e cliente con partita IVA e codice fiscale, tipo, numero e data documento, le righe di dettaglio con quantità e prezzi, i riepiloghi IVA per aliquota con natura ed esigibilità, e le scadenze di pagamento." } },
-      { "@type": "Question", "name": "In quanto tempo viene generato l'Excel?", "acceptedAnswer": { "@type": "Answer", "text": "In meno di un minuto: il download parte automaticamente non appena la conversione è completata." } }
+      { "@type": "Question", "name": "Ci sono limiti di dimensione?", "acceptedAnswer": { "@type": "Answer", "text": "Sì: fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto." } }
     ]
   }
   </script>
@@ -288,8 +288,8 @@
 <!-- STATS BAR -->
 <div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
   <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Non salvati</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">usati solo per generare<br/>il risultato</div></div>
-    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Nessun archivio</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">nessun database<br/>per i documenti caricati</div></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Gratuito</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">senza registrazione</div></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">10 MB</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">per file,<br/>100 MB in tutto</div></div>
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">50</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Fatture elaborabili<br/>in un colpo solo</div></div>
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">5</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Fogli Excel<br/>strutturati</div></div>
   </div>
@@ -302,7 +302,7 @@
     <div class="text-center mb-14">
       <div class="label mb-4" style="justify-content:center;">Il processo</div>
       <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Come funziona</h2>
-      <p style="color:var(--muted);margin-top:8px;">Tre passaggi, meno di un minuto</p>
+      <p style="color:var(--muted);margin-top:8px;">Tre passaggi</p>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
       <div class="dark-card text-center">
@@ -318,7 +318,7 @@
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scarica l'Excel</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Il file Excel viene generato e scaricato immediatamente. Cinque fogli pronti: Riepilogo Fatture, Dettaglio Righe, Riepilogo IVA, Notifiche SdI, Allegati.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Il file Excel viene generato e scaricato al termine dell'elaborazione.</p>
       </div>
     </div>
   </div>
@@ -355,6 +355,20 @@
         <h3 style="font-size:15px;font-weight:700;margin-bottom:8px;">Foglio Riepilogo IVA</h3>
         <p style="font-size:13px;color:var(--muted);line-height:1.6;">Imponibili e imposte raggruppati per aliquota, con natura dell'operazione ed esigibilità IVA.</p>
       </div>
+      <div class="dark-card">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg class="w-5 h-5" style="color:#5eead4;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:8px;">Foglio Notifiche SdI</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Le notifiche del Sistema di Interscambio presenti nei file caricati.</p>
+      </div>
+      <div class="dark-card">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg class="w-5 h-5" style="color:#fcd34d;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:8px;">Foglio Allegati</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Gli eventuali allegati incorporati nelle fatture.</p>
+      </div>
     </div>
     <div class="grid sm:grid-cols-2 gap-3">
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
@@ -367,11 +381,7 @@
       </div>
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <div><p style="font-size:14px;font-weight:600;">Nessuna installazione richiesta</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Funziona su PC, Mac, tablet e smartphone</p></div>
-      </div>
-      <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
-        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <div><p style="font-size:14px;font-weight:600;">File non salvati</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Datace non salva i documenti caricati</p></div>
+        <div><p style="font-size:14px;font-weight:600;">Nessuna installazione richiesta</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Funziona direttamente nel browser</p></div>
       </div>
     </div>
   </div>
@@ -413,14 +423,15 @@
       <div class="dark-card">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <span style="width:36px;height:36px;border-radius:10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fbbf24;">TD</span>
-          <h3 style="font-size:15px;font-weight:700;">Tutti i tipi documento</h3>
+          <h3 style="font-size:15px;font-weight:700;">Tipi documento</h3>
         </div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Riconosce tutti i tipi di documento e li traduce in descrizioni leggibili nel foglio Excel.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Riconosce i tipi di documento ordinari e li traduce in descrizioni leggibili nel foglio Excel.</p>
         <ul>
           <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Fatture e parcelle</li>
           <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Note di credito e debito</li>
           <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Autofatture e reverse charge</li>
         </ul>
+        <p style="font-size:12px;color:rgba(255,255,255,.62);margin-top:10px;line-height:1.6;">Le fatture semplificate (TD07, TD08, TD09) non vengono lette: lo strumento le scarta indicando il motivo.</p>
       </div>
     </div>
   </div>
@@ -482,7 +493,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Come si converte una fattura elettronica XML in Excel?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Carica il file XML su <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="https://fattura.datacetools.com/" style="color:#93c5fd;">fattura.datacetools.com</a>, il sistema legge il tracciato FatturaPA ed estrae automaticamente tutti i dati, scaricando un file Excel strutturato su 5 fogli. Bastano pochi secondi, senza installazioni.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Carica il file XML su <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="https://fattura.datacetools.com/" style="color:#93c5fd;">fattura.datacetools.com</a>, il sistema legge il tracciato FatturaPA ed estrae automaticamente tutti i dati, scaricando un file Excel strutturato su 5 fogli. Senza installazioni.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
@@ -514,11 +525,17 @@
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
-          <span style="font-weight:600;font-size:14px;padding-right:16px;">In quanto tempo viene generato l'Excel?</span>
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">Ci sono limiti di dimensione?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">In meno di un minuto: il download parte automaticamente non appena la conversione è completata.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì: fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto.</div>
       </details>
+    </div>
+    <div class="text-center" style="margin-top:40px;">
+      <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="https://fattura.datacetools.com/" class="btn-primary">
+        Converti ora
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
     </div>
   </div>
 </section>

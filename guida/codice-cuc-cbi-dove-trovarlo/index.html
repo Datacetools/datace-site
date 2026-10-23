@@ -65,7 +65,7 @@
           { "@type": "Question", "name": "Il CUC è uguale per tutte le banche?", "acceptedAnswer": { "@type": "Answer", "text": "No. Ogni banca assegna il suo: con conti in due banche l'azienda ha due CUC, e nel file va quello della banca da cui partono i bonifici." } },
           { "@type": "Question", "name": "Dove trovo il CUC?", "acceptedAnswer": { "@type": "Answer", "text": "Nel corporate banking della tua banca, tra i dati dell'azienda; di norma nel contratto di corporate banking; dal consulente paghe o dal gestionale che già prepara i flussi per la banca; oppure chiedendolo alla banca." } },
           { "@type": "Question", "name": "Cosa significa l'errore «Il contenuto dell'elemento InitgPty non è completo»?", "acceptedAnswer": { "@type": "Answer", "text": "Che nel file manca il CUC: l'elemento InitgPty è il blocco che identifica chi invia la distinta, e lo schema CBI richiede che contenga il codice. Inserisci il CUC e rigenera il file." } },
-          { "@type": "Question", "name": "Datace salva il mio CUC?", "acceptedAnswer": { "@type": "Answer", "text": "No. Il CUC lo scrivi nel tuo modello Excel e resta nel tuo file: Datace lo usa solo per generare l'XML e non lo salva." } }
+          { "@type": "Question", "name": "Datace salva il mio CUC?", "acceptedAnswer": { "@type": "Answer", "text": "No. Il CUC lo scrivi nel tuo modello Excel e resta nel tuo file: Datace lo usa solo per generare l'XML e non lo riceve." } }
         ]
       },
       {
@@ -170,7 +170,7 @@
       <span style="font-size:12px;color:var(--muted);">Lettura 4 min</span>
     </div>
     <h1 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;">Codice CUC: cos'è e dove trovarlo</h1>
-    <p style="color:rgba(255,255,255,.6);font-size:1.05rem;line-height:1.7;margin-top:14px;max-width:42rem;">Il CUC è il codice che la banca pretende in ogni file XML di bonifici massivi, ed è anche il dato che quasi nessuno sa dove cercare. Ecco cos'è, perché senza la banca rifiuta il file e dove trovarlo.</p>
+    <p style="color:rgba(255,255,255,.6);font-size:1.05rem;line-height:1.7;margin-top:14px;max-width:42rem;">Il CUC è il codice che la banca pretende in ogni file XML di bonifici massivi, ed è anche il dato che molti non sanno dove cercare. Ecco cos'è, perché senza la banca rifiuta il file e dove trovarlo.</p>
   </div>
 </section>
 
@@ -207,7 +207,7 @@
       <div class="nota">Il CUC si cerca <strong>una volta per banca</strong>. Dopo, si riusa per tutte le distinte successive.</div>
 
       <h2>Come si usa con Bonifici massivi XML</h2>
-      <p>Con <a href="/bonifici-massivi-xml/">Bonifici massivi XML</a> il CUC si scrive nel foglio <strong>Distinta</strong> del modello Excel, insieme ai dati dell'azienda e all'IBAN di addebito. Compili la Distinta una volta, ti tieni il file e lo riusi ogni mese: il CUC resta nel tuo file, Datace non lo salva.</p>
+      <p>Con <a href="/bonifici-massivi-xml/">Bonifici massivi XML</a> il CUC si scrive nel foglio <strong>Distinta</strong> del modello Excel, insieme ai dati dell'azienda e all'IBAN di addebito. Compili la Distinta una volta, ti tieni il file e lo riusi ogni mese: il CUC resta nel tuo file, Datace non lo riceve.</p>
       <p>Se il CUC manca, lo strumento <strong>non genera il file</strong> e te lo dice subito, invece di farti scoprire l'errore in banca.</p>
     </article>
 
@@ -241,7 +241,7 @@
       <details class="faq-q"><summary>Il CUC è uguale per tutte le banche?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>No. Ogni banca assegna il suo: con conti in due banche l'azienda ha due CUC, e nel file va quello della banca da cui partono i bonifici.</p></details>
       <details class="faq-q"><summary>Dove trovo il CUC?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Nel corporate banking della tua banca, tra i dati dell'azienda; di norma nel contratto di corporate banking; dal consulente paghe o dal gestionale che già prepara i flussi per la banca; oppure chiedendolo alla banca.</p></details>
       <details class="faq-q"><summary>Cosa significa l'errore «Il contenuto dell'elemento InitgPty non è completo»?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Che nel file manca il CUC: l'elemento InitgPty è il blocco che identifica chi invia la distinta, e lo schema CBI richiede che contenga il codice. Inserisci il CUC e rigenera il file.</p></details>
-      <details class="faq-q"><summary>Datace salva il mio CUC?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>No. Il CUC lo scrivi nel tuo modello Excel e resta nel tuo file: Datace lo usa solo per generare l'XML e non lo salva.</p></details>
+      <details class="faq-q"><summary>Datace salva il mio CUC?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>No. Il CUC lo scrivi nel tuo modello Excel e resta nel tuo file: Datace lo usa solo per generare l'XML e non lo riceve.</p></details>
     </div>
   </div>
 </section>
@@ -250,15 +250,15 @@
 <section style="background:#f8fafc;border-top:1px solid #e5e7eb;" class="px-6 py-14">
   <div class="max-w-3xl mx-auto" style="background:white;border:1px solid #e5e7eb;border-radius:18px;padding:32px;text-align:center;">
     <h2 class="text-2xl font-extrabold mb-3" style="color:#0f2040;">Il tuo caso è diverso?</h2>
-    <p style="font-size:15px;color:#475569;line-height:1.7;margin-bottom:24px;">Formato particolare, altro gestionale, report da preparare ogni mese: posso costruire una soluzione su misura. Per segnalazioni, supporto o per raccontarmi il tuo caso:</p>
+    <p style="font-size:15px;color:#475569;line-height:1.7;margin-bottom:24px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Raccontaci il tuo caso:</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
       <a href="https://www.linkedin.com/in/davide-sgroia/" target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="guida-cuc" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#0f2040;border:1px solid #0f2040;color:white;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
         <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-        Profilo LinkedIn
+        Profilo LinkedIn di Davide Sgroia
       </a>
       <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20CUC&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="guida-cuc" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        Raccontami il tuo caso
+        Scrivici il tuo caso
       </a>
     </div>
     <p style="font-size:13px;color:#64748b;margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20CUC&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="guida-cuc" style="color:#b45309;">info@datacetools.com</a></p>
