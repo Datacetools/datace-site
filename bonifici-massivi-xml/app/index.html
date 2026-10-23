@@ -148,14 +148,6 @@
       <span style="color:white;font-weight:700;font-size:15px;">Bonifici massivi XML</span>
       <span style="color:var(--muted);font-size:11px;">Da Excel a XML SEPA (CBI) · pronto per l'home banking</span>
     </div>
-
-    <!-- Privacy badge -->
-    <div class="ml-auto hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);">
-      <svg class="w-3 h-3" style="color:#86efac;" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
-      </svg>
-      <span style="color:#86efac;font-size:11px;font-weight:600;">Elaborato nel browser</span>
-    </div>
   </div>
 </header>
 
@@ -193,7 +185,7 @@
       <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
       </svg>
-      <span>Serve il <strong>CUC</strong> della banca: è obbligatorio e, senza, la banca rifiuta il file. <span style="text-decoration:underline;">Cos'è e dove trovarlo</span></span>
+      <span>Per generare il file serve il <strong>CUC</strong> della banca. <span style="text-decoration:underline;">Cos'è e dove trovarlo</span></span>
     </a>
   </section>
 
@@ -250,7 +242,6 @@
         Genera e verifica XML
       </span>
     </button>
-    <p class="frase-privacy" style="font-size:11px;color:rgba(255,255,255,.45);margin-top:8px;text-align:center;">Statistiche di navigazione senza cookie. Il contenuto dei file non viene registrato.</p>
 
     <!-- Progress / Status -->
     <div id="status-area" class="mt-4 hidden">
@@ -386,39 +377,6 @@
   </section>
 
 
-  <!-- COME FUNZIONA -->
-  <section class="dark-card p-6">
-    <h2 style="font-size:16px;font-weight:700;margin-bottom:20px;">Come funziona</h2>
-    <div class="grid sm:grid-cols-3 gap-5">
-      <div class="flex gap-3 items-start">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
-          <span style="font-weight:800;font-size:14px;color:var(--gold);">1</span>
-        </div>
-        <div>
-          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Compila</p>
-          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Nel modello Excel: i dati di chi paga nel foglio Distinta, un bonifico per riga nel foglio Beneficiari</p>
-        </div>
-      </div>
-      <div class="flex gap-3 items-start">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
-          <span style="font-weight:800;font-size:14px;color:var(--gold);">2</span>
-        </div>
-        <div>
-          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Controlla</p>
-          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Ogni IBAN e ogni importo vengono verificati, e vedi la distinta con il totale. Gli errori arrivano tutti insieme, con la riga</p>
-        </div>
-      </div>
-      <div class="flex gap-3 items-start">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(29,122,148,.2);border:1px solid rgba(29,122,148,.3);">
-          <span style="font-weight:800;font-size:14px;color:#2a9db5;">3</span>
-        </div>
-        <div>
-          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Importa in banca</p>
-          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Scarichi l'XML SEPA in formato CBI e lo importi nell'home banking, dove lo autorizzi con la tua firma. Datace non invia nulla alla banca</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
 
 
@@ -449,7 +407,7 @@
   <!-- CONTATTI -->
   <section class="dark-card p-6 text-center">
     <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">Il tuo caso è diverso?</h2>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Formato particolare, altro gestionale, report da preparare ogni mese: posso costruire una soluzione su misura. Per segnalazioni, supporto o per raccontarmi il tuo caso:</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Raccontaci il tuo caso:</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
       <a href="https://www.linkedin.com/in/davide-sgroia/" target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="tool-bonifici" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;" onmouseover="this.style.background='rgba(255,255,255,.1)';this.style.borderColor='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
         <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
@@ -457,7 +415,7 @@
       </a>
       <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="tool-bonifici" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        Raccontami il tuo caso
+        Scrivici il tuo caso
       </a>
     </div>
     <p style="font-size:13px;color:rgba(255,255,255,.4);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="tool-bonifici" style="color:#F59E0B;">info@datacetools.com</a></p>
