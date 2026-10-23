@@ -41,7 +41,7 @@
     "description": "Strumento online per convertire moduli F24 PDF in file Excel strutturati. Estrae codici tributo, importi a debito e a credito, sezione, banca e anno di riferimento.",
     "inLanguage": "it",
     "featureList": [
-      "Supporta F24 Ordinario, Semplificato e Accise/Elide",
+      "Supporta F24 Ordinario, Semplificato ed Elide",
       "Estrae codici tributo, importi, sezione, banca",
       "Esporta su 3 fogli Excel: Dettaglio, Riepilogo, Per Anno",
       "Elabora fino a 10 PDF contemporaneamente",
@@ -93,7 +93,7 @@
       {
         "@type": "Question",
         "name": "Quali tipi di F24 sono supportati?",
-        "acceptedAnswer": { "@type": "Answer", "text": "F24 Ordinario (tutte le sezioni: erario, regioni, IMU, INPS, altri enti), F24 Semplificato e F24 Accise/Elide." }
+        "acceptedAnswer": { "@type": "Answer", "text": "F24 Ordinario (tutte le sezioni: erario, regioni, IMU, INPS, altri enti), F24 Semplificato e F24 Elide." }
       },
       {
         "@type": "Question",
@@ -412,11 +412,7 @@
     <div class="grid sm:grid-cols-2 gap-3">
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <div><p style="font-size:14px;font-weight:600;">Fino a 10 PDF contemporaneamente</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">I dati riconosciuti vengono unificati in un unico Excel</p></div>
-      </div>
-      <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
-        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <div><p style="font-size:14px;font-weight:600;">Compatibile con i gestionali contabili</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Formato Excel standard, importabile ovunque</p></div>
+        <div><p style="font-size:14px;font-weight:600;">Formato Excel standard</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">File .xlsx, si apre con Excel e LibreOffice</p></div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -433,7 +429,7 @@
     <div class="text-center mb-12">
       <div class="label mb-4" style="justify-content:center;">Compatibilità</div>
       <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Tipi di F24 supportati</h2>
-      <p style="color:var(--muted);margin-top:8px;">Compatibile con i principali modelli F24 ufficiali</p>
+      <p style="color:var(--muted);margin-top:8px;">Modelli F24 letti dallo strumento</p>
     </div>
     <div class="grid md:grid-cols-3 gap-5">
       <div class="dark-card">
@@ -455,25 +451,16 @@
           <h3 style="font-size:15px;font-weight:700;">F24 Semplificato</h3>
         </div>
         <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Il modello ridotto per i versamenti più comuni, con struttura a colonne codice ente, codice tributo e importo.</p>
-        <ul>
-          <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Versamenti IMU semplificati</li>
-          <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Contributi INPS fissi</li>
-          <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Ritenute d'acconto</li>
-        </ul>
       </div>
       <div class="dark-card">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <span style="width:36px;height:36px;border-radius:10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fbbf24;">A</span>
-          <h3 style="font-size:15px;font-weight:700;">F24 Accise / Elide</h3>
+          <span style="width:36px;height:36px;border-radius:10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fbbf24;">E</span>
+          <h3 style="font-size:15px;font-weight:700;">F24 Elide</h3>
         </div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Il modello per accise, imposte di registro, locazioni e altri tributi con il codice identificativo atto.</p>
-        <ul>
-          <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Accise su prodotti energetici</li>
-          <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Imposta di registro</li>
-          <li style="font-size:12px;color:rgba(255,255,255,.62);padding:2px 0;">· Cedolare secca locazioni</li>
-        </ul>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Il modello per i versamenti con elementi identificativi, come locazioni e cedolare secca.</p>
       </div>
     </div>
+    <p style="font-size:13px;color:var(--muted);text-align:center;margin-top:20px;">L'F24 Ordinario è il modello più verificato. Per Semplificato ed Elide confronta sempre i dati dell'Excel con il PDF.</p>
   </div>
 </section>
 
@@ -555,7 +542,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quali tipi di F24 sono supportati?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;"><strong style="color:white;">F24 Ordinario</strong> (tutte le sezioni: erario, regioni, IMU, INPS, altri enti), <strong style="color:white;">F24 Semplificato</strong> e <strong style="color:white;">F24 Accise / Elide</strong>.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;"><strong style="color:white;">F24 Ordinario</strong> (tutte le sezioni: erario, regioni, IMU, INPS, altri enti), <strong style="color:white;">F24 Semplificato</strong> e <strong style="color:white;">F24 Elide</strong>.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
