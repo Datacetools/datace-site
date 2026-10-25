@@ -1,0 +1,25 @@
+/* SORGENTE del CSS di /fattura-elettronica-excel/app/ (le cartelle con "_" non escono online).
+   Si ricompila dalla radice del sito, con Tailwind v4.3.3, ogni volta che nella pagina si
+   aggiunge o si toglie una classe (la CLI è in fatturaxls-web/browser, versione bloccata):
+
+     ..\fatturaxls-web\browser\node_modules\.bin\tailwindcss -i _tailwind/fattura-app.css -o fattura-elettronica-excel/app/tailwind.css --minify
+
+   Il prodotto si committa: su GitHub Pages non c'è nessun passo di build.
+   Tema e regole come in fatturaxls-web/tailwind.css (la pagina di prima). */
+@import "tailwindcss" source(none);
+@source "../fattura-elettronica-excel/app/index.html";
+
+@theme {
+  --animate-bounce-in: bounceIn 0.4s ease-out;
+
+  @keyframes bounceIn {
+    0%   { transform: scale(0.8); opacity: 0; }
+    60%  { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+}
+
+/* Dalla v4 i pulsanti hanno il cursore normale: qui restano con la manina. */
+@layer base {
+  button:not(:disabled) { cursor: pointer; }
+}
