@@ -3,6 +3,7 @@ import json
 import re
 import urllib.parse
 import zipfile
+from analisi import calcola
 from fattura_core import FormatoNonSupportato, estrai_file, export_excel_bytes, parse_fattura
 MAX_FILES = 50
 MAX_SIZE_MB = 10
@@ -150,4 +151,16 @@ def anteprima(chiave, nomi, files):
         preview = [{'File': f['file'], 'Tipo': f['tipo'], 'Numero': f['numero'], 'Data': f['data'], 'Fornitore': f['fornitore']['nome'], 'Cliente': f['cliente']['nome'], 'Imponibile': round(f['tot_imponibile'], 2), 'Imposta': round(f['tot_imposta'], 2), 'Totale': f['totale_doc']} for f in fatture[:200]]
         righe = sum((len(f.get('righe') or []) for f in fatture))
         return ({'totale': len(fatture), 'anteprima': preview, 'troncato': len(fatture) > 200, 'scartati': scartati, 'righe': righe}, None, None)
+    return _risposta(fai)
+
+def analisi(chiave, nomi, files):
+
+    def fai():
+        if len(nomi) > MAX_FILES:
+            raise Risposta(400, f'1-{MAX_FILES} file richiesti.')
+        _troppi(nomi, files)
+        letto = _leggi(chiave, nomi, files)
+        if letto is None:
+            return None
+        return (calcola(letto[0]), None, None)
     return _risposta(fai)

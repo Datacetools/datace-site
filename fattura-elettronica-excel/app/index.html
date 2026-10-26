@@ -103,6 +103,29 @@
     #preview-wrap::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
     #preview-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 3px; }
 
+    /* KPI e grafici (brief 036): barre in HTML, i numeri restano testo della pagina */
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .kpi { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-width: 0; }
+    .kpi-t { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .kpi-v { font-size: 20px; font-weight: 700; font-family: monospace; margin-top: 4px; overflow-wrap: anywhere; }
+    .kpi-n { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 4px; }
+    .an-note { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 4px; }
+    .an-blocco { margin-top: 24px; }
+    .an-h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    .barra { display: grid; grid-template-columns: minmax(0, 38%) 1fr auto; gap: 10px; align-items: center; font-size: 12px; margin-bottom: 6px; }
+    .barra-nome { color: rgba(255,255,255,.75); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .barra-fondo { background: rgba(255,255,255,.05); border-radius: 4px; height: 12px; }
+    .barra-pieno { background: var(--gold); border-radius: 4px; height: 12px; min-width: 2px; }
+    .barra-pieno.neg { background: #f87171; }
+    .barra-num { font-family: monospace; color: rgba(255,255,255,.7); text-align: right; }
+    .scelta { font-size: 12px; border-radius: 999px; padding: 6px 14px; border: 1px solid var(--border2); background: transparent; color: rgba(255,255,255,.7); cursor: pointer; }
+    .scelta[aria-pressed="true"] { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.4); color: var(--gold); }
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .barra { grid-template-columns: minmax(0, 1fr) auto; }
+      .barra-fondo { grid-column: 1 / -1; grid-row: 2; }
+    }
+
     /* Footer grid */
     .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: start; }
     .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 16px; }
@@ -300,6 +323,45 @@
     <p id="preview-trunc" class="mt-2 text-xs hidden" style="color:rgba(255,255,255,.3);">
       Mostrate le prime 200 fatture. Il file Excel conterrà tutti i dati.
     </p>
+  </section>
+
+  <!-- KPI E GRAFICI (brief 036): calcolati nel browser da analisi.py, testi in TESTI -->
+  <section id="analisi-section" class="dark-card p-6 hidden" aria-live="polite">
+    <h2 id="an-titolo" style="font-size:16px;font-weight:700;"></h2>
+    <p id="an-base" class="an-note"></p>
+    <p id="an-vuoto" class="an-note hidden"></p>
+    <div id="an-contenuto">
+      <div class="kpi-grid" style="margin-top:16px;">
+        <div class="kpi"><div class="kpi-t" id="an-t-doc"></div><div class="kpi-v" id="kpi-documenti"></div></div>
+        <div class="kpi"><div class="kpi-t" id="an-t-imp"></div><div class="kpi-v" id="kpi-imponibile" style="color:var(--gold);"></div></div>
+        <div class="kpi"><div class="kpi-t" id="an-t-iva"></div><div class="kpi-v" id="kpi-iva"></div><div class="kpi-n hidden" id="an-n-reverse"></div></div>
+        <div class="kpi"><div class="kpi-t" id="an-t-tot"></div><div class="kpi-v" id="kpi-totale"></div><div class="kpi-n hidden" id="an-n-split"></div></div>
+      </div>
+      <div id="an-avvisi" style="margin-top:12px;"></div>
+
+      <div class="an-blocco">
+        <h3 class="an-h3" id="an-h-controparte"></h3>
+        <p id="an-tu" class="an-note"></p>
+        <div role="group" id="an-scelte" style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px;">
+          <button type="button" class="scelta" id="an-ricevute" aria-pressed="false" onclick="scegliVerso('ricevute')"></button>
+          <button type="button" class="scelta" id="an-emesse" aria-pressed="false" onclick="scegliVerso('emesse')"></button>
+        </div>
+        <div id="grafico-controparte"></div>
+        <p id="an-esclusi" class="an-note hidden"></p>
+      </div>
+
+      <div class="an-blocco">
+        <h3 class="an-h3" id="an-h-mesi"></h3>
+        <div id="grafico-mesi"></div>
+        <p id="an-senza-data" class="an-note hidden"></p>
+      </div>
+
+      <div class="an-blocco">
+        <h3 class="an-h3" id="an-h-aliquote"></h3>
+        <div id="grafico-aliquote"></div>
+      </div>
+    </div>
+    <p id="an-piede" style="font-size:11px;color:rgba(255,255,255,.35);margin-top:20px;"></p>
   </section>
   </div><!-- /strumento -->
 
@@ -550,7 +612,10 @@ function addFiles(newFiles) {
 function removeFile(idx) {
   selectedFiles.splice(idx, 1);
   renderFileList(); updateButton();
-  if (selectedFiles.length === 0) document.getElementById('preview-section').classList.add('hidden');
+  if (selectedFiles.length === 0) {
+    ++_previewSeq;   // un'anteprima ancora in volo non deve far ricomparire nulla
+    for (const id of ['preview-section', 'analisi-section']) document.getElementById(id).classList.add('hidden');
+  }
   else loadPreview();
 }
 
@@ -596,12 +661,13 @@ function updateButton() {
 }
 
 /* ── Preview ─────────────────────────────────────────────────────────── */
-let _previewSeq = 0;
+let _previewSeq = 0, _anteprimeInCorso = 0;   // il secondo: anteprima e analisi non ancora finite
 
 async function loadPreview() {
   if (selectedFiles.length === 0 || troppoInTutto()) return;
   // Due anteprime in volo possono tornare in ordine inverso: vale solo l'ultima chiesta.
   const seq = ++_previewSeq;
+  _anteprimeInCorso++;
   try {
     const res = await (await ilMotore()).anteprima(selectedFiles);
     if (seq !== _previewSeq || !res.ok) return;
@@ -609,7 +675,111 @@ async function loadPreview() {
     _ultimaAnteprima = data;
     renderPreview(data);
     avvisaScartati((data.scartati || []).length, data.scartati || []);
-  } catch (_) {}
+    // KPI e grafici: sulla lettura appena fatta (i file non si rimandano)
+    const ra = await (await ilMotore()).analisi(selectedFiles);
+    if (seq !== _previewSeq || !ra.ok) return;
+    renderAnalisi(await ra.json());
+  } catch (_) {} finally { _anteprimeInCorso--; }
+}
+
+/* ── KPI e grafici (brief 036) ───────────────────────────────────────────
+   I numeri arrivano già sommati da analisi.py (regole nel brief). I testi nuovi
+   sono tutti qui, in TESTI: li scrive il manager. */
+const TESTI = {
+  titolo: "Analisi dei documenti letti",
+  base: (n, letti) => `Calcolati su ${n} ${n === 1 ? 'documento' : 'documenti'} di ${letti} letti, al netto delle note di credito.`,
+  vuoto: "Nessun documento da sommare in questo caricamento.",
+  doc: "Documenti", imp: "Imponibile", iva: "IVA in fattura", tot: "Totale",
+  reverse: n => `${n} con reverse charge: sulla parte in reverse charge l'IVA in fattura è 0.`,
+  split: n => `${n} in split payment: l'IVA non va al fornitore.`,
+  doppioni: n => n === 1 ? '1 doppione non contato.' : `${n} doppioni non contati.`,
+  valuta: n => n === 1 ? '1 documento in altra valuta, non sommato.' : `${n} documenti in altra valuta, non sommati.`,
+  nonSommati: n => n === 1 ? '1 documento di integrazione, autofattura o acconto, non sommato.'
+                           : `${n} documenti di integrazione, autofattura o acconto, non sommati.`,
+  hRicevute: "Imponibile per fornitore", hEmesse: "Imponibile per cliente",
+  bRicevute: "Fatture ricevute", bEmesse: "Fatture emesse",
+  tu: (nome, pct) => `Il soggetto più presente è ${nome} (${pct}% dei documenti).`,
+  misti: "I file sembrano misti: scegli se guardare le fatture ricevute o emesse.",
+  esclusi: n => n === 1 ? '1 documento non riguarda il soggetto scelto: non è nel grafico per controparte.'
+                        : `${n} documenti non riguardano il soggetto scelto: non sono nel grafico per controparte.`,
+  altri: n => `Altri (${n})`,
+  hMesi: "Imponibile per mese",
+  senzaData: n => n === 1 ? '1 documento senza data valida: non è nel grafico per mese.'
+                          : `${n} documenti senza data valida: non sono nel grafico per mese.`,
+  hAliquote: "Imponibile e IVA per aliquota",
+  imponibileDi: v => `imponibile ${v}`,
+  senzaNome: "Senza nome",
+  piede: "Calcolati nel tuo browser dal contenuto dei file. Controlla sempre i totali con la tua contabilità.",
+};
+const euro = v => Number(v).toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+const MESI = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
+let _analisi = null, _verso = null;
+
+function testo(id, t) { document.getElementById(id).textContent = t; }
+function nota(id, n, f) {
+  const el = document.getElementById(id);
+  el.classList.toggle('hidden', !n);
+  if (n) el.textContent = f(n);
+}
+
+/* Barre orizzontali: [etichetta, valore, nota]; larghezza in proporzione al valore più grande. */
+function barre(id, voci) {
+  const max = Math.max(...voci.map(v => Math.abs(v[1])), 0) || 1;
+  document.getElementById(id).innerHTML = voci.map(([nome, v, extra]) => `
+    <div class="barra">
+      <span class="barra-nome" title="${escHtml(nome)}">${escHtml(nome)}</span>
+      <div class="barra-fondo"><div class="barra-pieno${v < 0 ? ' neg' : ''}" style="width:${(Math.abs(v) / max * 100).toFixed(1)}%"></div></div>
+      <span class="barra-num">${euro(v)}${extra ? ` <span style="color:rgba(255,255,255,.4);">${escHtml(extra)}</span>` : ''}</span>
+    </div>`).join('');
+}
+
+function renderAnalisi(a) {
+  _analisi = a;
+  const sez = document.getElementById('analisi-section');
+  if (!a || !a.letti) { sez.classList.add('hidden'); return; }
+  testo('an-titolo', TESTI.titolo);
+  testo('an-base', TESTI.base(a.documenti, a.letti));
+  const vuoto = a.documenti === 0;
+  document.getElementById('an-vuoto').classList.toggle('hidden', !vuoto);
+  testo('an-vuoto', TESTI.vuoto);
+  document.getElementById('an-contenuto').classList.toggle('hidden', vuoto);
+  testo('an-t-doc', TESTI.doc); testo('an-t-imp', TESTI.imp); testo('an-t-iva', TESTI.iva); testo('an-t-tot', TESTI.tot);
+  testo('kpi-documenti', a.documenti.toLocaleString('it-IT'));
+  testo('kpi-imponibile', euro(a.imponibile));
+  testo('kpi-iva', euro(a.iva));
+  testo('kpi-totale', euro(a.totale));
+  nota('an-n-reverse', a.reverse, TESTI.reverse);
+  nota('an-n-split', a.split, TESTI.split);
+  document.getElementById('an-avvisi').innerHTML = [[a.doppioni, TESTI.doppioni], [a.altra_valuta, TESTI.valuta], [a.non_sommati, TESTI.nonSommati]]
+    .filter(([n]) => n).map(([n, f]) => `<p class="an-note">${escHtml(f(n))}</p>`).join('');
+  testo('an-ricevute', TESTI.bRicevute); testo('an-emesse', TESTI.bEmesse);
+  testo('an-tu', a.tu.fatture === 'misti' ? TESTI.misti : TESTI.tu(a.tu.nome || TESTI.senzaNome, Math.round(a.tu.quota * 100)));
+  _verso = a.tu.fatture === 'misti' ? null : a.tu.fatture;
+  renderControparte();
+  testo('an-h-mesi', TESTI.hMesi);
+  barre('grafico-mesi', a.mesi.map(([m, v]) => [`${MESI[+m.slice(5) - 1]} ${m.slice(0, 4)}`, v]));
+  nota('an-senza-data', a.senza_data, TESTI.senzaData);
+  testo('an-h-aliquote', TESTI.hAliquote);
+  barre('grafico-aliquote', a.aliquote.map(([al, nat, descr, imp, iva]) =>
+    [nat ? `${al.toLocaleString('it-IT')}% ${descr} (${nat})` : `${al.toLocaleString('it-IT')}%`, iva, TESTI.imponibileDi(euro(imp))]));
+  testo('an-piede', TESTI.piede);
+  sez.classList.remove('hidden');
+  if (!vuoto) safeTrack('charts_shown', { tool: TOOL });
+}
+
+function scegliVerso(v) { _verso = v; renderControparte(); }
+
+function renderControparte() {
+  const a = _analisi;
+  for (const v of ['ricevute', 'emesse']) document.getElementById('an-' + v).setAttribute('aria-pressed', String(_verso === v));
+  testo('an-h-controparte', _verso === 'emesse' ? TESTI.hEmesse : TESTI.hRicevute);
+  const g = document.getElementById('grafico-controparte');
+  if (!_verso) { g.innerHTML = ''; nota('an-esclusi', 0); return; }
+  const c = a[_verso];
+  const voci = c.voci.map(([nome, v]) => [nome || TESTI.senzaNome, v]);
+  if (c.n_altri) voci.push([TESTI.altri(c.n_altri), c.altri]);
+  barre('grafico-controparte', voci);
+  nota('an-esclusi', c.esclusi, TESTI.esclusi);
 }
 
 function renderPreview(data) {
