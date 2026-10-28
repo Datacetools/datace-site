@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Aggiornamenti | Datace</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Cosa abbiamo corretto o aggiunto negli strumenti di Datace, tool per tool." />
+  <link rel="canonical" href="https://datacetools.com/aggiornamenti/" />
+  <meta name="robots" content="index, follow" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{brand:{DEFAULT:'#1c3461',light:'#2a9db5',dark:'#0f2040',gold:'#F59E0B'}},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <style>
+    :root{--navy:#060E1F;--navy2:#0A1628;--navy3:#0F2040;--gold:#F59E0B;--teal:#1d7a94;--border:rgba(255,255,255,0.07);--muted:rgba(255,255,255,0.62);}
+    *{box-sizing:border-box;}body{font-family:'Inter',sans-serif;}
+    .logo-bar{transform-box:fill-box;transform-origin:left center;}
+    .logo-bar-1{animation:barStream 2.8s ease-in-out infinite 0s;}
+    .logo-bar-2{animation:barStream 2.8s ease-in-out infinite .22s;}
+    .logo-bar-3{animation:barStream 2.8s ease-in-out infinite .44s;}
+    @keyframes barStream{0%,100%{transform:scaleX(1);opacity:1;}30%{transform:scaleX(0.32);opacity:0.5;}60%{transform:scaleX(1);opacity:1;}}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:500;color:#93c5fd;letter-spacing:.04em;}
+    .pill-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;align-items:start;}
+    .footer-col-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:16px;}
+    .footer-link{display:block;font-size:14px;color:rgba(255,255,255,.62);margin-bottom:10px;text-decoration:none;transition:color .2s ease;}
+    .footer-link:hover{color:white;}
+    .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.2);}
+    @media(max-width:768px){.footer-grid{grid-template-columns:1fr;gap:32px;}.footer-bottom{flex-direction:column;gap:8px;text-align:center;}}
+    /* CORPO CHIARO (lettura) */
+    .prose h2{font-size:1.4rem;font-weight:800;color:#0f2040;letter-spacing:-.01em;margin:2.2rem 0 .8rem;}
+    .prose h3{font-size:1.08rem;font-weight:700;color:#1c3461;margin:1.6rem 0 .5rem;}
+    .prose p{color:#475569;line-height:1.85;margin-bottom:.85rem;font-size:1rem;}
+    .prose ul{list-style:disc;padding-left:1.5rem;color:#475569;line-height:1.85;margin-bottom:1rem;}
+    .prose li{margin-bottom:.4rem;}
+    .prose strong{color:#0f2040;}
+    .prose a{color:#1d7a94;text-decoration:underline;}
+    .card{background:white;border:1px solid #e5e7eb;border-radius:18px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+    .faq-q{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:18px 20px;}
+    .faq-q summary{font-weight:600;color:#0f2040;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+    .faq-q summary::-webkit-details-marker{display:none;}
+    .faq-q p{margin-top:10px;color:#475569;font-size:.92rem;line-height:1.7;}
+    .faq-q[open] summary .chev{transform:rotate(180deg);}
+    .chev{transition:transform .2s;color:#94a3b8;flex-shrink:0;}
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com"></script>
+</head>
+<body class="antialiased" style="background:#f1f5f9;">
+
+<!-- HEADER -->
+<!-- DATACE HEADER START -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <svg class="w-9 h-9 flex-shrink-0" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" style="color:rgba(255,255,255,.62);">
+      <a href="/#strumenti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Strumenti</a>
+      <a href="/guida/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Guide</a>
+      <a href="/chi-siamo" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Chi sono</a>
+      <a href="/#contatti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Contatti</a>
+    </nav>
+    <a href="/#strumenti" style="background:white;color:#0f2040;font-weight:700;font-size:13px;padding:9px 20px;border-radius:10px;letter-spacing:.01em;transition:all .2s ease;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Inizia ora</a>
+  </div>
+</header>
+<!-- DATACE HEADER END -->
+
+<!-- BREADCRUMB -->
+<div style="background:var(--navy2);border-bottom:1px solid var(--border);" class="py-2 px-6">
+  <div class="max-w-5xl mx-auto text-xs flex items-center gap-1.5" style="color:rgba(255,255,255,.55);">
+    <a href="/">Datace</a><span>/</span>
+    <span style="color:rgba(255,255,255,.6);">Aggiornamenti</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="px-6 py-16" style="background:linear-gradient(135deg,#0f2040 0%,#0A1628 55%,#060E1F 100%);position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20%;left:-5%;width:50%;height:80%;background:radial-gradient(ellipse,rgba(29,122,148,.16) 0%,transparent 65%);"></div>
+  <div class="max-w-3xl mx-auto" style="position:relative;z-index:1;color:white;">
+    <h1 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;">Aggiornamenti di Datace</h1>
+    <p style="color:rgba(255,255,255,.6);font-size:1.05rem;line-height:1.7;margin-top:14px;max-width:42rem;">Cosa abbiamo corretto o aggiunto negli strumenti, tool per tool. Ogni novità nasce quasi sempre da un vostro messaggio.</p>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section style="background:#f1f5f9;" class="px-6 py-14">
+  <div class="max-w-3xl mx-auto">
+    <article class="prose card" style="padding:36px 40px;">
+      <h2 id="f24" style="margin-top:0;">F24 PDF in Excel</h2>
+      <h3>v1.01, 28/10/2026: la data di versamento ora compare nell'Excel</h3>
+      <p>Se nell'F24 la data di versamento è scritta nel riquadro «Estremi del versamento», ora la ritrovi nella colonna <strong>Data versamento</strong> del foglio Dettaglio, come data vera (puoi ordinare e filtrare).</p>
+      <p><em>Cosa non andava.</em> In alcuni F24 la data è scritta una cifra per cella, con del testo stampato di lato nel margine. Lo strumento si confondeva e lasciava la colonna vuota. Ce l'ha fatto notare una persona dal feedback della pagina.</p>
+      <p><em>Cosa è cambiato.</em> Lo strumento ora legge la data anche in questi PDF.</p>
+      <p><em>Cosa resta uguale.</em></p>
+      <ul>
+        <li>La lettura della data è ancora <strong>in prova</strong> (BETA, come nell'avviso della pagina dello strumento): se non ti torna, dicci nel feedback.</li>
+        <li>Se il riquadro è vuoto, per esempio perché il modello non è ancora stato pagato, la colonna resta vuota: la data non si deduce da altro.</li>
+        <li>Controlla sempre le righe dell'Excel con il PDF, come per ogni elaborazione.</li>
+        <li>Anche qui i tuoi file non vengono salvati.</li>
+      </ul>
+      <p><em>Non ancora.</em> I numeri di banca (ABI) e di sportello (CAB) scritti nello stesso riquadro non finiscono nell'Excel. Se ti servono, scrivici.</p>
+
+      <h2 id="segnalare">Come segnalare un problema</h2>
+      <p>Se un file non esce come ti aspetti, scrivicelo nel feedback in fondo alla pagina dello strumento (nome facoltativo, nessuna registrazione) e dì quale colonna o riga non torna. Non allegare file con dati personali: basta descrivere cosa manca.</p>
+    </article>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo" class="footer-link">Chi sono</a>
+        <a href="/privacy" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+
+</body>
+</html>
