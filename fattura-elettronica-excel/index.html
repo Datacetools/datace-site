@@ -40,7 +40,7 @@
     "operatingSystem": "All",
     "description": "Convertitore online delle Fatture Elettroniche italiane in formato XML (FatturaPA) e .p7m in file Excel strutturati. Estrae fornitore, cliente, righe, riepiloghi IVA, nature e scadenze di pagamento.",
     "inLanguage": "it",
-    "offers": { "@type": "Offer", "priceCurrency": "EUR" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
     "featureList": [
       "Supporta fatture XML e file firmati .xml.p7m",
       "Estrae fornitore, cliente, righe, IVA, pagamenti",
@@ -91,11 +91,12 @@
       { "@type": "Question", "name": "Come si converte una fattura elettronica XML in Excel?", "acceptedAnswer": { "@type": "Answer", "text": "Apri lo strumento e scegli il file XML: il tuo browser legge il tracciato FatturaPA ed estrae automaticamente tutti i dati, scaricando un file Excel strutturato su 5 fogli. Senza installazioni." } },
       { "@type": "Question", "name": "Sono supportati i file .p7m firmati digitalmente?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Sono supportate sia le fatture XML semplici sia quelle .xml.p7m firmate digitalmente, come quelle scaricate dallo SdI o dal cassetto fiscale." } },
       { "@type": "Question", "name": "I file delle fatture vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "No. Le fatture vengono lette e convertite dal browser, sul tuo computer. Datace non le riceve e quindi non può conservarle: non esiste un archivio e non c'è registrazione." } },
-      { "@type": "Question", "name": "Posso convertire più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, fino a 50 file contemporaneamente. Tutte le fatture vengono unificate in un unico Excel. Sono gestiti anche i file XML che contengono più fatture (lotti)." } },
+      { "@type": "Question", "name": "Oltre all'Excel, lo strumento mostra dei grafici?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, in forma semplice. Dopo la lettura vedi documenti, imponibile, IVA e totale, e tre grafici a barre: per fornitore o cliente, per mese e per aliquota IVA. Le note di credito sono sottratte; doppioni e documenti in altra valuta non sono contati e te lo diciamo a schermo. Sono numeri di controllo calcolati nel tuo browser: non sostituiscono la contabilità." } },
+      { "@type": "Question", "name": "Posso convertire più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, fino a 50 file contemporaneamente. Tutte le fatture vengono unificate in un unico Excel. Sono gestiti anche i file XML che contengono più fatture (lotti): ogni fattura finisce su una riga separata." } },
       { "@type": "Question", "name": "Quali dati vengono estratti dalla fattura?", "acceptedAnswer": { "@type": "Answer", "text": "Fornitore e cliente con partita IVA e codice fiscale, tipo, numero e data documento, le righe di dettaglio con quantità e prezzi, i riepiloghi IVA per aliquota con natura ed esigibilità, e le scadenze di pagamento." } },
       { "@type": "Question", "name": "Ci sono limiti di dimensione?", "acceptedAnswer": { "@type": "Answer", "text": "Sì: fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto." } },
       { "@type": "Question", "name": "Quali browser sono supportati?", "acceptedAnswer": { "@type": "Answer", "text": "Chrome, Edge, Firefox, Brave e Opera. Safari e i browser di iPhone e iPad non sono ancora supportati." } },
-      { "@type": "Question", "name": "Quanto ci mette?", "acceptedAnswer": { "@type": "Answer", "text": "Prima di partire lo strumento ti dice quanto tempo serve. Per la prima apertura il browser scarica circa 21 MB, poi li tiene." } }
+      { "@type": "Question", "name": "Quanto ci mette?", "acceptedAnswer": { "@type": "Answer", "text": "Prima di partire lo strumento ti dice quanto tempo serve. Per la prima apertura il browser scarica circa 15 MB, poi di solito li tiene." } }
     ]
   }
   </script>
@@ -315,7 +316,7 @@
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Estrazione automatica</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Il motore legge il tracciato FatturaPA: fornitore, cliente, righe, IVA e pagamenti. <strong style="color:white;">Output strutturato e più facile da controllare.</strong></p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Il motore legge il tracciato FatturaPA: fornitore, cliente, righe, IVA e pagamenti. <strong style="color:white;">Output strutturato e più facile da controllare.</strong> Prima di scaricare vedi un riepilogo con documenti, imponibile, IVA e totale, e tre grafici: per fornitore o cliente, per mese e per aliquota.</p>
       </div>
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
@@ -509,6 +510,13 @@
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">Oltre all'Excel, lo strumento mostra dei grafici?</span>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, in forma semplice. Dopo la lettura vedi documenti, imponibile, IVA e totale, e tre grafici a barre: per fornitore o cliente, per mese e per aliquota IVA. Le note di credito sono sottratte; doppioni e documenti in altra valuta non sono contati e te lo diciamo a schermo. Sono numeri di controllo calcolati nel tuo browser: non sostituiscono la contabilità.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Posso convertire più fatture insieme?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
@@ -540,7 +548,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quanto ci mette?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Prima di partire lo strumento ti dice quanto tempo serve. Per la prima apertura il browser scarica circa 21 MB, poi li tiene.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Prima di partire lo strumento ti dice quanto tempo serve. Per la prima apertura il browser scarica circa 15 MB, poi di solito li tiene.</div>
       </details>
     </div>
     <div class="text-center" style="margin-top:40px;">

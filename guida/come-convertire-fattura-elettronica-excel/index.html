@@ -41,7 +41,7 @@
         "author": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" },
         "publisher": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com", "logo": { "@type": "ImageObject", "url": "https://datacetools.com/images/logo-icon.svg" } },
         "datePublished": "2026-05-28",
-        "dateModified": "2026-06-15"
+        "dateModified": "2026-10-28"
       },
       {
         "@type": "HowTo",
@@ -51,10 +51,10 @@
         "totalTime": "PT2M",
         "tool": [ { "@type": "HowToTool", "name": "Fattura elettronica in Excel" } ],
         "step": [
-          { "@type": "HowToStep", "position": 1, "name": "Accedi a Fattura elettronica in Excel", "text": "Apri Fattura elettronica in Excel dal browser.", "url": "https://datacetools.com/guida/come-convertire-fattura-elettronica-excel#step-1" },
-          { "@type": "HowToStep", "position": 2, "name": "Carica i file XML o .p7m", "text": "Trascina i tuoi file XML o .xml.p7m nell'area di caricamento, oppure clicca per selezionarli. Puoi caricare fino a 50 file alla volta, ciascuno fino a 10 MB.", "url": "https://datacetools.com/guida/come-convertire-fattura-elettronica-excel#step-2" },
-          { "@type": "HowToStep", "position": 3, "name": "Elaborazione automatica", "text": "Il sistema legge ogni file FatturaPA ed estrae fornitore e cliente con partita IVA e codice fiscale, tipo/numero/data documento, righe di dettaglio, riepiloghi IVA per aliquota e modalità di pagamento.", "url": "https://datacetools.com/guida/come-convertire-fattura-elettronica-excel#step-3" },
-          { "@type": "HowToStep", "position": 4, "name": "Scarica il file Excel", "text": "Clicca su Scarica Excel. Il file .xlsx contiene 5 fogli: Riepilogo Fatture, Dettaglio Righe, Riepilogo IVA, Notifiche SdI e Allegati.", "url": "https://datacetools.com/guida/come-convertire-fattura-elettronica-excel#step-4" }
+          { "@type": "HowToStep", "position": 1, "name": "Apri Fattura elettronica in Excel", "text": "Apri Fattura elettronica in Excel dal browser.", "url": "https://datacetools.com/guida/come-convertire-fattura-elettronica-excel#step-1" },
+          { "@type": "HowToStep", "position": 2, "name": "Carica i file XML o .p7m", "text": "Trascina i tuoi file XML o .xml.p7m nell'area di caricamento, oppure clicca per selezionarli. Puoi caricare fino a 50 file alla volta, ciascuno fino a 10 MB e 100 MB in tutto. I file restano sul tuo computer: li legge il tuo browser e non vengono inviati a Datace.", "url": "https://datacetools.com/guida/come-convertire-fattura-elettronica-excel#step-2" },
+          { "@type": "HowToStep", "position": 3, "name": "Elaborazione automatica", "text": "Lo strumento legge ogni file FatturaPA ed estrae fornitore e cliente con partita IVA e codice fiscale, tipo/numero/data documento, righe di dettaglio, riepiloghi IVA per aliquota e modalità di pagamento. Prima di scaricare, la pagina mostra un riepilogo con documenti, imponibile, IVA e totale, e tre grafici (per fornitore o cliente, per mese e per aliquota IVA): serve a controllare a colpo d'occhio che i totali tornino.", "url": "https://datacetools.com/guida/come-convertire-fattura-elettronica-excel#step-3" },
+          { "@type": "HowToStep", "position": 4, "name": "Scarica il file Excel", "text": "Clicca su Elabora e scarica Excel. Il file .xlsx contiene 5 fogli: Riepilogo Fatture, Dettaglio Righe, Riepilogo IVA, Notifiche SdI e Allegati. In alternativa puoi scaricare tutto in un archivio ZIP: l'Excel, gli XML estratti dai file .p7m e gli allegati.", "url": "https://datacetools.com/guida/come-convertire-fattura-elettronica-excel#step-4" }
         ]
       },
       {
@@ -64,7 +64,7 @@
           { "@type": "Question", "name": "Come si converte una Fattura Elettronica XML in Excel?", "acceptedAnswer": { "@type": "Answer", "text": "Il modo più rapido è usare Fattura elettronica in Excel di Datace: carica il file XML o .p7m, attendi l'estrazione automatica e scarica il file Excel con tutti i dati già strutturati su 5 fogli." } },
           { "@type": "Question", "name": "Come apro un file .p7m di una fattura?", "acceptedAnswer": { "@type": "Answer", "text": "Un file .xml.p7m è una Fattura Elettronica XML firmata digitalmente (CAdES). Fattura elettronica in Excel estrae automaticamente il contenuto XML dal file firmato e ne legge i dati, senza bisogno di software esterni per la verifica della firma." } },
           { "@type": "Question", "name": "I miei dati vengono salvati o condivisi?", "acceptedAnswer": { "@type": "Answer", "text": "Le fatture vengono lette e convertite dal tuo browser: Datace non le riceve, quindi non le salva e non le condivide. Non esiste un archivio e non c'è registrazione." } },
-          { "@type": "Question", "name": "Posso caricare più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Fattura elettronica in Excel accetta fino a 50 file per richiesta, ciascuno fino a 10 MB. Anche un singolo file XML può contenere più fatture (lotti): ognuna viene riportata separatamente nell'Excel finale." } },
+          { "@type": "Question", "name": "Posso caricare più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Fattura elettronica in Excel accetta fino a 50 file per volta, ciascuno fino a 10 MB. Anche un singolo file XML può contenere più fatture (lotti): ognuna viene riportata separatamente nell'Excel finale." } },
           { "@type": "Question", "name": "Quali tipi di documento sono supportati?", "acceptedAnswer": { "@type": "Answer", "text": "Fattura elettronica in Excel riconosce i tipi di documento ordinari del tracciato FatturaPA: TD01 fattura, TD04 nota di credito, TD05 nota di debito, TD06 parcella, TD24 fattura differita e i codici per reverse charge e autofatture (TD16-TD23), oltre alle nature IVA N1-N7 e alle modalità di pagamento MP01-MP23. Le fatture semplificate (TD07, TD08, TD09) non vengono lette: lo strumento le scarta indicando il motivo." } }
         ]
       },
@@ -177,22 +177,22 @@
     <article class="prose lg:col-span-2 card" style="padding:36px 40px;">
       <h2 style="margin-top:0;">Perché convertire le Fatture Elettroniche XML in Excel</h2>
       <p>Dal 2019 la Fattura Elettronica è obbligatoria in Italia per la quasi totalità delle operazioni B2B, B2C e verso la Pubblica Amministrazione. Ogni fattura viaggia nel formato XML FatturaPA: un tracciato standard che contiene cedente/prestatore (fornitore), cessionario/committente (cliente), tipo e numero documento, righe di dettaglio, riepiloghi IVA per aliquota e condizioni di pagamento.</p>
-      <p>Quel formato è ordinato e più facile da controllare per i sistemi informatici ma illeggibile a occhio: aprire un XML grezzo non aiuta a sommare imponibili, filtrare per aliquota IVA, controllare le scadenze di pagamento o importare i dati in un gestionale. Convertire le fatture in Excel rende quei dati finalmente utilizzabili.</p>
+      <p>Quel formato è pensato per i software: a occhio è illeggibile e non aiuta a sommare imponibili, filtrare per aliquota IVA, controllare le scadenze di pagamento o importare i dati in un gestionale. Convertire le fatture in Excel rende quei dati finalmente utilizzabili.</p>
 
       <h2>Cosa serve prima di iniziare</h2>
       <ul>
         <li>I file XML delle fatture, oppure i file firmati .xml.p7m (da uno a cinquanta per volta)</li>
-        <li>Un browser aggiornato</li>
-        <li>Una connessione internet per aprire lo strumento</li>
+        <li>Chrome, Edge, Firefox, Brave od Opera (Safari, iPhone e iPad non sono ancora supportati)</li>
+        <li>Una connessione internet per aprire lo strumento (la prima volta il browser scarica circa 15 MB, poi di solito li tiene)</li>
       </ul>
       <p>I file devono essere nel formato <strong>FatturaPA 1.2</strong>, quello scaricabile dal Sistema di Interscambio (SdI), dalla tua PEC, dal cassetto fiscale dell'Agenzia delle Entrate o dal tuo gestionale. Anche i file firmati digitalmente (.xml.p7m) sono supportati.</p>
 
       <h2 id="step-1">Passo 1: Apri Fattura elettronica in Excel</h2>
       <p>Vai su <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="https://datacetools.com/fattura-elettronica-excel/app/">Fattura elettronica in Excel</a>. Non serve installare nulla: la pagina si apre direttamente con l'area di caricamento.</p>
       <h2 id="step-2">Passo 2: Carica i file XML o .p7m</h2>
-      <p>Trascina i file nell'area centrale oppure clicca sul pulsante per aprire il selettore file. Puoi caricare fino a <strong>50 file alla volta</strong>, ciascuno fino a 10 MB. Puoi mescolare fatture XML semplici e file firmati .xml.p7m, di fornitori e periodi diversi, nella stessa elaborazione. Un singolo XML che contiene un lotto di più fatture viene gestito automaticamente.</p>
+      <p>Trascina i file nell'area centrale oppure clicca sul pulsante per aprire il selettore file. Puoi caricare fino a <strong>50 file alla volta</strong>, ciascuno fino a 10 MB e 100 MB in tutto. Puoi mescolare fatture XML semplici e file firmati .xml.p7m, di fornitori e periodi diversi, nella stessa elaborazione. Un singolo XML che contiene un lotto di più fatture viene gestito automaticamente. I file restano sul tuo computer: li legge il tuo browser e non vengono inviati a Datace.</p>
       <h2 id="step-3">Passo 3: Elaborazione automatica</h2>
-      <p>Il sistema elabora ogni file FatturaPA e, per ciascuna fattura, estrae:</p>
+      <p>Lo strumento legge ogni file FatturaPA e, per ciascuna fattura, estrae:</p>
       <ul>
         <li>Fornitore (cedente/prestatore) e cliente (cessionario/committente): denominazione, partita IVA e codice fiscale</li>
         <li>Tipo documento (TD01 fattura, TD04 nota di credito, TD06 parcella, ecc.), numero e data</li>
@@ -201,8 +201,9 @@
         <li>Modalità di pagamento (MP01-MP23), scadenze e importi</li>
         <li>Importo totale del documento</li>
       </ul>
+      <p>Prima di scaricare, la pagina mostra un riepilogo con documenti, imponibile, IVA e totale, e tre grafici (per fornitore o cliente, per mese e per aliquota IVA): serve a controllare a colpo d'occhio che i totali tornino.</p>
       <h2 id="step-4">Passo 4: Scarica il file Excel</h2>
-      <p>Clicca su <strong>Scarica Excel</strong>. Il file .xlsx che ricevi contiene cinque fogli:</p>
+      <p>Clicca su <strong>Elabora e scarica Excel</strong>. Il file .xlsx che ricevi contiene cinque fogli:</p>
       <ul>
         <li><strong>Riepilogo Fatture</strong>: una riga per fattura, con fornitore, cliente, tipo, numero, data, imponibile, imposta e totale</li>
         <li><strong>Dettaglio Righe</strong>: ogni riga di ogni fattura, una per volta</li>
@@ -210,11 +211,12 @@
         <li><strong>Notifiche SdI</strong>: le notifiche del Sistema di Interscambio (RC, NS, MC, EC, DT) presenti nei file</li>
         <li><strong>Allegati</strong>: gli eventuali allegati incorporati nelle fatture</li>
       </ul>
+      <p>In alternativa puoi scaricare tutto in un archivio ZIP: l'Excel, gli XML estratti dai file .p7m e gli allegati.</p>
       <p>Il file è pronto da aprire in Excel, LibreOffice Calc o da importare nei gestionali che leggono file Excel.</p>
 
       <h2>Problemi comuni e come risolverli</h2>
       <h3>Il file .p7m non si apre nel computer</h3>
-      <p>Il .p7m è una busta crittografica (CAdES) che racchiude l'XML della fattura insieme alla firma digitale. Aprirlo con un doppio clic richiede software di verifica della firma. Con Fattura elettronica in Excel non serve: carica direttamente il file .xml.p7m e il sistema estrae l'XML interno e ne legge i dati.</p>
+      <p>Il .p7m è una busta crittografica (CAdES) che racchiude l'XML della fattura insieme alla firma digitale. Aprirlo con un doppio clic richiede software di verifica della firma. Con Fattura elettronica in Excel non serve: carica direttamente il file .xml.p7m e lo strumento estrae l'XML interno e ne legge i dati.</p>
       <h3>L'XML proviene da un tracciato diverso</h3>
       <p>Fattura elettronica in Excel è specializzato sul tracciato FatturaPA delle Fatture Elettroniche italiane. Un file XML generico non viene riconosciuto come fattura e non produce dati. Verifica che il file sia una vera Fattura Elettronica scaricata dallo SdI, dalla PEC o dal cassetto fiscale.</p>
       <h3>Dati mancanti o parziali nell'Excel</h3>
@@ -226,7 +228,7 @@
       <div class="card">
         <h3 class="font-bold mb-4 text-sm" style="color:#0f2040;">Fattura elettronica in Excel supporta</h3>
         <ul class="flex flex-col gap-2 text-sm" style="color:#475569;">
-          <li>✓ Fattura Elettronica XML (FatturaPA 1.2)</li><li>✓ File firmati .xml.p7m (CAdES)</li><li>✓ Tipi documento ordinari (le semplificate TD07-TD09 non sono lette)</li><li>✓ Fino a 50 file per richiesta</li><li>✓ Lotti multi-fattura nello stesso XML</li><li>✓ Excel con fogli strutturati</li>
+          <li>✓ Fattura Elettronica XML (FatturaPA 1.2)</li><li>✓ File firmati .xml.p7m (CAdES)</li><li>✓ Tipi documento ordinari (le semplificate TD07-TD09 non sono lette)</li><li>✓ Fino a 50 file per volta</li><li>✓ Lotti multi-fattura nello stesso XML</li><li>✓ Excel con fogli strutturati</li>
         </ul>
         <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="https://datacetools.com/fattura-elettronica-excel/app/" class="mt-5 flex items-center justify-center gap-2 text-white text-sm font-semibold px-4 py-2.5 rounded-xl" style="background:#1c3461;">Apri Fattura elettronica in Excel →</a>
       </div>
@@ -246,10 +248,10 @@
   <div class="max-w-3xl mx-auto">
     <h2 class="text-2xl font-extrabold text-center mb-8" style="color:#0f2040;">Domande frequenti</h2>
     <div class="flex flex-col gap-3">
-      <details class="faq-q"><summary>Come si converte una Fattura Elettronica XML in Excel?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Il modo più rapido è usare Fattura elettronica in Excel di Datace: carica il file XML o .p7m, attendi l'estrazione automatica e scarica il file Excel con tutti i dati già strutturati.</p></details>
+      <details class="faq-q"><summary>Come si converte una Fattura Elettronica XML in Excel?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Il modo più rapido è usare Fattura elettronica in Excel di Datace: carica il file XML o .p7m, attendi l'estrazione automatica e scarica il file Excel con tutti i dati già strutturati su 5 fogli.</p></details>
       <details class="faq-q"><summary>Come apro un file .p7m di una fattura?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Un file .xml.p7m è una Fattura Elettronica XML firmata digitalmente (CAdES). Fattura elettronica in Excel estrae automaticamente il contenuto XML dal file firmato e ne legge i dati, senza bisogno di software esterni per la verifica della firma.</p></details>
       <details class="faq-q"><summary>I miei dati vengono salvati o condivisi?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Le fatture vengono lette e convertite dal tuo browser: Datace non le riceve, quindi non le salva e non le condivide. Non esiste un archivio e non c'è registrazione.</p></details>
-      <details class="faq-q"><summary>Posso caricare più fatture insieme?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Sì. Fattura elettronica in Excel accetta fino a 50 file per richiesta, ciascuno fino a 10 MB. Anche un singolo file XML può contenere più fatture (lotti): ognuna viene riportata separatamente nell'Excel finale.</p></details>
+      <details class="faq-q"><summary>Posso caricare più fatture insieme?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Sì. Fattura elettronica in Excel accetta fino a 50 file per volta, ciascuno fino a 10 MB. Anche un singolo file XML può contenere più fatture (lotti): ognuna viene riportata separatamente nell'Excel finale.</p></details>
       <details class="faq-q"><summary>Quali tipi di documento sono supportati?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Fattura elettronica in Excel riconosce i tipi di documento ordinari del tracciato FatturaPA: TD01 fattura, TD04 nota di credito, TD05 nota di debito, TD06 parcella, TD24 fattura differita e i codici per reverse charge e autofatture (TD16-TD23), oltre alle nature IVA N1-N7 e alle modalità di pagamento MP01-MP23. Le fatture semplificate (TD07, TD08, TD09) non vengono lette: lo strumento le scarta indicando il motivo.</p></details>
     </div>
   </div>
