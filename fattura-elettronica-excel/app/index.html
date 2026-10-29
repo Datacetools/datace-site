@@ -275,11 +275,12 @@
         </div>
         <span id="status-msg" style="font-size:13px;color:var(--muted);">Elaborazione in corso…</span>
       </div>
-      <div id="status-success" class="hidden animate-bounce-in flex items-center gap-2 text-sm rounded-xl px-4 py-3" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#86efac;">
+      <div id="status-success" class="hidden animate-bounce-in flex items-center gap-2 text-sm rounded-xl px-4 py-3" style="flex-wrap:wrap;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#86efac;">
         <svg class="w-5 h-5 shrink-0" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
         <span id="success-msg">Excel scaricato con successo!</span>
+        <a href="/raccontaci/" target="_blank" rel="noopener" data-umami-event="raccontaci-link" data-umami-event-origine="dopo-download" style="flex-basis:100%;padding-left:28px;font-size:12px;color:rgba(255,255,255,.62);text-decoration:underline;">Se ti va, raccontaci come lavori</a>
       </div>
       <div id="status-error" class="hidden flex items-start gap-2 text-sm rounded-xl px-4 py-3" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;">
         <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#fca5a5;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -480,6 +481,7 @@
         <a href="/guida/" class="footer-link">Guide</a>
         <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
         <a href="/chi-siamo" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
         <a href="/privacy" class="footer-link">Informativa privacy</a>
         <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
         <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>

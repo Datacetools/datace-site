@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raccontaci come lavori | Datace</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <meta name="description" content="Datace lo sviluppo da solo, partendo dai problemi di chi lavora con documenti fiscali e amministrativi. Due minuti per raccontarmi come lavori: nessuna vendita, nessun obbligo."/>
+  <meta name="robots" content="noindex, follow"/>
+  <link rel="canonical" href="https://datacetools.com/raccontaci/"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://datacetools.com/raccontaci/"/>
+  <meta property="og:title" content="Raccontaci come lavori | Datace"/>
+  <meta property="og:description" content="Datace lo sviluppo da solo, partendo dai problemi di chi lavora con documenti fiscali e amministrativi. Due minuti per raccontarmi come lavori: nessuna vendita, nessun obbligo."/>
+  <meta property="og:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Datace: strumenti gratuiti per aziende e commercialisti" />
+  <meta name="twitter:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{brand:{DEFAULT:'#1c3461',light:'#2a9db5',dark:'#0f2040'}},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
+
+  <style>
+    :root {
+      --navy:#060E1F; --navy2:#0A1628; --navy3:#0F2040;
+      --gold:#F59E0B; --gold2:#FBBF24;
+      --teal:#1d7a94;
+      --border:rgba(255,255,255,0.07);
+      --muted:rgba(255,255,255,0.62);
+    }
+    *{box-sizing:border-box;}
+    body{background:var(--navy);color:white;}
+
+    /* Logo bars */
+    .logo-bar{transform-box:fill-box;transform-origin:left center;}
+    .logo-bar-1{animation:barStream 2.8s ease-in-out infinite 0s;}
+    .logo-bar-2{animation:barStream 2.8s ease-in-out infinite .22s;}
+    .logo-bar-3{animation:barStream 2.8s ease-in-out infinite .44s;}
+    @keyframes barStream{
+      0%,100%{transform:scaleX(1);opacity:1;}
+      30%{transform:scaleX(0.32);opacity:0.5;}
+      60%{transform:scaleX(1);opacity:1;}
+    }
+
+    /* Page hero */
+    .page-hero{
+      background:linear-gradient(135deg,#060E1F 0%,#0A1628 50%,#0F2040 100%);
+      border-bottom:1px solid var(--border);
+      padding:72px 24px 60px;
+      position:relative;overflow:hidden;
+    }
+    .page-hero::before{
+      content:'';position:absolute;top:-30%;left:-10%;
+      width:50%;height:120%;
+      background:radial-gradient(ellipse,rgba(29,122,148,.12) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .page-hero .inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
+
+    /* Label */
+    .label{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:11px;font-weight:700;letter-spacing:.15em;
+      text-transform:uppercase;color:#F59E0B;
+    }
+    .label::before{content:'';width:20px;height:1px;background:#F59E0B;}
+
+    /* Dark card */
+    .dark-card{
+      background:linear-gradient(135deg,rgba(15,32,64,.7),rgba(6,14,31,.85));
+      border:1px solid var(--border);
+      border-radius:18px;
+      transition:border-color .25s,transform .25s,box-shadow .25s;
+    }
+    .dark-card:hover{
+      border-color:rgba(255,255,255,.13);
+      transform:translateY(-3px);
+      box-shadow:0 18px 40px rgba(0,0,0,.4);
+    }
+    .dark-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(245,158,11,.35),transparent);
+      opacity:0;transition:opacity .25s;border-radius:18px 18px 0 0;
+    }
+    .dark-card:hover::before{opacity:1;}
+
+    /* Prose */
+    .prose-dark section{margin-bottom:40px;}
+    .prose-dark h2{
+      font-size:17px;font-weight:700;color:white;
+      margin-bottom:14px;padding-bottom:12px;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .prose-dark p{color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:12px;font-size:14px;}
+    .prose-dark strong{color:rgba(255,255,255,.8);}
+    .prose-dark a{color:#F59E0B;}
+    .prose-dark a:hover{text-decoration:underline;}
+    .prose-dark ul li{color:rgba(255,255,255,.55);font-size:14px;line-height:1.8;}
+
+    /* Stat box */
+    .stat-box{
+      background:rgba(255,255,255,.03);border:1px solid var(--border);
+      border-radius:14px;padding:20px;text-align:center;
+    }
+    .stat-box .num{
+      font-size:2.5rem;font-weight:800;
+      background:linear-gradient(135deg,#fff,#93c5fd);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      line-height:1;
+    }
+    .stat-box .lbl{font-size:12px;color:rgba(255,255,255,.55);margin-top:6px;line-height:1.4;}
+
+    /* Trust block */
+    .trust-block{
+      background:rgba(245,158,11,.07);
+      border:1px solid rgba(245,158,11,.2);
+      border-radius:16px;padding:24px;
+    }
+
+    /* Info table rows */
+    .info-row{
+      display:grid;grid-template-columns:110px 1fr;gap:8px;
+      padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);
+      font-size:13px;
+    }
+    .info-row:last-child{border-bottom:none;}
+    .info-label{color:rgba(255,255,255,.55);font-weight:500;}
+    .info-value{color:rgba(255,255,255,.6);}
+
+    /* Modulo */
+    .q{margin-bottom:28px;border:0;padding:0;}
+    .q-t{display:block;font-size:15px;font-weight:600;color:white;margin-bottom:12px;}
+    .opz{display:flex;flex-wrap:wrap;gap:8px;}
+    .opz label{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:rgba(255,255,255,.75);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 14px;cursor:pointer;}
+    .opz input{accent-color:#F59E0B;}
+    .campo{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;font-size:14px;color:white;font-family:inherit;}
+    .campo:focus{outline:2px solid rgba(245,158,11,.5);border-color:transparent;}
+    .campo::placeholder{color:rgba(255,255,255,.35);}
+    .spunta{visibility:hidden;opacity:0;transition:opacity .2s;}
+    .spunta.visibile{visibility:visible;opacity:1;}
+    .esito{border-radius:12px;padding:12px 16px;font-size:14px;margin-top:16px;}
+    .esito-ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#86efac;}
+    .esito-ko{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#fca5a5;}
+    /* Footer */
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;align-items:start;}
+    .footer-col-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:16px;}
+    .footer-link{display:block;font-size:14px;color:rgba(255,255,255,.62);margin-bottom:10px;text-decoration:none;transition:color .2s;}
+    .footer-link:hover{color:white;}
+    .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.2);}
+
+    @media(max-width:768px){
+      .footer-grid{grid-template-columns:1fr;gap:28px;}
+      .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
+      .page-hero{padding:48px 20px 40px;}
+    }
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com"></script>
+</head>
+<body class="font-sans antialiased" style="background:#060E1F;color:white;">
+<!-- DATACE HEADER START -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <svg class="w-9 h-9 flex-shrink-0" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" style="color:rgba(255,255,255,.62);">
+      <a href="/#strumenti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Strumenti</a>
+      <a href="/guida/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Guide</a>
+      <a href="/chi-siamo" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Chi sono</a>
+      <a href="/#contatti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Contatti</a>
+    </nav>
+    <a href="/#strumenti" style="background:white;color:#0f2040;font-weight:700;font-size:13px;padding:9px 20px;border-radius:10px;letter-spacing:.01em;transition:all .2s ease;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Inizia ora</a>
+  </div>
+</header>
+<!-- DATACE HEADER END -->
+
+<section class="page-hero">
+  <div class="inner">
+    <div class="label mb-5">Due minuti</div>
+    <h1 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px;">Raccontaci come lavori</h1>
+    <p style="font-size:1.05rem;color:rgba(255,255,255,.62);line-height:1.75;max-width:600px;">Datace lo sviluppo io, da solo, partendo dai problemi di chi lavora con documenti fiscali e amministrativi. Se ti va di aiutarmi, rispondi a queste domande: due minuti, nessuna vendita, nessun obbligo. Non inserire dati di clienti o dipendenti.</p>
+  </div>
+</section>
+
+<main class="max-w-3xl mx-auto px-6 py-16">
+  <form id="raccontaci" class="dark-card" style="padding:32px;position:relative;" novalidate>
+    <!-- Anti-spam di Formspree: le persone non lo vedono, i robot lo compilano -->
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
+
+    <fieldset class="q">
+      <legend class="q-t">Chi sei?</legend>
+      <div class="opz">
+        <label><input type="radio" name="ruolo" value="Commercialista" /> Commercialista</label>
+        <label><input type="radio" name="ruolo" value="Consulente del lavoro" /> Consulente del lavoro</label>
+        <label><input type="radio" name="ruolo" value="Amministrativo-a di una PMI" /> Amministrativo-a di una PMI</label>
+        <label><input type="radio" name="ruolo" value="Titolare" /> Titolare</label>
+        <label><input type="radio" name="ruolo" value="Altro" /> Altro</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="q">
+      <legend class="q-t">Quante aziende o clienti segui?</legend>
+      <div class="opz">
+        <label><input type="radio" name="aziende_clienti" value="1" /> 1</label>
+        <label><input type="radio" name="aziende_clienti" value="2-10" /> 2-10</label>
+        <label><input type="radio" name="aziende_clienti" value="11-50" /> 11-50</label>
+        <label><input type="radio" name="aziende_clienti" value="Più di 50" /> Più di 50</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="q">
+      <legend class="q-t">Quali documenti ricopi o converti a mano più spesso?</legend>
+      <div class="opz">
+        <label><input type="checkbox" name="documenti" value="F24" /> F24</label>
+        <label><input type="checkbox" name="documenti" value="Fatture XML" /> Fatture XML</label>
+        <label><input type="checkbox" name="documenti" value="Estratti conto" /> Estratti conto</label>
+        <label><input type="checkbox" name="documenti" value="Cedolini" /> Cedolini</label>
+        <label><input type="checkbox" name="documenti" value="Corrispettivi" /> Corrispettivi</label>
+        <label><input type="checkbox" name="documenti" value="Altro" /> Altro</label>
+      </div>
+      <input type="text" name="documenti_altro" class="campo" style="margin-top:10px;" placeholder="Altro: quali documenti?" maxlength="200" aria-label="Altri documenti" />
+    </fieldset>
+
+    <div class="q">
+      <label class="q-t" for="attivita">Qual è l'attività che ti porta via più tempo ogni mese?</label>
+      <textarea id="attivita" name="attivita_piu_lunga" rows="3" class="campo" maxlength="2000"></textarea>
+    </div>
+
+    <div class="q">
+      <label class="q-t" for="oggi">Come la risolvi oggi?</label>
+      <textarea id="oggi" name="come_oggi" rows="3" class="campo" maxlength="2000"></textarea>
+    </div>
+
+    <div class="q" style="margin-bottom:20px;">
+      <label class="q-t" for="email" style="margin-bottom:4px;">La tua email (facoltativa)</label>
+      <p id="email-nota" style="font-size:13px;color:rgba(255,255,255,.55);margin-bottom:10px;">Solo se vuoi che ti scriva per approfondire.</p>
+      <input type="email" id="email" class="campo" autocomplete="email" maxlength="200" aria-describedby="email-nota" aria-controls="spunta" />
+      <!-- Compare solo con l'email scritta; lo spazio resta riservato, così la pagina non salta -->
+      <label id="spunta" class="spunta" style="display:flex;align-items:flex-start;gap:10px;margin-top:12px;font-size:13px;color:rgba(255,255,255,.7);line-height:1.6;cursor:pointer;">
+        <input type="checkbox" id="consenso" style="accent-color:#F59E0B;margin-top:4px;flex-shrink:0;" />
+        <span>Sì, puoi scrivermi a questo indirizzo per approfondire le mie risposte (<a href="/privacy/" style="color:#F59E0B;text-decoration:underline;">informativa</a>).</span>
+      </label>
+    </div>
+
+    <button type="submit" id="invia" style="background:#F59E0B;color:#0f2040;font-weight:700;font-size:14px;padding:12px 24px;border-radius:12px;border:none;cursor:pointer;">Invia le risposte</button>
+    <div id="esito" class="esito" role="status" aria-live="polite" hidden></div>
+  </form>
+</main>
+
+<script>
+(function () {
+  const form = document.getElementById('raccontaci');
+  const esito = document.getElementById('esito');
+  const bottone = document.getElementById('invia');
+  const email = document.getElementById('email');
+  const consenso = document.getElementById('consenso');
+  const OK = 'Grazie! Leggo ogni risposta personalmente.';
+  const KO = 'Non siamo riusciti a inviare. Riprova tra poco; se il problema continua, scrivi a info@datacetools.com.';
+
+  // La spunta del consenso si vede solo con l'email scritta; quando sparisce si toglie
+  const spunta = document.getElementById('spunta');
+  function aggiornaSpunta() {
+    const serve = email.value.trim() !== '';
+    spunta.classList.toggle('visibile', serve);
+    if (!serve) consenso.checked = false;
+  }
+  email.addEventListener('input', aggiornaSpunta);
+  form.addEventListener('reset', () => setTimeout(aggiornaSpunta));
+  aggiornaSpunta();
+
+  function mostra(testo, buono) {
+    esito.textContent = testo;
+    esito.className = 'esito ' + (buono ? 'esito-ok' : 'esito-ko');
+    esito.hidden = false;
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const mail = email.value.trim();
+    if (mail && !email.checkValidity()) { mostra("L'email non sembra corretta: controllala oppure lasciala vuota.", false); email.focus(); return; }
+    if (mail && !consenso.checked) { mostra("Per lasciare l'email serve il consenso: spunta la casella sotto l'email, oppure lascia l'email vuota.", false); consenso.focus(); return; }
+
+    // Il campo nascosto compilato è un robot: non si invia nulla a Formspree
+    if (form.elements._gotcha.value) { form.reset(); mostra(OK, true); return; }
+
+    const scelta = n => (form.querySelector('input[name="' + n + '"]:checked') || {}).value || '';
+    const dati = new FormData();
+    dati.append('tool', 'Raccontaci');
+    dati.append('ruolo', scelta('ruolo'));
+    dati.append('aziende_clienti', scelta('aziende_clienti'));
+    dati.append('documenti', Array.from(form.querySelectorAll('input[name="documenti"]:checked'), x => x.value).join(', '));
+    dati.append('documenti_altro', form.elements.documenti_altro.value.trim());
+    dati.append('attivita_piu_lunga', form.elements.attivita_piu_lunga.value.trim());
+    dati.append('come_oggi', form.elements.come_oggi.value.trim());
+    if (mail) dati.append('email', mail);   // un campo email vuoto Formspree lo rifiuta
+    dati.append('consenso_ricontatto', mail && consenso.checked ? 'sì' : 'no');
+
+    bottone.disabled = true; bottone.style.opacity = '.6';
+    try {
+      const r = await fetch('https://formspree.io/f/mreddazr', { method: 'POST', body: dati, headers: { 'Accept': 'application/json' } });
+      if (!r.ok) throw new Error('http ' + r.status);
+      form.reset();
+      mostra(OK, true);
+      try { if (window.umami) window.umami.track('raccontaci-inviato'); } catch (_) {}
+    } catch (_) {
+      mostra(KO, false);
+    } finally {
+      bottone.disabled = false; bottone.style.opacity = '1';
+    }
+  });
+})();
+</script>
+
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
+        <a href="/privacy" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+</body>
+</html>
