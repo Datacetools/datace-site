@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-- L'immagine di anteprima di tutte le pagine (images/og-datace.png, 1200×630), brief 049.
+     Quando cambia uno strumento si cambia la lista qui sotto e si rilancia _og/genera.py. -->
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<style>
+  @font-face { font-family: "Inter"; font-weight: 400 800; src: url("../fonts/inter-latin.woff2") format("woff2"); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    font-family: Inter, system-ui, sans-serif; color: #fff; padding: 72px 84px 0;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(29,122,148,.35), transparent 42%),
+      radial-gradient(circle at 82% 92%, rgba(245,158,11,.10), transparent 30%),
+      linear-gradient(135deg, #0F2040 0%, #060E1F 60%);
+  }
+  .marca { display: flex; align-items: center; gap: 22px; }
+  .marca svg { width: 88px; height: 88px; }
+  .nome { font-size: 40px; font-weight: 800; letter-spacing: .32em; }
+  .sotto { font-size: 15px; font-weight: 600; letter-spacing: .24em; color: rgba(255,255,255,.5); margin-top: 8px; }
+  h1 { font-size: 66px; font-weight: 800; line-height: 1.12; margin-top: 64px; letter-spacing: -.01em; }
+  h1 span { color: #bfdbfe; }
+  .pillole { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px; }
+  .pillola { font-size: 22px; font-weight: 500; padding: 12px 22px; border-radius: 999px;
+             background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); }
+  .piede { position: absolute; left: 84px; right: 84px; bottom: 70px; display: flex; justify-content: space-between; align-items: baseline; font-size: 22px; font-weight: 700; }
+  .sito { color: #F59E0B; }
+  .promessa { color: #86efac; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="marca">
+    <svg viewBox="0 0 48 48" fill="none">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+      </defs>
+      <rect width="48" height="48" rx="12" fill="url(#bg)" stroke="rgba(255,255,255,.12)" stroke-width=".6"/>
+      <rect x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+      <rect x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+      <rect x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+    </svg>
+    <div>
+      <div class="nome">DATACE</div>
+      <div class="sotto">DOCUMENTI IN DATI STRUTTURATI</div>
+    </div>
+  </div>
+
+  <h1>Strumenti gratuiti per<br>aziende e <span>commercialisti</span></h1>
+
+  <!-- Gli strumenti, nell'ordine della home -->
+  <div class="pillole">
+    <div class="pillola">F24 PDF in Excel</div>
+    <div class="pillola">Fattura elettronica in Excel</div>
+    <div class="pillola">Bonifici massivi XML</div>
+  </div>
+
+  <div class="piede">
+    <div class="sito">datacetools.com</div>
+    <div class="promessa">✓ Il file resta sul tuo computer</div>
+  </div>
+</body>
+</html>
