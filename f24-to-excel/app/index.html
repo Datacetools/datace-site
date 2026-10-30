@@ -159,7 +159,7 @@
     </div>
 
     <h2 class="text-lg font-semibold text-white mb-1">Scegli i tuoi F24</h2>
-    <p class="text-sm text-gray-400 mb-6">Fino a 10 PDF · Max 20 MB ciascuno · Vengono elaborati insieme in un unico Excel</p>
+    <p class="text-sm text-gray-400 mb-6">Fino a 10 PDF · Max 20 MB ciascuno · 100 MB in tutto · Vengono elaborati insieme in un unico Excel</p>
 
 
     <!-- Drop Zone -->
@@ -471,7 +471,7 @@ async function aggiornaAttesa() {
   const giro = ++_giroAttesa;   // i file cambiano mentre si contano: vale l'ultimo conteggio
   _pagine = 0;
   el.classList.add('hidden');
-  if (selectedFiles.length === 0) return;
+  if (selectedFiles.length === 0 || troppiInTutto()) return;   // oltre 100 MB il motore li rifiuta: niente conteggio
   const m = await ilMotore();
   const n = await m.pagine(selectedFiles);
   if (giro !== _giroAttesa || !n) return;
@@ -496,6 +496,8 @@ function handleDrop(e) {
 }
 
 const MAX_FILE_BYTES = 20 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 100 * 1024 * 1024;   // lo stesso tetto del motore (invio.py)
+const troppiInTutto = () => selectedFiles.reduce((s, f) => s + f.size, 0) > MAX_TOTAL_BYTES;
 
 function addFiles(newFiles) {
   // Prima si pulisce, POI si avvisa: al contrario l'avviso spariva nello stesso istante
@@ -519,6 +521,9 @@ function addFiles(newFiles) {
     selectedFiles = selectedFiles.slice(0, 10);
     showError('Massimo 10 file. Gli ultimi sono stati ignorati.');
   }
+  // Subito alla scelta (brief 048, Davide): il motore li rifiuterebbe comunque, e contarne
+  // le pagine con file enormi richiedeva fino a 13 s.
+  if (troppiInTutto()) showError('Troppi dati insieme (massimo 100 MB): elabora i file in più volte.');
   renderFileList();
   updateButton();
   aggiornaAttesa();
@@ -538,6 +543,7 @@ function removeFile(idx) {
   renderFileList();
   updateButton();
   clearStatus();   // i riquadri erano dei file di prima
+  if (troppiInTutto()) showError('Troppi dati insieme (massimo 100 MB): elabora i file in più volte.');
   aggiornaAttesa();
 }
 

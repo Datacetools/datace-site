@@ -40,7 +40,7 @@ def _text_layer_flag(text_pages, total_pages):
 
 def _elabora(nomi, tipi, files, credito_negativo):
     if sum((len(f) for f in files)) > MAX_TOTAL_BYTES:
-        raise Risposta(413, {'error_code': 'file_too_large', 'stage': 'upload_validation', 'message': f'Troppi dati in un invio solo (massimo {MAX_TOTAL_MB} MB): dividi i file in più invii.'})
+        raise Risposta(413, {'error_code': 'file_too_large', 'stage': 'upload_validation', 'message': f'Troppi dati insieme (massimo {MAX_TOTAL_MB} MB): elabora i file in più volte.'})
     if not files:
         raise _errore(400, 'empty_or_corrupt', 'upload_validation', 'Nessun file ricevuto.')
     if len(files) > MAX_FILES:
