@@ -1,0 +1,20 @@
+Programmi di terze parti usati da questa pagina, serviti così come sono stati pubblicati:
+
+Pyodide 0.29.5 (Python 3.13 in WebAssembly)   Mozilla Public License 2.0   https://github.com/pyodide/pyodide
+CPython 3.13 (libreria standard)               Python Software Foundation License
+pdfplumber 0.11.10                             MIT
+pdfminer.six 20260107                          MIT
+cryptography 46.0.3                            Apache 2.0 / BSD 3-Clause
+cffi 1.17.1                                    MIT
+pycparser 2.22                                 BSD 3-Clause
+charset-normalizer 3.4.4                       MIT
+pandas 2.3.3                                   BSD 3-Clause
+numpy 2.2.5                                    BSD 3-Clause
+Pillow 11.3.0                                  MIT-CMU (HPND)
+python-dateutil 2.9.0.post0                    Apache 2.0 / BSD 3-Clause
+pytz 2025.2                                    MIT
+six 1.17.0                                     MIT
+openpyxl 3.1.5                                 MIT
+et-xmlfile 2.0.0                               MIT
+
+I testi completi delle licenze sono nei rispettivi progetti e dentro i file .whl.

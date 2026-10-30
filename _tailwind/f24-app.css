@@ -1,0 +1,44 @@
+/* SORGENTE del CSS di /f24-to-excel/app/ (le cartelle con "_" non escono online).
+   Si ricompila dalla radice del sito, con Tailwind v4.3.3, ogni volta che nella pagina si
+   aggiunge o si toglie una classe (la CLI è in f24-splitter-web/browser, versione bloccata):
+
+     $env:NODE_PATH = "..\f24-splitter-web\browser\node_modules"
+     ..\f24-splitter-web\browser\node_modules\.bin\tailwindcss -i _tailwind/f24-app.css -o f24-to-excel/app/tailwind.css --minify
+
+   (senza NODE_PATH la CLI non trova il pacchetto tailwindcss da qui: verificato il 30/10/2026)
+
+   Il prodotto si committa: su GitHub Pages non c'è nessun passo di build.
+   Sostituisce il CDN di Tailwind e Google Fonts della pagina sul server: stessi colori e
+   animazioni del suo tailwind.config e lo stesso file di Inter della vetrina di Bonifici. */
+@import "tailwindcss" source(none);
+@source "../f24-to-excel/app/index.html";
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --color-brand: #1c3461; --color-brand-light: #2a9db5; --color-brand-dark: #152747;
+  --color-datace-navy: #1c3461; --color-datace-teal: #2a9db5; --color-datace-gold: #c4972b;
+  --font-sans: Inter, system-ui, sans-serif;
+  --animate-pulse-slow: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-bounce-in: bounceIn 0.4s ease-out;
+
+  @keyframes bounceIn {
+    0%   { transform: scale(0.8); opacity: 0; }
+    60%  { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+}
+
+/* Dalla v4 i pulsanti hanno il cursore normale e i bordi prendono il colore del testo:
+   qui restano come con il CDN (v3). */
+@layer base {
+  button:not(:disabled) { cursor: pointer; }
+  *, ::after, ::before { border-color: var(--color-gray-200, currentColor); }
+}

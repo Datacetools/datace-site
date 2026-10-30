@@ -1,0 +1,808 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- I file non escono dal browser: nessuna richiesta verso altri indirizzi oltre alle
+       statistiche (Umami) e al modulo di feedback (Formspree). GitHub Pages non manda
+       header, quindi la CSP sta qui. 'wasm-unsafe-eval' e worker-src: il motore (Pyodide,
+       WebAssembly in un Web Worker), solo in questa pagina. Come Fattura. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://gateway.umami.is https://formspree.io; worker-src 'self'; base-uri 'self'" />
+
+  <!-- SEO primario -->
+  <title>F24 PDF in Excel: converti i PDF F24 | Datace</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231c3461'/%3E%3Crect x='10' y='11' width='28' height='6' rx='3' fill='%23F59E0B'/%3E%3Crect x='10' y='21' width='20' height='6' rx='3' fill='white'/%3E%3Crect x='10' y='31' width='12' height='6' rx='3' fill='white' fill-opacity='0.35'/%3E%3C/svg%3E">
+  <meta name="description" content="Scegli i tuoi moduli F24 PDF e scarica un file Excel con tutti i codici tributo, importi a debito e credito, suddivisi per banca e sezione. Strumento online per commercialisti e aziende. Il file è elaborato dal browser e non viene inviato a Datace." />
+  <meta name="keywords" content="F24 PDF Excel, estrai dati F24, F24 commercialista, codici tributo excel, convertire F24 PDF, elabora F24 online, F24 splitter" />
+  <!-- Su Google si fa trovare la vetrina, datacetools.com/f24-to-excel/, che porta qui
+       col suo pulsante: lo strumento non le fa concorrenza. Come chi-siamo e privacy. -->
+  <meta name="robots" content="noindex, follow" />
+
+  <!-- Open Graph (anteprima su WhatsApp, LinkedIn, Facebook) -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://datacetools.com/f24-to-excel/app/" />
+  <meta property="og:title"       content="F24 PDF in Excel: converti i PDF F24 in un clic | Datace" />
+  <meta property="og:description" content="Scegli i tuoi F24 PDF e scarica subito un Excel con codici tributo, importi, banca e sezione. Il file resta sul tuo computer." />
+  <meta name="twitter:card"       content="summary" />
+
+  <!-- Structured Data JSON-LD: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Datace F24 in Excel",
+    "url": "https://datacetools.com/f24-to-excel/app/",
+    "description": "Strumento online per estrarre codici tributo e importi dai moduli F24 PDF dell'Agenzia delle Entrate ed esportarli in un file Excel strutturato su 3 fogli.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "priceCurrency": "EUR" },
+    "inLanguage": "it",
+    "audience": { "@type": "Audience", "audienceType": "Commercialisti, Ragionieri, Aziende" },
+    "author": {
+      "@type": "Organization",
+      "name": "Datace",
+      "url": "https://datacetools.com"
+    }
+  }
+  </script>
+
+  <!-- Structured Data JSON-LD: Organization (segnale E-E-A-T per Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Datace",
+    "url": "https://datacetools.com",
+    "description": "Datace crea strumenti di document processing e data automation per aziende e professionisti italiani.",
+    "knowsAbout": ["Document processing", "Data automation", "F24", "Elaborazione PDF", "Fiscalita italiana", "Excel"],
+    "inLanguage": "it"
+  }
+  </script>
+
+  <!-- Tailwind compilato in locale e Inter servito dal sito (sorgente: _tailwind/f24-app.css).
+       Nessuna richiesta a terzi: né CDN né font esterni. -->
+  <link rel="stylesheet" href="tailwind.css" />
+
+  <style>
+    /* Table scroll: sticky funziona solo su overflow:scroll, non auto */
+    /* Row colors per sezione */
+    tr.erario  td:first-child { border-left: 3px solid #2563eb; }
+    tr.inps    td:first-child { border-left: 3px solid #16a34a; }
+    tr.regioni td:first-child { border-left: 3px solid #9333ea; }
+    tr.imu     td:first-child { border-left: 3px solid #d97706; }
+    tr.altri   td:first-child { border-left: 3px solid #64748b; }
+
+    /* Tema scuro premium (classi native, nessun override) */
+    .dark-card { background:linear-gradient(135deg,rgba(15,32,64,.85),rgba(6,14,31,.95)); border:1px solid rgba(255,255,255,.07); border-radius:16px; }
+    .dz { border:2px dashed rgba(255,255,255,.15); border-radius:12px; transition:all .2s; cursor:pointer; }
+    .dz:hover, #drop-zone.drag-over { border-color:#2a9db5; background:rgba(29,122,148,.1); }
+    .faq-item { border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
+
+    /* Footer premium multi-colonna + logo animato */
+    .logo-bar { transform-box:fill-box; transform-origin:left center; }
+    .logo-bar-1 { animation:barStream 2.8s ease-in-out infinite 0s; }
+    .logo-bar-2 { animation:barStream 2.8s ease-in-out infinite .22s; }
+    .logo-bar-3 { animation:barStream 2.8s ease-in-out infinite .44s; }
+    @keyframes barStream { 0%,100%{transform:scaleX(1);opacity:1;} 30%{transform:scaleX(.32);opacity:.5;} 60%{transform:scaleX(1);opacity:1;} }
+    .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; align-items:start; }
+    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-bottom:16px; }
+    .footer-link { display:block; font-size:14px; color:rgba(255,255,255,.45) !important; margin-bottom:10px; text-decoration:none; transition:color .2s ease; }
+    .footer-link:hover { color:#fff !important; }
+    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
+    @media(max-width:768px){ .footer-grid{grid-template-columns:1fr;gap:32px;} .footer-bottom{flex-direction:column;gap:8px;text-align:center;} }
+    /* Il calcolo dopo l'elaborazione (brief 039): debiti meno crediti uguale saldo, saldo grande */
+    .calcolo { display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:16px; }
+    .voce { flex:1 1 0; min-width:0; container-type:inline-size; }
+    .voce-saldo { flex-grow:1.6; }
+    .op { font-size:22px; font-weight:700; color:rgba(255,255,255,.4); flex-shrink:0; }
+    .kpi-t { font-size:11px; color:rgba(255,255,255,.62); text-transform:uppercase; letter-spacing:.08em; }
+    /* Un importo non va mai a capo e sta nella sua colonna: «€ 123.456.789,01» (16 caratteri
+       da 0,6 em) entra se la cifra è al massimo un decimo della larghezza (10cqi). */
+    .kpi-v { font-size:18px; font-size:clamp(13px,10cqi,18px); font-weight:700; font-family:monospace; margin-top:4px; white-space:nowrap; }
+    .voce-saldo .kpi-v { font-size:28px; font-size:clamp(16px,10cqi,30px); color:#F59E0B; }
+    .kpi-n { font-size:11px; color:rgba(255,255,255,.5); margin-top:4px; }
+    @media(max-width:560px){ .calcolo{flex-direction:column;align-items:stretch;gap:6px;} .op{text-align:center;line-height:1;} }
+</style>
+
+  <!-- Umami: analytics aggregati e cookieless (stesso host/ID di datace-site). -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com"></script>
+</head>
+<body class="min-h-screen font-sans" style="background:#060E1F;color:#fff;">
+
+<!-- ─── HEADER ─────────────────────────────────────────────────────────── -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-4xl mx-auto px-6 py-3 flex items-center gap-3">
+    <a href="https://datacetools.com" class="flex items-center gap-3 flex-shrink-0">
+      <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none">
+        <defs>
+          <linearGradient id="hsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="hbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#hbg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#hsg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.35);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <div style="width:1px;height:32px;background:rgba(255,255,255,.1);" class="mx-2 hidden sm:block"></div>
+    <div class="hidden sm:flex flex-col leading-tight">
+      <span style="color:white;font-weight:700;font-size:15px;">F24 in Excel</span>
+      <span style="color:rgba(255,255,255,.45);font-size:11px;">Estrai Debiti e Crediti dai tuoi F24</span>
+    </div>
+    <div class="ml-auto hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);">
+      <svg class="w-3 h-3" style="color:#86efac;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+      <span style="color:#86efac;font-size:11px;font-weight:600;">Resta sul tuo computer</span>
+    </div>
+  </div>
+</header>
+
+<!-- ─── MAIN ────────────────────────────────────────────────────────────── -->
+<main class="max-w-4xl mx-auto px-4 py-10 space-y-8">
+
+  <!-- Browser non adatti (controllo.js): al posto dello strumento, uno di questi due -->
+  <p id="safari" role="alert" hidden class="dark-card p-6" style="font-size:15px;color:#fcd34d;">Safari e i browser di iPhone e iPad non sono ancora supportati. Apri la pagina da un computer con Chrome, Edge, Firefox, Brave o Opera.</p>
+  <p id="non-supportato" role="alert" hidden class="dark-card p-6" style="font-size:15px;color:#fcd34d;">Questo browser non è supportato. Apri la pagina con Chrome, Edge, Firefox, Brave o Opera.</p>
+
+  <div id="strumento" class="space-y-8">
+  <!-- CARD UPLOAD -->
+  <section class="dark-card p-8">
+
+    <!-- Novità -->
+    <div class="flex gap-3 items-start rounded-xl px-4 py-3 mb-6" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+      <span class="flex-shrink-0 uppercase tracking-wide" style="font-weight:800;font-size:11px;color:#F59E0B;line-height:20px;">Novità</span>
+      <p class="text-gray-200 text-sm">F24 in Excel ora funziona nel browser: il PDF resta sul tuo computer e non viene inviato a Datace. Se qualcosa non ti torna, scrivicelo nel feedback qui sotto. <a href="https://datacetools.com/aggiornamenti/" target="_blank" rel="noopener" style="color:#F59E0B;text-decoration:underline;">Tutti gli aggiornamenti</a></p>
+    </div>
+
+    <h2 class="text-lg font-semibold text-white mb-1">Scegli i tuoi F24</h2>
+    <p class="text-sm text-gray-400 mb-6">Fino a 10 PDF · Max 20 MB ciascuno · Vengono elaborati insieme in un unico Excel</p>
+
+
+    <!-- Drop Zone -->
+    <div id="drop-zone"
+         class="border-2 border-dashed border-white/15 rounded-xl p-10 text-center cursor-pointer
+                transition-all duration-200 hover:border-brand" style="transition:all 0.2s;" onmouseenter="this.style.borderColor='#2a9db5';this.style.background='rgba(29,122,148,.12)';" onmouseleave="this.style.borderColor='';this.style.background='';"
+         onclick="document.getElementById('file-input').click()"
+         ondragover="handleDragOver(event)"
+         ondragleave="handleDragLeave(event)"
+         ondrop="handleDrop(event)">
+
+      <svg class="mx-auto w-12 h-12 text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="text-gray-300 font-medium">Trascina i PDF qui</p>
+      <p class="text-gray-500 text-sm mt-1">oppure <span class="underline" style="color:#2a9db5;">clicca per selezionare</span></p>
+    </div>
+
+    <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.6);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;text-align:center;"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg><span><strong style="color:white;">Il file è elaborato dal browser e non viene inviato a Datace.</strong></span> <a href="https://datacetools.com/privacy/" style="color:#F59E0B;text-decoration:underline;">Privacy</a></p>
+    <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.5);margin-top:6px;text-align:center;">La prima volta il browser scarica circa 30 MB, poi di solito li tiene. L'avvio richiede alcuni secondi.</p>
+    <input id="file-input" type="file" accept=".pdf,application/pdf"
+           multiple class="hidden" onchange="handleFileSelect(this.files)" />
+
+    <!-- File list -->
+    <div id="file-list" class="mt-4 space-y-2 hidden"></div>
+
+    <!-- Credito negativo automatico (nascosto, sempre attivo) -->
+    <input id="credito-neg" type="checkbox" checked class="hidden" />
+
+    <!-- Il tempo che serve, detto prima di partire (brief 048) -->
+    <p id="attesa" class="hidden" style="font-size:13px;color:rgba(255,255,255,.75);margin-top:16px;line-height:1.5;"></p>
+
+    <!-- CTA -->
+    <button id="btn-elabora"
+            onclick="elabora()"
+            disabled
+            class="mt-6 w-full py-3 px-6 rounded-xl font-semibold text-white text-sm
+                   bg-white/10 cursor-not-allowed transition-all duration-200
+                   disabled:opacity-60"
+            data-enabled-class="bg-brand hover:bg-brand-dark cursor-pointer shadow-md hover:shadow-lg active:scale-95">
+      <span id="btn-label" class="flex items-center justify-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Elabora e scarica Excel
+      </span>
+    </button>
+
+    <!-- Progress / Status -->
+    <div id="status-area" class="mt-4 hidden">
+      <div id="status-loading" class="hidden flex-col items-center gap-3 py-4">
+        <!-- Cerchio di progresso SVG -->
+        <div class="relative w-24 h-24">
+          <svg class="w-24 h-24 -rotate-90" viewBox="0 0 100 100">
+            <!-- Traccia sfondo -->
+            <circle cx="50" cy="50" r="40"
+                    fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8"/>
+            <!-- Traccia progresso -->
+            <circle id="progress-ring" cx="50" cy="50" r="40"
+                    fill="none" stroke="#1c3461" stroke-width="8"
+                    stroke-linecap="round"
+                    stroke-dasharray="251.2"
+                    stroke-dashoffset="251.2"
+                    style="transition: stroke-dashoffset 0.4s ease;"/>
+          </svg>
+          <!-- Percentuale al centro -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span id="progress-pct" class="text-2xl font-bold leading-none" style="color:#5cc6dc;">0%</span>
+          </div>
+        </div>
+        <span id="status-msg" class="text-sm text-gray-400">Elaborazione in corso…</span>
+      </div>
+      <div id="status-success" class="hidden animate-bounce-in flex items-center gap-2 text-sm text-green-300 bg-green-500/10 rounded-lg px-4 py-3" style="flex-wrap:wrap;">
+        <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span id="success-msg">Excel scaricato con successo!</span>
+        <a href="https://datacetools.com/raccontaci/" target="_blank" rel="noopener" data-umami-event="raccontaci-link" data-umami-event-origine="dopo-download" style="flex-basis:100%;padding-left:28px;font-size:12px;color:rgba(255,255,255,.62);text-decoration:underline;">Se ti va, raccontaci come lavori</a>
+      </div>
+      <div id="riepilogo" class="hidden mt-4">
+        <div class="calcolo">
+          <div class="voce"><div class="kpi-t">Debiti</div><div class="kpi-v" id="kpi-debiti"></div></div>
+          <div class="op" aria-hidden="true">−</div>
+          <div class="voce"><div class="kpi-t">Crediti compensati</div><div class="kpi-v" id="kpi-crediti"></div></div>
+          <div class="op" aria-hidden="true">=</div>
+          <div class="voce voce-saldo"><div class="kpi-t">Saldo da versare</div><div class="kpi-v" id="kpi-saldo"></div><div class="kpi-n hidden" id="kpi-saldo-credito">a credito</div><div class="kpi-n hidden" id="kpi-saldo-controllare" style="color:#fcd34d;">da controllare</div></div>
+        </div>
+        <p id="avviso-totali" class="hidden mt-3 text-sm rounded-lg px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);"></p>
+        <p id="kpi-base" class="kpi-n" style="margin-top:8px;"></p>
+        <p id="avviso-doppioni" class="hidden mt-3 text-sm rounded-lg px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);">Hai scelto due volte lo stesso file: i totali lo contano due volte.</p>
+      </div>
+      <div id="status-error" class="hidden flex items-start gap-2 text-sm text-red-300 bg-red-500/10 rounded-lg px-4 py-3">
+        <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span id="error-msg">Errore durante l'elaborazione.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COME FUNZIONA -->
+  <section class="dark-card p-6">
+    <h2 class="text-lg font-semibold text-white mb-4">Come funziona</h2>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+          <span style="font-weight:800;font-size:14px;color:#F59E0B;">1</span>
+        </div>
+        <div>
+          <p class="font-medium text-gray-200 text-sm">Scegli</p>
+          <p class="text-gray-400 text-xs mt-0.5">Trascina uno o più PDF F24 dell'Agenzia delle Entrate</p>
+        </div>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+          <span style="font-weight:800;font-size:14px;color:#F59E0B;">2</span>
+        </div>
+        <div>
+          <p class="font-medium text-gray-200 text-sm">Elabora</p>
+          <p class="text-gray-400 text-xs mt-0.5">Il motore estrae codici tributo, importi, banca e data di versamento da ogni pagina</p>
+        </div>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(29,122,148,.2);border:1px solid rgba(29,122,148,.3);">
+          <span style="font-weight:800;font-size:14px;color:#2a9db5;">3</span>
+        </div>
+        <div>
+          <p class="font-medium text-gray-200 text-sm">Scarica</p>
+          <p class="text-gray-400 text-xs mt-0.5">Ricevi un Excel con 3 fogli: Dettaglio, Riepilogo, Per Anno</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+</main>
+
+<!-- ─── FEEDBACK ──────────────────────────────────────────────────────────── -->
+<section class="max-w-4xl mx-auto px-4 py-10">
+  <div class="dark-card p-6 text-center">
+    <h2 class="text-lg font-semibold text-white mb-1">Lascia un feedback</h2>
+    <p class="text-sm text-gray-400 mb-5">Hai usato F24 in Excel? Dicci cosa ne pensi, ci aiuta a migliorare.</p>
+    <form action="https://formspree.io/f/mreddazr" method="POST" class="space-y-3 text-left">
+      <input type="hidden" name="tool" value="F24 in Excel" />
+      <input type="text" name="name" placeholder="Nome (opzionale)"
+             class="w-full border border-white/15 bg-white/5 text-white placeholder-white/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent" style="--tw-ring-color:#2a9db5;" />
+      <textarea name="message" rows="3" placeholder="Il tuo feedback..." required
+                class="w-full border border-white/15 bg-white/5 text-white placeholder-white/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent resize-none" style="--tw-ring-color:#2a9db5;"></textarea>
+      <button type="submit"
+              class="w-full py-2.5 px-6 rounded-xl font-semibold text-white text-sm transition-all duration-200"
+              style="background:#1c3461;" onmouseenter="this.style.background='#2a9db5'" onmouseleave="this.style.background='#1c3461'">
+        Invia feedback
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- CONTATTI -->
+<section class="max-w-4xl mx-auto px-4 pb-8">
+  <div class="dark-card p-6 text-center">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">Il tuo caso è diverso?</h2>
+    <p style="font-size:13px;color:rgba(255,255,255,.45);margin-bottom:20px;">Formato particolare, altro gestionale, report da preparare ogni mese: posso costruire una soluzione su misura. Per segnalazioni, supporto o per raccontarmi il tuo caso:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+      <a href="https://www.linkedin.com/in/davide-sgroia/" target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="tool-f24" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;" onmouseover="this.style.background='rgba(255,255,255,.1)';this.style.borderColor='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        Profilo LinkedIn
+      </a>
+      <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="tool-f24" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Raccontami il tuo caso
+      </a>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,.4);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="tool-f24" style="color:#F59E0B;">info@datacetools.com</a></p>
+  </div>
+</section>
+
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
+        <a href="/privacy" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+
+
+<!-- Controllo del browser prima di tutto (vecchio stile: gira ovunque), poi il motore -->
+<script src="controllo.js"></script>
+<script type="module" src="motore.min.js"></script>
+
+<!-- ─── JAVASCRIPT ────────────────────────────────────────────────────────── -->
+<script>
+/* ── State ───────────────────────────────────────────────────────────── */
+let selectedFiles = [];
+
+const SECTION_COLORS = {
+  'ERARIO':  'erario',
+  'INPS':    'inps',
+  'REGIONI': 'regioni',
+  'IMU':     'imu',
+  'ICI':     'imu',
+  'ALTRI':   'altri',
+};
+
+/* ── Analytics privacy-safe (whitelist rigida) ───────────────────────────
+   Inviamo SOLO parametri tecnici anonimi. Mai filename, err.detail, message,
+   testo PDF, importi, codici tributo o dati liberi del documento. */
+const TOOL = "f24";
+const TOOL_VERSION = "1.03"; // = VERSIONE di invio.py (f24-splitter-web/browser) e la pagina Aggiornamenti
+const ALLOWED_STAGES = ["upload_validation","pdf_read","text_extract","data_parse","excel_gen","download","unknown"];
+const ALLOWED_ERROR_CODES = ["too_many_files","file_too_large","empty_or_corrupt","not_a_pdf","no_text_layer","unsupported_layout","parse_no_data","server_error","network_error","unknown"];
+const ALLOWED_PARAMS = ["tool","stage","error_code","file_type","file_count","file_size_bucket","page_count_bucket","has_text_layer","processing_time_bucket","tool_version"];
+
+function safeTrack(event, params) {
+  if (!window.umami || typeof window.umami.track !== "function") return;  // funziona anche senza Umami
+  const clean = {};
+  for (const k of ALLOWED_PARAMS) {
+    const v = params ? params[k] : undefined;
+    if (v !== undefined && v !== null) clean[k] = v;   // solo chiavi whitelisted
+  }
+  if (clean.stage && !ALLOWED_STAGES.includes(clean.stage)) clean.stage = "unknown";
+  if (clean.error_code && !ALLOWED_ERROR_CODES.includes(clean.error_code)) clean.error_code = "unknown";
+  try { window.umami.track(event, clean); } catch (_) {}
+}
+function sizeBucket(bytes) {
+  if (bytes < 1048576)  return "<1MB";
+  if (bytes < 10485760) return "1-10MB";
+  if (bytes < 52428800) return "10-50MB";
+  return "50MB+";
+}
+function timeBucket(ms) {
+  if (ms < 5000)  return "<5s";
+  if (ms < 30000) return "5-30s";
+  return "30s+";
+}
+function pageBucketSafe(v) { return ["1","2-5","6+"].includes(v) ? v : "unknown"; }
+
+window.addEventListener("load", () => safeTrack("tool_opened", { tool: TOOL, tool_version: TOOL_VERSION }));
+
+/* ── File selection ──────────────────────────────────────────────────── */
+function handleFileSelect(files) {
+  addFiles(Array.from(files));
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  document.getElementById('drop-zone').classList.remove('drag-over');
+}
+
+/* Il motore gira nel browser (motore.js + Web Worker): la stessa risposta della vecchia
+   rotta /elabora, così il resto della pagina non cambia. Come Fattura. */
+const motorePronto = new Promise(r => { window.__motorePronto = r; });
+async function ilMotore() { return window.motore || motorePronto; }  // non "motore": window.motore è il modulo
+
+/* Il tempo che serve, detto dopo la scelta dei file e prima di partire (brief 048): dalle
+   pagine dei PDF e dalla velocità di QUESTO PC e browser (motore.stima, come Fattura),
+   arrotondato per eccesso a 5 secondi. */
+let _pagine = 0, _secondi = 5, _giroAttesa = 0;
+function arrotonda(s) { return Math.max(5, Math.ceil(s / 5) * 5); }
+async function aggiornaAttesa() {
+  const el = document.getElementById('attesa');
+  const giro = ++_giroAttesa;   // i file cambiano mentre si contano: vale l'ultimo conteggio
+  _pagine = 0;
+  el.classList.add('hidden');
+  if (selectedFiles.length === 0) return;
+  const m = await ilMotore();
+  const n = await m.pagine(selectedFiles);
+  if (giro !== _giroAttesa || !n) return;
+  _pagine = n;
+  _secondi = arrotonda(m.stima(n));
+  el.textContent = `Servono circa ${_secondi} secondi per ${n} ${n === 1 ? 'pagina' : 'pagine'}. ` +
+                   'Puoi continuare a usare altre schede, ma non chiudere questa.';
+  el.classList.remove('hidden');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files).filter(f =>
+    f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')
+  );
+  if (files.length === 0) {
+    showError('Nessun PDF rilevato. Trascina solo file .pdf');
+    return;
+  }
+  addFiles(files);
+}
+
+const MAX_FILE_BYTES = 20 * 1024 * 1024;
+
+function addFiles(newFiles) {
+  // Prima si pulisce, POI si avvisa: al contrario l'avviso spariva nello stesso istante
+  // in cui compariva (era così anche sul server; corretto come in Fattura, brief 048).
+  stopProgress();
+  clearStatus();
+  const oversized = [];
+  newFiles.forEach(f => {
+    if (f.size > MAX_FILE_BYTES) {
+      oversized.push(f.name);
+      return;
+    }
+    if (!selectedFiles.find(x => x.name === f.name && x.size === f.size)) {
+      selectedFiles.push(f);
+    }
+  });
+  if (oversized.length > 0) {
+    showError(`File troppo grandi (max 20 MB): ${oversized.join(', ')}`);
+  }
+  if (selectedFiles.length > 10) {
+    selectedFiles = selectedFiles.slice(0, 10);
+    showError('Massimo 10 file. Gli ultimi sono stati ignorati.');
+  }
+  renderFileList();
+  updateButton();
+  aggiornaAttesa();
+  if (selectedFiles.length > 0) {
+    const totalBytes = selectedFiles.reduce((s, f) => s + (f.size || 0), 0);
+    safeTrack("file_selected", {
+      tool: TOOL,
+      file_type: "pdf",
+      file_count: selectedFiles.length,
+      file_size_bucket: sizeBucket(totalBytes),
+    });
+  }
+}
+
+function removeFile(idx) {
+  selectedFiles.splice(idx, 1);
+  renderFileList();
+  updateButton();
+  clearStatus();   // i riquadri erano dei file di prima
+  aggiornaAttesa();
+}
+
+function renderFileList() {
+  const wrap = document.getElementById('file-list');
+  if (selectedFiles.length === 0) { wrap.classList.add('hidden'); return; }
+  wrap.classList.remove('hidden');
+  wrap.innerHTML = selectedFiles.map((f, i) => `
+    <div class="flex items-center justify-between bg-white/5 rounded-lg px-3 py-2 text-sm">
+      <div class="flex items-center gap-2 min-w-0">
+        <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/>
+        </svg>
+        <span class="truncate text-gray-200">${escHtml(f.name)}</span>
+        <span class="text-gray-500 flex-shrink-0">${formatBytes(f.size)}</span>
+      </div>
+      <button onclick="removeFile(${i})"
+              class="text-gray-500 hover:text-red-500 ml-3 flex-shrink-0 transition-colors"
+              title="Rimuovi">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>`).join('');
+}
+
+/* ── Button state ────────────────────────────────────────────────────── */
+function updateButton() {
+  const btn = document.getElementById('btn-elabora');
+  if (selectedFiles.length === 0) {
+    btn.disabled = true;
+    btn.className = btn.className.replace(/bg-brand[^\s]*/g, 'bg-white/10 cursor-not-allowed');
+  } else {
+    btn.disabled = false;
+    btn.className = 'mt-6 w-full py-3 px-6 rounded-xl font-semibold text-white text-sm ' +
+      'bg-brand hover:bg-datace-teal cursor-pointer shadow-md hover:shadow-lg active:scale-95 transition-all duration-200';
+  }
+}
+
+/* ── Cerchio progresso ───────────────────────────────────────────────── */
+const CIRCUMFERENCE = 2 * Math.PI * 40;   // r=40 → 251.2
+let   _progressTimer  = null;
+let   _currentPct     = 0;
+
+function setRingPct(pct) {
+  pct = Math.min(100, Math.max(0, Math.round(pct)));
+  _currentPct = pct;
+  const offset = CIRCUMFERENCE * (1 - pct / 100);
+  const ring   = document.getElementById('progress-ring');
+  const label  = document.getElementById('progress-pct');
+  if (ring)  ring.style.strokeDashoffset = offset;
+  if (label) label.textContent = pct + '%';
+
+  // Colore: blu → verde al 100%
+  if (ring) ring.style.stroke = pct >= 100 ? '#16a34a' : '#1c3461';
+}
+
+/* Il cerchio segue il tempo stimato: arriva al 90% quando la stima è passata, poi resta
+   lì finché il motore non ha finito (finishProgress). Prima era a tempo fisso (~7 s),
+   pensato per il server: con 40 s di lettura restava fermo all'88% per mezzo minuto. */
+function startFakeProgress(secondi) {
+  clearTimeout(_progressTimer);
+  setRingPct(0);
+  const inizio = performance.now(), durata = Math.max(2, secondi) * 1000;
+  function tick() {
+    setRingPct(Math.min(90, 90 * (performance.now() - inizio) / durata));
+    if (_currentPct < 90) _progressTimer = setTimeout(tick, 200);
+  }
+  _progressTimer = setTimeout(tick, 60);
+}
+
+function finishProgress(onDone) {
+  clearTimeout(_progressTimer);
+  // Anima da dove siamo fino al 100%
+  function raceToEnd() {
+    if (_currentPct < 100) {
+      setRingPct(_currentPct + 2);
+      _progressTimer = setTimeout(raceToEnd, 20);
+    } else {
+      clearTimeout(_progressTimer);
+      setTimeout(() => { if (onDone) onDone(); }, 300);
+    }
+  }
+  raceToEnd();
+}
+
+function stopProgress() {
+  clearTimeout(_progressTimer);
+  setRingPct(0);
+}
+
+/* ── Elabora (download Excel) ────────────────────────────────────────── */
+async function elabora() {
+  if (selectedFiles.length === 0) return;
+
+  clearStatus();
+  const m = await ilMotore();
+  if (!m.prontoGia()) { setLoading(true, 'Sto preparando lo strumento…'); await m.pronto(); }
+
+  const _t0 = performance.now();
+  safeTrack("processing_started", { tool: TOOL, file_count: selectedFiles.length });
+  setLoading(true, 'Lettura e analisi dei PDF…');
+  startFakeProgress(_pagine ? _secondi : 5);
+
+  try {
+    const res = await m.elabora(selectedFiles, document.getElementById('credito-neg').checked);
+
+    if (!res.ok) {
+      let msg = `Errore ${res.status}`;
+      let error_code = "unknown", stage = "unknown";
+      try {
+        const err = await res.json();
+        const d = err && err.detail;
+        if (d && typeof d === "object") {
+          if (d.message)    msg        = d.message;     // SOLO per la UI
+          if (d.error_code) error_code = d.error_code;  // per analytics (enum)
+          if (d.stage)      stage      = d.stage;        // per analytics (enum)
+        } else if (typeof d === "string") {
+          msg = d; // retro-compat; mostrato all'utente, MAI inviato a Umami
+        }
+      } catch(_) {}
+      stopProgress();
+      setLoading(false);
+      safeTrack("processing_error", { tool: TOOL, stage, error_code, processing_time_bucket: timeBucket(performance.now() - _t0) });
+      showError(msg);
+      return;
+    }
+
+    // Risposta OK: aggiorna messaggio mentre finisce l'animazione
+    document.getElementById('status-msg').textContent = 'Generazione Excel…';
+
+    const blob       = await res.blob();
+    const rows       = res.headers.get('X-Rows-Extracted') || '?';
+    const pageBucket = pageBucketSafe(res.headers.get('X-Page-Count-Bucket'));
+    const hasText    = res.headers.get('X-Has-Text-Layer') || 'unknown';
+    const toolVer    = res.headers.get('X-Tool-Version') || TOOL_VERSION;
+    let riepilogo = null;
+    try { riepilogo = JSON.parse(res.headers.get('X-Riepilogo')); } catch (_) {}
+    const dispHdr    = res.headers.get('Content-Disposition') || '';
+    const match      = dispHdr.match(/filename\*?=(?:UTF-8'')?([^\s;]+)/i);
+    const filename   = match ? decodeURIComponent(match[1]) : 'f24_export.xlsx';
+
+    // Porta il cerchio al 100% poi scarica
+    finishProgress(() => {
+      const url  = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href     = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+
+      safeTrack("download_started", { tool: TOOL });
+      safeTrack("processing_success", {
+        tool: TOOL,
+        file_count: selectedFiles.length,
+        page_count_bucket: pageBucket,
+        has_text_layer: hasText,
+        processing_time_bucket: timeBucket(performance.now() - _t0),
+        tool_version: toolVer,
+      });
+
+      setLoading(false);
+      showSuccess(`Excel scaricato! ${rows} righe estratte da ${selectedFiles.length} file.`);
+      if (riepilogo) showRiepilogo(riepilogo);
+    });
+
+  } catch (err) {
+    stopProgress();
+    setLoading(false);
+    safeTrack("processing_error", { tool: TOOL, stage: "unknown", error_code: "network_error", processing_time_bucket: timeBucket(performance.now() - _t0) });
+    showError('Qualcosa non ha funzionato. Riprova.');
+    console.error(err);
+  }
+}
+
+/* ── UI helpers ──────────────────────────────────────────────────────── */
+function setLoading(on, msg) {
+  const area    = document.getElementById('status-area');
+  const loading = document.getElementById('status-loading');
+  const btn     = document.getElementById('btn-elabora');
+
+  area.classList.remove('hidden');
+  if (on) {
+    loading.classList.remove('hidden');
+    loading.classList.add('flex');
+    document.getElementById('status-msg').textContent = msg || 'Elaborazione…';
+    btn.disabled = true;
+  } else {
+    loading.classList.add('hidden');
+    loading.classList.remove('flex');
+    btn.disabled = (selectedFiles.length === 0);
+  }
+}
+
+/* € 48.500,00 a mano: in it-IT toLocaleString non mette il punto sotto i 10.000 (1500,00). */
+function euro(v) {
+  const [int, dec] = Math.abs(v).toFixed(2).split('.');
+  return (v < 0 ? '-' : '') + '€ ' + int.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ',' + dec;
+}
+
+/* Il calcolo dagli stessi totali della riga TOTALE dell'Excel (header X-Riepilogo). */
+function showRiepilogo(r) {
+  document.getElementById('kpi-debiti').textContent  = euro(r.debiti);
+  document.getElementById('kpi-crediti').textContent = euro(r.crediti);
+  document.getElementById('kpi-saldo').textContent   = euro(Math.abs(r.saldo));
+  document.getElementById('kpi-saldo-credito').classList.toggle('hidden', !(r.saldo < 0));
+  const periodo = !r.dal ? '' : r.dal === r.al ? `, versamenti del ${r.dal}` : `, versamenti dal ${r.dal} al ${r.al}`;
+  document.getElementById('kpi-base').textContent = `Calcolato su ${r.pdf_letti} PDF${periodo}`;
+  // Deleghe i cui totali letti non tornano con quelli stampati (brief 040): i nomi dei
+  // file li conosce solo la pagina, il motore manda la posizione del file nell'invio.
+  const nt = r.non_tornano || [];
+  const n = nt.reduce((s, x) => s + x.n, 0);
+  if (n) {
+    const dove = nt.map(x => {
+      const nome = selectedFiles[x.file] ? selectedFiles[x.file].name : `file ${x.file + 1}`;
+      const altre = x.n > x.pagine.length ? ` e altre ${x.n - x.pagine.length}` : '';
+      return `${nome} ${x.n === 1 ? 'pagina' : 'pagine'} ${x.pagine.join(', ')}${altre}`;
+    }).join('; ');
+    document.getElementById('avviso-totali').textContent =
+      `Su ${n} ${n === 1 ? 'delega' : 'deleghe'} i totali letti non tornano con quelli stampati sul modulo: ${dove}. ` +
+      'I numeri qui sopra potrebbero non essere esatti: controlla quelle pagine.';
+    safeTrack("totals_mismatch", { tool: TOOL });
+  }
+  document.getElementById('avviso-totali').classList.toggle('hidden', !n);
+  document.getElementById('kpi-saldo-controllare').classList.toggle('hidden', !n);
+  document.getElementById('avviso-doppioni').classList.toggle('hidden', !r.doppioni);
+  document.getElementById('riepilogo').classList.remove('hidden');
+  safeTrack("summary_shown", { tool: TOOL });
+}
+
+function clearStatus() {
+  document.getElementById('riepilogo').classList.add('hidden');
+  document.getElementById('status-success').classList.add('hidden');
+  document.getElementById('status-error').classList.add('hidden');
+  document.getElementById('status-loading').classList.add('hidden');
+  document.getElementById('status-area').classList.add('hidden');
+}
+
+function showSuccess(msg) {
+  const area = document.getElementById('status-area');
+  const el   = document.getElementById('status-success');
+  document.getElementById('success-msg').textContent = msg;
+  area.classList.remove('hidden');
+  el.classList.remove('hidden');
+}
+
+function showError(msg) {
+  const area = document.getElementById('status-area');
+  const el   = document.getElementById('status-error');
+  document.getElementById('error-msg').textContent = msg;
+  area.classList.remove('hidden');
+  el.classList.remove('hidden');
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024)         return bytes + ' B';
+  if (bytes < 1048576)      return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
