@@ -115,7 +115,7 @@
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
     }
 </style>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
 </head>
 
 <body class="min-h-screen font-sans" style="background:#060E1F;color:white;">
@@ -560,6 +560,7 @@
 
 <!-- Controllo del browser prima di tutto (vecchio stile: gira ovunque), poi il motore -->
 <script src="controllo.js"></script>
+<script src="/comune/avviso.js"></script>
 <script type="module" src="motore.min.js"></script>
 
 <!-- ─── JAVASCRIPT ────────────────────────────────────────────────────────── -->
@@ -661,14 +662,14 @@ function handleDrop(e) {
   e.preventDefault();
   document.getElementById('drop-zone').classList.remove('drag-over');
   const f = Array.from(e.dataTransfer.files).find(isXlsx);
-  if (!f) { showError('Nessun file Excel trovato. Trascina qui il modello compilato (.xlsx).'); return; }
+  if (!f) { showError('Nessun file Excel trovato. Trascina qui il modello compilato (.xlsx).', [], 'File non valido'); return; }
   setFile(f);
 }
 
 function setFile(f) {
   stopProgress(); clearStatus();
   document.getElementById('file-input').value = '';   // riscegliere lo stesso file deve funzionare
-  if (!isXlsx(f)) { showError('Il file deve essere in formato Excel (.xlsx). Usa il modello scaricato da questa pagina.'); return; }
+  if (!isXlsx(f)) { showError('Il file deve essere in formato Excel (.xlsx). Usa il modello scaricato da questa pagina.', [], 'File non valido'); return; }
   if (f.size > MAX_FILE_BYTES) { mostraInfo('File troppo grande', MSG_OLTRE_5MB); return; }
   selectedFile = f; fileValido = false; xmlPronto = null; esito = esitoVuoto();
   renderFile(); updateButton();
@@ -729,7 +730,7 @@ async function mostraErroreRisposta(res) {
     if (err.errori) esito = { errori, avvisi: err.avvisi || [], escluse: err.escluse || [] };
   } catch (_) {}
   if (typeof msg !== 'string') msg = 'Il file non è valido: usa il modello scaricato da questa pagina.';
-  showError(msg, errori);
+  showError(msg, errori, res.status >= 500 ? 'Non è andata a buon fine' : 'File non valido');
 }
 
 /* ── Preview ─────────────────────────────────────────────────────────── */
@@ -749,7 +750,7 @@ async function loadPreview() {
     fileValido = true; updateButton();
     renderPreview(data);
   } catch (err) {
-    if (seq === _previewSeq) showError('Il file non può essere letto. Usa il modello scaricato da questa pagina.');
+    if (seq === _previewSeq) showError('Il file non può essere letto. Usa il modello scaricato da questa pagina.', [], 'File non valido');
     console.error(err);
   }
 }
@@ -879,7 +880,7 @@ async function genera(escluseOk = false, avvisiOk = false) {
   } catch (err) {
     stopProgress(); setLoading(false);
     safeTrack("processing_error", { tool: TOOL, stage: "unknown", error_code: "unknown", processing_time_bucket: timeBucket(performance.now() - _t0) });
-    showError('Non è stato possibile generare il file XML. Riprova; se il problema continua, scrivi a info@datacetools.com.');
+    showError('Non è stato possibile generare il file XML. Riprova; se il problema continua, scrivi a info@datacetools.com.', [], 'Non è andata a buon fine');
     console.error(err);
   }
 }
@@ -953,11 +954,10 @@ function mostraAvvisi(continua) {
     'Genera comunque', continua);
 }
 
-/* Solo un messaggio (file troppo pesante): lo stesso riquadro, con il solo «Ho capito». */
+/* Solo un messaggio (file troppo pesante): il pop-up comune delle app (/comune/avviso.js). */
 function mostraInfo(titolo, testo) {
   clearStatus();
-  mostraConferma(titolo, escHtml(testo), '', 'Ho capito', null);
-  for (const id of ['conferma-lista', 'conferma-log', 'conferma-no']) document.getElementById(id).style.display = 'none';
+  avviso(titolo, testo);
 }
 
 function continuaConferma() {
@@ -1036,7 +1036,11 @@ function showSuccess(msg) {
 }
 
 /* `errori`: l'elenco riga per riga che manda il server, sotto il messaggio. */
-function showError(msg, errori = []) {
+/* Errore breve (nessuna riga da elencare): il pop-up comune delle app
+   (/comune/avviso.js). Con l'elenco delle righe e «Scarica log»: il riquadro rosso, che è un
+   rapporto da leggere con calma (decisione di Davide, 3/11/2026). */
+function showError(msg, errori = [], titolo = 'Non è andata a buon fine') {
+  if (!errori.length) { avviso(titolo, msg); return; }
   const area  = document.getElementById('status-area');
   const el    = document.getElementById('status-error');
   const lista = document.getElementById('error-list');

@@ -51,13 +51,13 @@ def _elabora(nomi, tipi, files, credito_negativo):
         raw = bytes(raw)
         if tipo not in ('application/pdf', 'application/octet-stream'):
             if not (nome or '').lower().endswith('.pdf'):
-                raise _errore(400, 'not_a_pdf', 'upload_validation', 'Uno dei file scelti non è un PDF valido.')
+                raise _errore(400, 'not_a_pdf', 'upload_validation', 'Questo file non è un PDF. Scegli il PDF del modello F24.')
         if len(raw) > MAX_SIZE_BYTES:
             raise _errore(400, 'file_too_large', 'upload_validation', f'Uno dei file supera i {MAX_SIZE_MB} MB consentiti.')
         if len(raw) < 4:
             raise _errore(400, 'empty_or_corrupt', 'upload_validation', 'Uno dei file è vuoto o corrotto.')
         if not raw.startswith(b'%PDF'):
-            raise _errore(400, 'not_a_pdf', 'upload_validation', 'Uno dei file scelti non è un PDF valido.')
+            raise _errore(400, 'not_a_pdf', 'upload_validation', 'Questo file non è un PDF. Scegli il PDF del modello F24.')
         impronta = hashlib.sha256(raw).digest()
         doppioni += impronta in impronte
         impronte.add(impronta)
@@ -77,10 +77,10 @@ def _elabora(nomi, tipi, files, credito_negativo):
     text_flag = _text_layer_flag(text_pages, total_pages)
     if not all_rows:
         if text_flag == 'false':
-            raise _errore(422, 'no_text_layer', 'data_parse', 'Il PDF non contiene testo leggibile (probabile scansione).')
+            raise _errore(422, 'no_text_layer', 'data_parse', 'Non abbiamo trovato nessun F24 in questo file. Controlla che sia il PDF del modello F24 e non una scansione o una foto.')
         if parse_errors:
             raise _errore(422, 'unsupported_layout', 'data_parse', 'Impossibile leggere i file: assicurati che siano F24 PDF non cifrati.')
-        raise _errore(422, 'parse_no_data', 'data_parse', 'Non sono stati trovati dati F24 nel documento.')
+        raise _errore(422, 'parse_no_data', 'data_parse', 'Non abbiamo trovato nessun F24 in questo file. Controlla che sia il PDF del modello F24 e non una scansione o una foto.')
     try:
         excel = export_excel_bytes(all_rows, credito_negativo=credito_negativo)
     except Exception:

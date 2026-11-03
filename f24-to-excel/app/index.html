@@ -106,7 +106,7 @@
 </style>
 
   <!-- Umami: analytics aggregati e cookieless (stesso host/ID di datace-site). -->
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
 </head>
 <body class="min-h-screen font-sans" style="background:#060E1F;color:#fff;">
 
@@ -180,7 +180,6 @@
     </div>
 
     <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.6);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;text-align:center;"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg><span><strong style="color:white;">Il file è elaborato dal browser e non viene inviato a Datace.</strong></span> <a href="https://datacetools.com/privacy/" style="color:#F59E0B;text-decoration:underline;">Privacy</a></p>
-    <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.5);margin-top:6px;text-align:center;">La prima volta il browser scarica circa 30 MB, poi di solito li tiene. L'avvio richiede alcuni secondi.</p>
     <input id="file-input" type="file" accept=".pdf,application/pdf"
            multiple class="hidden" onchange="handleFileSelect(this.files)" />
 
@@ -252,13 +251,6 @@
         <p id="avviso-totali" class="hidden mt-3 text-sm rounded-lg px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);"></p>
         <p id="kpi-base" class="kpi-n" style="margin-top:8px;"></p>
         <p id="avviso-doppioni" class="hidden mt-3 text-sm rounded-lg px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);">Hai scelto due volte lo stesso file: i totali lo contano due volte.</p>
-      </div>
-      <div id="status-error" class="hidden flex items-start gap-2 text-sm text-red-300 bg-red-500/10 rounded-lg px-4 py-3">
-        <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-        <span id="error-msg">Errore durante l'elaborazione.</span>
       </div>
     </div>
   </section>
@@ -391,6 +383,7 @@
 
 <!-- Controllo del browser prima di tutto (vecchio stile: gira ovunque), poi il motore -->
 <script src="controllo.js"></script>
+<script src="/comune/avviso.js"></script>
 <script type="module" src="motore.min.js"></script>
 
 <!-- ─── JAVASCRIPT ────────────────────────────────────────────────────────── -->
@@ -485,15 +478,12 @@ async function aggiornaAttesa() {
 function handleDrop(e) {
   e.preventDefault();
   document.getElementById('drop-zone').classList.remove('drag-over');
-  const files = Array.from(e.dataTransfer.files).filter(f =>
-    f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')
-  );
-  if (files.length === 0) {
-    showError('Nessun PDF rilevato. Trascina solo file .pdf');
-    return;
-  }
-  addFiles(files);
+  addFiles(Array.from(e.dataTransfer.files));
 }
+
+// Lo stesso controllo del motore (invio.py): il tipo vuoto il browser lo manda come octet-stream.
+const nonPdf = f => !['application/pdf', 'application/octet-stream', ''].includes(f.type) &&
+                    !f.name.toLowerCase().endsWith('.pdf');
 
 const MAX_FILE_BYTES = 20 * 1024 * 1024;
 const MAX_TOTAL_BYTES = 100 * 1024 * 1024;   // lo stesso tetto del motore (invio.py)
@@ -504,8 +494,12 @@ function addFiles(newFiles) {
   // in cui compariva (era così anche sul server; corretto come in Fattura, brief 048).
   stopProgress();
   clearStatus();
-  const oversized = [];
+  const oversized = [], scartati = [];
   newFiles.forEach(f => {
+    if (nonPdf(f)) {   // brief 052: si scartano e si nominano, gli altri si elaborano
+      scartati.push(f.name);
+      return;
+    }
     if (f.size > MAX_FILE_BYTES) {
       oversized.push(f.name);
       return;
@@ -514,16 +508,21 @@ function addFiles(newFiles) {
       selectedFiles.push(f);
     }
   });
+  if (scartati.length > 0) {
+    showError(scartati.length === 1
+      ? `Questo file non è un PDF: ${scartati[0]}. Scegli il PDF del modello F24.`
+      : `Questi file non sono PDF: ${scartati.join(', ')}. Scegli i PDF del modello F24.`, 'File non valido');
+  }
   if (oversized.length > 0) {
-    showError(`File troppo grandi (max 20 MB): ${oversized.join(', ')}`);
+    showError(`File troppo grandi (max 20 MB): ${oversized.join(', ')}`, 'File troppo grande');
   }
   if (selectedFiles.length > 10) {
     selectedFiles = selectedFiles.slice(0, 10);
-    showError('Massimo 10 file. Gli ultimi sono stati ignorati.');
+    showError('Massimo 10 file. Gli ultimi sono stati ignorati.', 'Troppi file');
   }
   // Subito alla scelta (brief 048, Davide): il motore li rifiuterebbe comunque, e contarne
   // le pagine con file enormi richiedeva fino a 13 s.
-  if (troppiInTutto()) showError('Troppi dati insieme (massimo 100 MB): elabora i file in più volte.');
+  if (troppiInTutto()) showError('Troppi dati insieme (massimo 100 MB): elabora i file in più volte.', 'Selezione troppo grande');
   renderFileList();
   updateButton();
   aggiornaAttesa();
@@ -543,7 +542,7 @@ function removeFile(idx) {
   renderFileList();
   updateButton();
   clearStatus();   // i riquadri erano dei file di prima
-  if (troppiInTutto()) showError('Troppi dati insieme (massimo 100 MB): elabora i file in più volte.');
+  if (troppiInTutto()) showError('Troppi dati insieme (massimo 100 MB): elabora i file in più volte.', 'Selezione troppo grande');
   aggiornaAttesa();
 }
 
@@ -668,7 +667,7 @@ async function elabora() {
       stopProgress();
       setLoading(false);
       safeTrack("processing_error", { tool: TOOL, stage, error_code, processing_time_bucket: timeBucket(performance.now() - _t0) });
-      showError(msg);
+      showError(msg, error_code === 'file_too_large' && res.status === 413 ? 'Selezione troppo grande' : TITOLI[error_code]);
       return;
     }
 
@@ -714,7 +713,7 @@ async function elabora() {
     stopProgress();
     setLoading(false);
     safeTrack("processing_error", { tool: TOOL, stage: "unknown", error_code: "network_error", processing_time_bucket: timeBucket(performance.now() - _t0) });
-    showError('Qualcosa non ha funzionato. Riprova.');
+    showError('Qualcosa non ha funzionato. Riprova.', 'Non è andata a buon fine');
     console.error(err);
   }
 }
@@ -774,10 +773,19 @@ function showRiepilogo(r) {
   safeTrack("summary_shown", { tool: TOOL });
 }
 
+// Ogni errore nel pop-up comune delle app (/comune/avviso.js), con il suo titolo (brief 052,
+// testi del manager).
+const TITOLI = {
+  not_a_pdf: 'File non valido', no_text_layer: 'Nessun F24 trovato', parse_no_data: 'Nessun F24 trovato',
+  file_too_large: 'File troppo grande', too_many_files: 'Troppi file',
+  empty_or_corrupt: 'PDF non leggibile', unsupported_layout: 'PDF non leggibile',
+};
+function showError(msg, titolo = 'Non è andata a buon fine') { avviso(titolo, msg); }   // /comune/avviso.js
+
+
 function clearStatus() {
   document.getElementById('riepilogo').classList.add('hidden');
   document.getElementById('status-success').classList.add('hidden');
-  document.getElementById('status-error').classList.add('hidden');
   document.getElementById('status-loading').classList.add('hidden');
   document.getElementById('status-area').classList.add('hidden');
 }
@@ -786,14 +794,6 @@ function showSuccess(msg) {
   const area = document.getElementById('status-area');
   const el   = document.getElementById('status-success');
   document.getElementById('success-msg').textContent = msg;
-  area.classList.remove('hidden');
-  el.classList.remove('hidden');
-}
-
-function showError(msg) {
-  const area = document.getElementById('status-area');
-  const el   = document.getElementById('status-error');
-  document.getElementById('error-msg').textContent = msg;
   area.classList.remove('hidden');
   el.classList.remove('hidden');
 }

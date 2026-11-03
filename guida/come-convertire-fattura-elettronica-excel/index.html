@@ -80,10 +80,9 @@
   }
   </script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{colors:{brand:{DEFAULT:'#1c3461',light:'#2a9db5',dark:'#0f2040',gold:'#F59E0B'}},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <!-- Tailwind compilato (sorgente: _tailwind/sito.css) e Inter servito dal sito:
+       nessuna richiesta a CDN o a Google Fonts. -->
+  <link rel="stylesheet" href="/tailwind.css" />
   <style>
     :root{--navy:#060E1F;--navy2:#0A1628;--navy3:#0F2040;--gold:#F59E0B;--teal:#1d7a94;--border:rgba(255,255,255,0.07);--muted:rgba(255,255,255,0.62);}
     *{box-sizing:border-box;}body{font-family:'Inter',sans-serif;}
@@ -115,7 +114,7 @@
     .faq-q[open] summary .chev{transform:rotate(180deg);}
     .chev{transition:transform .2s;color:#94a3b8;flex-shrink:0;}
   </style>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
 </head>
 <body class="antialiased" style="background:#f1f5f9;">
 

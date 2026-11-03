@@ -139,7 +139,7 @@
     }
   #carica { border: 0; padding: 0; margin: 0; min-width: 0; }
 </style>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com,f24xls.datacetools.com"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
 </head>
 
 <body class="min-h-screen font-sans" style="background:#060E1F;color:white;">
@@ -281,13 +281,6 @@
         </svg>
         <span id="success-msg">Excel scaricato con successo!</span>
         <a href="/raccontaci/" target="_blank" rel="noopener" data-umami-event="raccontaci-link" data-umami-event-origine="dopo-download" style="flex-basis:100%;padding-left:28px;font-size:12px;color:rgba(255,255,255,.62);text-decoration:underline;">Se ti va, raccontaci come lavori</a>
-      </div>
-      <div id="status-error" class="hidden flex items-start gap-2 text-sm rounded-xl px-4 py-3" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;">
-        <svg class="w-5 h-5 shrink-0 mt-0.5" style="color:#fca5a5;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-        <span id="error-msg">Errore durante l'elaborazione.</span>
       </div>
     </div>
   </section>
@@ -499,6 +492,7 @@
 
 <!-- Controllo del browser prima di tutto (vecchio stile: gira ovunque), poi il motore -->
 <script src="controllo.js"></script>
+<script src="/comune/avviso.js"></script>
 <script type="module" src="motore.min.js"></script>
 
 <!-- ─── JAVASCRIPT ────────────────────────────────────────────────────────── -->
@@ -571,9 +565,7 @@ let _ultimaAnteprima = null;   // documenti e righe: servono alla stima del temp
 function handleDrop(e) {
   e.preventDefault();
   document.getElementById('drop-zone').classList.remove('drag-over');
-  const files = Array.from(e.dataTransfer.files).filter(isXml);
-  if (files.length === 0) { showError('Nessun file XML rilevato. Trascina file .xml o .p7m'); return; }
-  addFiles(files);
+  addFiles(Array.from(e.dataTransfer.files));
 }
 
 const MAX_FILE_BYTES  = 10 * 1024 * 1024;
@@ -582,7 +574,7 @@ const MAX_TOTAL_BYTES = 100 * 1024 * 1024;   // lo stesso tetto che applica il s
 function troppoInTutto() {
   const tot = selectedFiles.reduce((s, f) => s + f.size, 0);
   if (tot <= MAX_TOTAL_BYTES) return false;
-  showError(`Troppi dati in un invio solo: ${formatBytes(tot)} su 100 MB. Togli qualche file e dividi in più invii.`);
+  showError(`Troppi dati in un invio solo: ${formatBytes(tot)} su 100 MB. Togli qualche file e dividi in più invii.`, 'Selezione troppo grande');
   return true;
 }
 
@@ -590,7 +582,7 @@ function troppoInTutto() {
 function avvisaScartati(n, nomi) {
   if (!n) return;
   const altri = n > nomi.length ? ` e altri ${n - nomi.length}` : '';
-  showError(`Attenzione: ${n} file non elaborati e NON presenti nell'Excel: ${nomi.join(', ')}${altri}.`, true);
+  showError(`Attenzione: ${n} file non elaborati e NON presenti nell'Excel: ${nomi.join(', ')}${altri}.`, 'File non elaborati');
 }
 
 function addFiles(newFiles) {
@@ -598,14 +590,19 @@ function addFiles(newFiles) {
   // nello stesso istante in cui compariva.
   stopProgress(); clearStatus();
   const oversized = [];
+  // Come F24: i file che non sono XML si scartano e si nominano, gli altri si elaborano.
+  const scartati = newFiles.filter(f => !isXml(f)).map(f => f.name);
+  if (scartati.length > 0) showError(scartati.length === 1
+    ? `Questo file non è una fattura XML: ${scartati[0]}. Scegli i file .xml o .p7m.`
+    : `Questi file non sono fatture XML: ${scartati.join(', ')}. Scegli i file .xml o .p7m.`, 'File non valido');
   newFiles.filter(isXml).forEach(f => {
     if (f.size > MAX_FILE_BYTES) { oversized.push(f.name); return; }
     if (!selectedFiles.find(x => x.name === f.name && x.size === f.size)) selectedFiles.push(f);
   });
-  if (oversized.length > 0) showError(`File troppo grandi (max 10 MB), non aggiunti: ${oversized.join(', ')}.`, true);
+  if (oversized.length > 0) showError(`File troppo grandi (max 10 MB), non aggiunti: ${oversized.join(', ')}.`, 'File troppo grande');
   if (selectedFiles.length > MAX_FILES) {
     selectedFiles = selectedFiles.slice(0, MAX_FILES);
-    showError(`Massimo ${MAX_FILES} file. Gli ultimi sono stati ignorati.`, true);
+    showError(`Massimo ${MAX_FILES} file. Gli ultimi sono stati ignorati.`, 'Troppi file');
   }
   renderFileList(); updateButton();
   if (selectedFiles.length > 0) safeTrack("file_selected", { tool: TOOL, file_type: "xml", file_count: selectedFiles.length, file_size_bucket: sizeBucket(selectedFiles.reduce((s, f) => s + (f.size || 0), 0)) });
@@ -863,7 +860,7 @@ async function elabora(zip = false) {
       let msg = `Errore ${res.status}`;
       try { const err = await res.json(); msg = err.detail || msg; } catch(_) {}
       safeTrack("processing_error", { tool: TOOL, stage: "unknown", error_code: errorCodeFromStatus(res.status), processing_time_bucket: timeBucket(performance.now() - _t0) });
-      stopProgress(); setLoading(false); showError(msg); return;
+      stopProgress(); setLoading(false); showError(msg, TITOLI[res.status]); return;
     }
     const blob    = await res.blob();
     const fatture = res.headers.get('X-Fatture-Extracted') || '?';
@@ -919,7 +916,7 @@ function setLoading(on, msg) {
 }
 
 function clearStatus() {
-  ['status-success','status-error','status-loading','status-area'].forEach(id =>
+  ['status-success','status-loading','status-area'].forEach(id =>
     document.getElementById(id).classList.add('hidden'));
 }
 
@@ -930,16 +927,11 @@ function showSuccess(msg) {
   area.classList.remove('hidden'); el.classList.remove('hidden');
 }
 
-/* `aggiungi`: l'avviso va in coda a quelli già visibili invece di coprirli
-   (troppo grandi + scartati dal server possono arrivare insieme). */
-function showError(msg, aggiungi = false) {
-  const area = document.getElementById('status-area');
-  const el   = document.getElementById('status-error');
-  const testo = document.getElementById('error-msg');
-  const visibile = !el.classList.contains('hidden') && !area.classList.contains('hidden');
-  testo.textContent = (aggiungi && visibile) ? `${testo.textContent} ${msg}` : msg;
-  area.classList.remove('hidden'); el.classList.remove('hidden');
-}
+/* Ogni errore nel pop-up comune delle app (/comune/avviso.js), con il suo titolo (titoli del
+   manager, 3/11/2026). Due avvisi insieme (troppo grandi + scartati) si leggono uno sotto l'altro.
+   Dal motore: il titolo dipende dal codice HTTP (413 troppi dati, 400 troppi file, 422 nessuna fattura). */
+const TITOLI = { 413: 'Selezione troppo grande', 400: 'Troppi file', 422: 'Nessuna fattura trovata' };
+function showError(msg, titolo = 'Non è andata a buon fine') { avviso(titolo, msg); }
 
 function formatBytes(bytes) {
   if (bytes < 1024)    return bytes + ' B';
