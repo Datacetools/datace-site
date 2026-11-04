@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Le fatture non escono dal browser: l'unica connessione permessa è quella di Umami
+       (connect-src gateway.umami.is, brief 070), che riceve solo gli eventi di safeTrack in
+       pagina.js. GitHub Pages non manda header, quindi la CSP sta qui. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://gateway.umami.is; worker-src 'self'; base-uri 'self'; form-action 'none'" />
+  <!-- MODELLO LOCALE (brief 058-061): etichette provvisorie, testi del manager da scrivere. -->
+  <title>Fatture XML in bonifici | Datace</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231c3461'/%3E%3Crect x='10' y='11' width='28' height='6' rx='3' fill='%23F59E0B'/%3E%3Crect x='10' y='21' width='20' height='6' rx='3' fill='white'/%3E%3Crect x='10' y='31' width='12' height='6' rx='3' fill='white' fill-opacity='0.35'/%3E%3C/svg%3E" />
+
+  <!-- Tailwind compilato da questa pagina (sorgente: _tailwind/fornitori-app.css) e i
+       componenti comuni delle app (/comune/app.css). Nessuna richiesta a terzi. -->
+  <link rel="stylesheet" href="tailwind.css" />
+  <link rel="stylesheet" href="/comune/app.css" />
+
+  <style>
+    /* Spazio di lavoro a schermo intero (brief 060): intestazione fissa in alto, barra fissa a
+       sinistra sotto di lei, il resto alla pagina; niente piè di pagina. Sotto i 900 px la barra
+       va sotto l'intestazione, su una riga (uso previsto: il computer).
+       Brief 061: intestazione e barra scure, l'area di lavoro chiara (.chiaro, comune/app.css). */
+    :root { --nav: 200px; --testa: 61px; --bar: 52px; }
+    .testa-app { position: fixed; top: 0; left: 0; right: 0; height: var(--testa); z-index: 60; background: var(--navy); border-bottom: 1px solid rgba(255,255,255,.07); } /* piena: semitrasparente sul fondo chiaro diventa grigia */
+    .barra-nav { position: fixed; top: var(--testa); left: 0; bottom: 0; width: var(--nav); z-index: 50; display: flex; flex-direction: column; gap: 28px;
+      padding: 20px 14px; background: var(--navy2); border-right: 1px solid rgba(255,255,255,.07); }
+    .nav-voci { display: flex; flex-direction: column; gap: 4px; }
+    .nav-voce { text-align: left; padding: 10px 12px; border-radius: 12px; border: 1px solid transparent; background: none; color: rgba(255,255,255,.7); font: inherit; font-size: 14px; }
+    .nav-voce:hover { color: white; background: rgba(255,255,255,.04); }
+    /* Voce attiva: i colori di .scelta attiva (comune/app.css). */
+    .nav-voce[aria-pressed="true"] { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.4); color: var(--gold); }
+    .nav-piede { margin-top: auto; display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
+    .nav-piede a { color: rgba(255,255,255,.4); text-decoration: none; }
+    .nav-piede a:hover { color: white; }
+    .lavoro { margin-left: var(--nav); min-height: 100vh; padding: calc(var(--testa) + 12px) 16px calc(var(--bar) + 8px); }
+    #bon { display: flex; flex-direction: column; gap: 10px; }
+    /* Prima del caricamento la zona sta al centro; dopo, una riga sola in alto (brief 061). */
+    #bon:not(.caricato) #carica { max-width: 760px; margin: max(40px, calc(50vh - 260px)) auto 0; width: 100%; }
+    .solo-striscia { display: none; }
+    /* Brief 064: la striscia prende la tinta navy chiara dei filtri; la zona resta bianca (teal
+       #1d7a94 su bianco 4,9:1; sulla tinta sarebbe 4,0:1), il riepilogo in #475569 (6,2:1). */
+    #bon.caricato #carica { padding: 8px 12px; display: flex; align-items: center; gap: 14px; background: linear-gradient(180deg, #eef2f9, #e3e9f3);
+      border-color: rgba(15,32,64,.10); box-shadow: 0 8px 24px -12px rgba(15,32,64,.25); }
+    #bon.caricato .testa-carica, #bon.caricato .icona-carica, #bon.caricato #zona p { display: none; }
+    #bon.caricato #zona { padding: 6px 14px; border-width: 1px; flex-shrink: 0; font-size: 13px; font-weight: 600; color: var(--teal); background: white; border-color: #5b6b88; }
+    #bon.caricato .solo-striscia { display: inline; }
+    #bon.caricato #esito { margin: 0 !important; text-align: left !important; color: #475569; flex: 1; }
+    /* Tappa B: Salva e Apri un salvataggio. Prima del caricamento solo «Apri», sotto la zona;
+       dopo, a destra nella striscia. Il contatore delle modifiche sta a destra in testata. */
+    .azioni-salva { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+    .azioni-salva .scelta { font-size: 12px; border-radius: 999px; padding: 6px 14px; border: 1px solid #5b6b88; background: white; color: #334155; cursor: pointer; }
+    #salva { background: var(--gold); border-color: var(--gold); color: var(--navy); font-weight: 600; }
+    #bon:not(.caricato) #salva { display: none; }
+    #bon.caricato .azioni-salva { order: 3; margin: 0; }
+    .non-salvate { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--gold2); border: 1px solid rgba(251,191,36,.4); border-radius: 999px; padding: 4px 12px; }
+    .non-salvate[hidden] { display: none; }
+    /* Dopo il caricamento la sezione è alta quanto lo schermo: la tabella prende tutto lo
+       spazio fino alla barra del totale e scorre dentro di sé, con l'intestazione ferma. */
+    #bon.caricato { height: calc(100vh - var(--testa) - var(--bar) - 20px); min-height: 460px; }
+    #bon.caricato #lavoro { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .scorre { flex: 1; min-height: 200px; overflow: auto; border: 1px solid var(--border); }
+    /* Barra del totale col colore del brand (brief 064): navy sfumato e traslucido con la
+       sfocatura dello sfondo; dove la sfocatura non c'è, navy pieno. Testo bianco (16:1),
+       importo in oro #FBBF24 (9,7:1), avviso in rosso chiaro #fca5a5 (8,5:1). */
+    .barra-totale { position: fixed; left: var(--nav); right: 0; bottom: 0; z-index: 40; height: var(--bar); padding: 0 20px; display: flex; align-items: center; gap: 16px;
+      background: linear-gradient(90deg, #0F2040, #0A1628); border-top: 1px solid rgba(255,255,255,.07); box-shadow: 0 -8px 24px rgba(6,14,31,.18); }
+    @supports ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+      .barra-totale { background: linear-gradient(90deg, rgba(15,32,64,.92), rgba(10,22,40,.92)); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    }
+    .barra-totale[hidden] { display: none; }
+    #tot { font-size: 15px; color: white; }
+    #tot .oro { color: var(--gold2); }
+    #avv { color: #fca5a5; margin: 0; }
+    /* Tappa B: il file per la banca. Pulsante oro come «Salva»; riquadro chiaro sopra la pagina. */
+    #apri-genera { margin-left: auto; font: inherit; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 12px; border: 0; background: var(--gold); color: var(--navy); cursor: pointer; }
+    #genera { margin: auto; width: min(720px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 24px; border: 1px solid var(--border2); border-radius: 18px; color: #0f2040; background: white; }
+    #genera::backdrop { background: rgba(4,8,15,.6); }
+    #genera h2 { font-size: 17px; font-weight: 700; margin: 0 0 12px; }
+    #genera h3 { font-size: 14px; font-weight: 700; margin: 16px 0 6px; }
+    #genera .campi { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+    #genera label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: #334155; }
+    #genera input { font: inherit; font-size: 13px; padding: 7px 10px; border-radius: 10px; border: 1px solid var(--border2); background: white; color: #0f2040; color-scheme: light; }
+    #genera input:focus { outline: none; border-color: var(--gold); }
+    #genera .testi { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 12px; }
+    #genera .testi small { display: block; color: var(--muted); font-size: 11px; }
+    #genera .bad { border-color: #fca5a5; background: #fef2f2; }
+    #genera ul { margin: 0; padding-left: 18px; font-size: 12px; color: #334155; }
+    #genera .errori { color: #b91c1c; }
+    #genera .ok { padding: 12px 14px; border-radius: 12px; background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; font-size: 13px; }
+    #genera .bottoni { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+    #genera .bottoni button { font: inherit; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 12px; border: 1px solid #5b6b88; background: white; color: #334155; cursor: pointer; }
+    #genera .bottoni button.primo-b { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+    @media (max-width: 900px) {
+      .barra-nav { position: fixed; top: var(--testa); right: 0; bottom: auto; width: auto; flex-direction: row; align-items: center; gap: 16px; padding: 10px 14px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+      .nav-voci { flex-direction: row; } .nav-piede { display: none; }
+      .lavoro { margin-left: 0; padding-top: calc(var(--testa) + 76px); } .barra-totale { left: 0; }
+      #bon.caricato { height: auto; } .scorre { max-height: 70vh; }
+    }
+
+    /* Filtri chiari (brief 063, al posto della fascia scura del 062): un riquadro grigio chiaro
+       con due righe, sopra le schede rapide e «Azzera filtri», sotto le tendine e la ricerca.
+       Pillole bianche con bordo #64748b (3,9:1 sul grigio del riquadro: con #cbd5e1 del brief
+       era 1,2:1) e ombra leggera; testo #334155 (10:1); attiva = oro pieno con testo navy (9:1).
+       Sotto il riquadro, i filtri attivi come etichette che si tolgono con un clic. */
+    /* Brief 064: tinta navy molto chiara al posto del grigio, con ombra navy morbida; bordo delle
+       pillole navy sbiadito #5b6b88 (4,4:1 sul lato più scuro della tinta); attiva con alone oro. */
+    .riquadro-filtri { background: linear-gradient(180deg, #eef2f9, #e3e9f3); border: 1px solid rgba(15,32,64,.10); box-shadow: 0 8px 24px -12px rgba(15,32,64,.25);
+      border-radius: 14px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .riga-filtri { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .riquadro-filtri .scelta, .filtro summary { font-size: 12px; border-radius: 999px; padding: 6px 12px; border: 1px solid #5b6b88; background: white; color: #334155;
+      box-shadow: 0 1px 2px rgba(15,32,64,.08); cursor: pointer; white-space: nowrap; }
+    .riquadro-filtri .scelta:hover, .filtro summary:hover { border-color: #334155; color: #0f2040; }
+    .riquadro-filtri .scelta[aria-pressed="true"], .filtro.attivo summary { background: var(--gold); border-color: var(--gold); color: var(--navy); font-weight: 600; box-shadow: 0 4px 14px rgba(245,158,11,.35); }
+    #azzera { margin-left: auto; border-style: dashed; }
+    #azzera[hidden] { display: none; }
+    .filtro { position: relative; }
+    .filtro summary { list-style: none; user-select: none; }
+    .filtro summary::-webkit-details-marker { display: none; }
+    .filtro summary::after { content: "▾"; margin-left: 6px; color: #334155; font-size: 13px; }
+    .filtro.attivo summary::after { color: var(--navy); }
+    .filtro label:has(input:checked) { background: #fef3c7; }
+    .filtro .pannello { position: absolute; top: calc(100% + 6px); left: 0; z-index: 30; width: 260px; padding: 8px; background: white; border: 1px solid var(--border2); border-radius: 12px; box-shadow: 0 8px 24px rgba(15,32,64,.14); }
+    .filtro[data-filtro="fornitore"] .pannello { width: 340px; }
+    .filtro .voci { max-height: 300px; overflow: auto; }
+    .filtro label { display: flex; gap: 8px; align-items: center; padding: 5px 6px; border-radius: 8px; font-size: 12px; color: #1e293b; cursor: pointer; }
+    .filtro label:hover { background: #f8fafc; }
+    .filtro label .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .filtro label small { color: var(--muted); font-family: monospace; font-size: 10px; margin-left: 4px; }
+    .filtro label .n { color: var(--muted); font-family: monospace; font-size: 11px; }
+    .filtro label.zero { color: #94a3b8; }
+    .filtro input[type=checkbox] { accent-color: var(--gold); }
+    .filtro input[type=search], #cerca { padding: 7px 12px; border-radius: 12px; border: 1px solid var(--border2); background: white; color: #0f2040; font: inherit; font-size: 13px; }
+    .filtro input[type=search] { width: 100%; margin-bottom: 6px; font-size: 12px; padding: 6px 10px; }
+    .filtro input::placeholder { color: #64748b; }
+    .cerca-lente { flex: 1; min-width: 220px; position: relative; display: block; }
+    .cerca-lente svg { position: absolute; left: 11px; top: 50%; width: 15px; height: 15px; transform: translateY(-50%); color: #475569; pointer-events: none; }
+    #cerca { width: 100%; padding-left: 32px; border-color: #5b6b88; box-shadow: 0 1px 2px rgba(15,32,64,.08); }
+    #cerca::placeholder { color: #64748b; }
+    .etichette { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+    .etichette[hidden] { display: none; }
+    .etichette button { font: inherit; font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--gold); background: #fef3c7; color: #92400e; cursor: pointer; }
+    .etichette button:hover { background: #fde68a; }
+    #lavoro .scorre { margin-top: 10px; }
+
+    /* Colonne a larghezza fissa come l'anteprima di Bonifici (table-fixed): la tabella è larga
+       quanto la scheda qualunque cosa contengano le fatture; il fornitore prende il resto e i
+       testi lunghi finiscono coi puntini (interi nel tooltip). Sotto i 1.000 px scorre. */
+    .tab-pag { width: 100%; min-width: 1000px; table-layout: fixed; border-collapse: collapse; font-size: 12px; }
+    .tab-pag th { padding: 8px 6px; text-align: left; white-space: nowrap; }
+    .tab-pag th button { background: none; border: 0; padding: 0; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; display: inline-flex; gap: 4px; align-items: center; }
+    .tab-pag th .freccia { color: #cbd5e1; }
+    .tab-pag th .freccia.su, .tab-pag th .freccia.giu { color: #b45309; }
+    .tab-pag td { padding: 0 6px; height: 40px; border-bottom: 1px solid #eef2f6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #1e293b; }
+    .tab-pag tr:hover td { background: #f8fafc; }
+    .tab-pag tr.sel td { background: #fffbeb; }
+    .tab-pag .num { text-align: right; }
+    .tab-pag td.num { font-family: monospace; color: #0f2040; }
+    .tab-pag td.forn { line-height: 15px; }
+    .tab-pag td.forn div { overflow: hidden; text-overflow: ellipsis; }
+    .tab-pag .piva { display: block; color: var(--muted); font-family: monospace; font-size: 10px; line-height: 12px; }
+    .tab-pag tr.addebito td, .tab-pag tr.pagato td { color: var(--muted); }
+    .tab-pag input[type=checkbox] { accent-color: var(--gold); width: 15px; height: 15px; }
+    .tab-pag input[type=date] { color-scheme: light; font: inherit; padding: 3px 6px; border-radius: 8px; border: 1px solid var(--border2); background: white; color: #0f2040; }
+    .ed { cursor: pointer; }
+    .ed:hover { text-decoration: underline dotted #94a3b8; }
+    /* La colonna IBAN tiene un IBAN italiano (27 caratteri) per intero; uno estero più lungo
+       scorre nella casella. */
+    input.iban { width: 100%; font: 11px monospace; padding: 5px 8px; border-radius: 8px; border: 1px solid var(--border2); background: white; color: #0f2040; }
+    input.iban::placeholder { color: #94a3b8; }
+    input.iban:focus, #cerca:focus, .filtro input[type=search]:focus { outline: none; border-color: var(--gold); }
+    input.iban.bad { border-color: #fca5a5; background: #fef2f2; color: #b91c1c; }
+    .stato { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline dotted #94a3b8; text-underline-offset: 3px; }
+    /* Etichette: rosso per ciò che blocca il bonifico, ambra per Scaduta e Nota di credito,
+       grigio per gli addebiti automatici. Testi scuri su fondi chiari (contrasto oltre 4,5:1). */
+    .chip { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 999px; border: 1px solid; vertical-align: 1px; }
+    .chip-bad  { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
+    .chip-warn { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+    .chip-mute { background: #f1f5f9; border-color: #e2e8f0; color: #475569; }
+
+    /* Dashboard (brief 062): fascia scura in alto come Aggiornamenti, coi numeri che contano in
+       grande; sotto, area chiara: quattro card di attenzione, modalità in una barra a segmenti,
+       primi 3 fornitori, un grafico. Carattere del sito con cifre allineate, niente monospace.
+       Colori: oro = importante, rosso = problema, ambra (#d97706) = attenzione, teal = neutro
+       che conta, grigio azzurro (#94a3b8) = automatico. Testi sempre scuri su chiaro o chiari
+       su scuro (contrasto 4,5:1 o più); il colore sta nelle barre, non nel testo. */
+    .cifre { font-variant-numeric: tabular-nums; }
+    .dash-testa { background: linear-gradient(135deg, #0f2040 0%, #0A1628 55%, #060E1F 100%); border-radius: 18px; padding: 22px 28px 26px; color: white; }
+    .dash-testa h2 { font-size: 18px; font-weight: 700; }
+    .dash-testa .sotto { font-size: 12px; color: rgba(255,255,255,.6); }
+    .grandi { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 18px; }
+    .grande-t { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+    .grande-v { font-size: 28px; font-weight: 800; letter-spacing: -.01em; margin-top: 4px; overflow-wrap: anywhere; }
+    .grande-n { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 2px; }
+    .dash-corpo { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
+    .dash-h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: #0f2040; }
+    .attenzione { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .att { background: white; border: 1px solid var(--border); border-left: 4px solid var(--c); border-radius: 14px; padding: 12px 14px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .att-t { font-size: 12px; font-weight: 600; color: #334155; }
+    .att-v { font-size: 22px; font-weight: 700; color: #0f2040; margin-top: 2px; }
+    .att-n { font-size: 12px; color: var(--muted); }
+    .segmenti { display: flex; gap: 2px; height: 18px; }
+    .segmenti span { height: 100%; min-width: 3px; }
+    .segmenti span:first-child { border-radius: 4px 0 0 4px; } .segmenti span:last-child { border-radius: 0 4px 4px 0; }
+    .legenda { display: grid; gap: 12px; margin-top: 14px; }
+    .legenda .voce-t { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #334155; min-width: 0; }
+    .legenda .voce-t b { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .legenda i { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+    .legenda .voce-v { font-size: 16px; font-weight: 700; color: #0f2040; margin-top: 2px; }
+    .legenda .voce-n { font-size: 12px; color: var(--muted); }
+    .tag { display: inline-block; margin-top: 4px; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 999px; background: #f1f5f9; color: #475569; }
+    .primi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .primo { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-width: 0; }
+    .ordine { width: 28px; height: 28px; border-radius: 999px; background: var(--gold); color: var(--navy); font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .primo .nome { font-size: 13px; font-weight: 700; color: #0f2040; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .primo .piva { font-size: 11px; color: var(--muted); }
+    .primo .imp { font-size: 22px; font-weight: 800; color: #0f2040; margin-top: 6px; }
+    @media (max-width: 1100px) { .grandi, .attenzione { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    /* Il grafico: una colonna per mese, teal; i mesi già passati in ambra (legenda sopra).
+       Angoli arrotondati in cima, 2 px tra le colonne, importo su ogni colonna (in verticale se
+       i mesi sono tanti), dettaglio nel tooltip. */
+    .grafico { display: flex; align-items: flex-end; gap: 2px; height: 220px; padding-top: 22px; border-bottom: 1px solid var(--border2); }
+    .grafico.fitto { padding-top: 64px; }
+    .grafico .col { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+    .grafico .col:hover .pieno { opacity: .8; }
+    .grafico .pieno { width: 70%; max-width: 48px; min-height: 2px; background: var(--teal); border-radius: 4px 4px 0 0; }
+    .grafico .pieno.passato { background: #d97706; }
+    .grafico .pieno.neg { background: #dc2626; }
+    .grafico .val { font-size: 10px; color: #334155; white-space: nowrap; margin-bottom: 3px; }
+    .grafico.fitto .val { writing-mode: vertical-rl; transform: rotate(180deg); }
+    .assi { display: flex; gap: 2px; margin-top: 4px; }
+    .assi span { flex: 1; min-width: 0; text-align: center; font-size: 10px; color: var(--muted); white-space: nowrap; overflow: visible; }
+    .chiave { display: flex; gap: 14px; font-size: 12px; color: #334155; margin: -4px 0 10px; }
+    .chiave i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  </style>
+  <script src="controllo.js"></script>
+  <script src="/comune/avviso.js" defer></script>
+  <script type="module" src="app.min.js"></script>
+  <!-- Umami (brief 070): solo eventi dell'elenco chiuso in pagina.js, mai dati dei file -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
+</head>
+
+<body class="font-sans" style="background:#f1f5f9;color:#0f2040;">
+
+<!-- ─── INTESTAZIONE (come le altre app; brief 060: resta, il piè di pagina no) ─── -->
+<header class="testa-app">
+  <div class="px-6 h-full flex items-center gap-3">
+    <a href="https://datacetools.com" class="flex items-center gap-3 shrink-0">
+      <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.35);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <div style="width:1px;height:32px;background:rgba(255,255,255,.1);" class="mx-2 hidden sm:block"></div>
+    <div class="hidden sm:flex flex-col leading-tight">
+      <span style="color:white;font-weight:700;font-size:15px;">Fatture XML in bonifici</span>
+      <span style="color:rgba(255,255,255,.45);font-size:11px;">Scadenzario fornitori · dalle fatture al file per la banca</span>
+    </div>
+    <!-- Tappa B: modifiche non ancora nel file di salvataggio (etichetta provvisoria) -->
+    <span id="non-salvate" class="non-salvate" role="status" hidden></span>
+  </div>
+</header>
+
+<!-- ─── BARRA A SINISTRA, sotto l'intestazione ─────────────────────────────── -->
+<nav class="barra-nav" aria-label="Sezioni">
+  <div class="nav-voci">
+    <button type="button" class="nav-voce" data-vai="bon" aria-pressed="true">Bonifici</button>
+    <button type="button" class="nav-voce" data-vai="dash" aria-pressed="false">Dashboard</button>
+  </div>
+  <!-- Senza piè di pagina i link legali restano qui (stessi indirizzi di _parti/footer.html). -->
+  <div class="nav-piede">
+    <a href="/privacy/">Privacy</a>
+    <a href="/condizioni/">Condizioni d'uso</a>
+    <a href="/#contatti">Contatti</a>
+    <a href="/">Torna al sito</a>
+  </div>
+</nav>
+
+<!-- ─── SPAZIO DI LAVORO (chiaro) ────────────────────────────────────────── -->
+<main class="lavoro chiaro">
+
+  <!-- Browser non adatti (controllo.js): al posto dello strumento, uno di questi due -->
+  <p id="safari" role="alert" hidden class="scheda p-6" style="font-size:15px;color:#92400e;">Safari e i browser di iPhone e iPad non sono ancora supportati. Apri la pagina da un computer con Chrome, Edge, Firefox, Brave o Opera.</p>
+  <p id="non-supportato" role="alert" hidden class="scheda p-6" style="font-size:15px;color:#92400e;">Questo browser non è supportato. Apri la pagina con Chrome, Edge, Firefox, Brave o Opera.</p>
+
+  <div id="strumento">
+  <section id="bon">
+    <!-- CARICA: al centro all'inizio, poi una riga sola in alto per aggiungere fatture -->
+    <section id="carica" class="scheda p-8">
+      <div class="testa-carica flex items-center gap-5 mb-6">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:#fef3c7;border:1px solid #fde68a;">
+          <span style="font-weight:800;font-size:14px;color:#92400e;">1</span>
+        </div>
+        <div>
+          <h2 style="font-size:17px;font-weight:700;margin-bottom:4px;">Carica le fatture ricevute</h2>
+          <p style="font-size:13px;color:var(--muted);">File .xml o .p7m, anche lo ZIP scaricato dal portale · Le fatture restano sul tuo computer</p>
+        </div>
+      </div>
+      <label id="zona" class="drop-zone p-10 text-center block">
+        <svg class="icona-carica mx-auto w-12 h-12 mb-4" style="color:#cbd5e1;" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+          <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p style="font-weight:600;color:#334155;">Trascina qui le fatture o lo ZIP</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px;">oppure <span style="color:var(--teal);text-decoration:underline;">selezionali dal computer</span></p>
+        <span class="solo-striscia">Carica altre fatture</span>
+        <input type="file" id="scelta" class="hidden" multiple accept=".xml,.p7m,.zip,.XML,.P7M,.ZIP" />
+      </label>
+      <!-- Tappa B: salvataggio in Excel e riapertura (etichette provvisorie) -->
+      <div class="azioni-salva">
+        <button type="button" id="salva" class="scelta">Salva</button>
+        <label class="scelta">Apri un salvataggio<input type="file" id="apri" class="hidden" accept=".xlsx,.XLSX" /></label>
+      </div>
+      <p id="esito" class="an-note" style="margin-top:12px;text-align:center;" aria-live="polite"></p>
+    </section>
+
+    <!-- TABELLA -->
+    <section id="lavoro" class="scheda p-3" hidden>
+      <div class="riquadro-filtri">
+        <div class="riga-filtri">
+        <div role="group" aria-label="Filtri rapidi" id="schede" class="flex flex-wrap gap-2">
+          <button type="button" class="scelta" data-scheda="tutte" aria-pressed="true">Tutte (<span id="n-tutte">0</span>)</button>
+          <button type="button" class="scelta" data-scheda="sistemare" aria-pressed="false">Da sistemare (<span id="n-sistemare">0</span>)</button>
+          <button type="button" class="scelta" data-scheda="scadute" aria-pressed="false">Scadute (<span id="n-scadute">0</span>)</button>
+          <button type="button" class="scelta" data-scheda="scelte" aria-pressed="false">Scelte (<span id="n-scelte">0</span>)</button>
+        </div>
+          <button type="button" id="azzera" class="scelta" hidden>Azzera filtri</button>
+        </div>
+        <div class="riga-filtri">
+        <div id="filtri" class="flex flex-wrap gap-2" role="group" aria-label="Filtri a elenco">
+          <details class="filtro" data-filtro="modalita"><summary>Modalità</summary><div class="pannello"><div class="voci"></div></div></details>
+          <details class="filtro" data-filtro="tipo"><summary>Tipo</summary><div class="pannello"><div class="voci"></div></div></details>
+          <details class="filtro" data-filtro="fornitore"><summary>Fornitore</summary><div class="pannello"><input type="search" class="cerca-voci" placeholder="Cerca fornitore o partita IVA" aria-label="Cerca fornitore"><div class="voci"></div></div></details>
+          <details class="filtro" data-filtro="stato"><summary>Stato</summary><div class="pannello"><div class="voci"></div></div></details>
+          <details class="filtro" data-filtro="iban"><summary>IBAN</summary><div class="pannello"><div class="voci"></div></div></details>
+          <details class="filtro" data-filtro="scadenza"><summary>Scadenza</summary><div class="pannello"><div class="voci"></div></div></details>
+        </div>
+        <label class="cerca-lente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4.5 4.5"/></svg><input type="search" id="cerca" placeholder="Cerca fornitore, numero, IBAN, modalità..." aria-label="Cerca" /></label>
+        </div>
+      </div>
+      <!-- Filtri attivi come etichette: un clic toglie la voce (brief 063) -->
+      <div id="etichette" class="etichette" aria-label="Filtri attivi" hidden></div>
+      <div class="scorre rounded-xl">
+        <table class="tab-pag">
+          <thead><tr id="testa"></tr></thead>
+          <tbody id="righe"></tbody>
+        </table>
+        <p class="an-note" id="vuota" style="padding:12px;" hidden>Nessuna riga.</p>
+      </div>
+    </section>
+  </section>
+
+  <section id="dash" hidden>
+    <div id="cruscotto"></div>
+  </section>
+  </div><!-- /strumento -->
+</main>
+
+<div class="barra-totale" id="bar" hidden>
+  <b id="tot"></b>
+  <div id="avv" class="an-note"></div>
+  <button type="button" id="apri-genera">Genera il file</button>
+</div>
+
+<!-- Tappa B: il file CBI per la banca (etichette provvisorie, i testi li scrive il manager) -->
+<dialog id="genera" class="chiaro" aria-labelledby="genera-t">
+  <form method="dialog" id="genera-form" novalidate>
+    <h2 id="genera-t">Genera il file per la banca</h2>
+    <p class="an-note" id="genera-conti" style="margin:0 0 12px;"></p>
+    <div class="campi">
+      <label>Ordinante (ragione sociale)<input id="o-nome" autocomplete="organization"></label>
+      <label>IBAN di addebito<input id="o-iban" spellcheck="false" style="font-family:monospace;"></label>
+      <label>CUC<input id="o-cuc" spellcheck="false" style="font-family:monospace;"></label>
+      <label>Data di esecuzione<input id="o-data" type="date"></label>
+    </div>
+    <p class="an-note" style="margin:8px 0 0;">Pagamento ai fornitori (tipologia SUPP).</p>
+    <div id="genera-testi"></div>
+    <div id="genera-fuori"></div>
+    <div id="genera-msg" aria-live="polite"></div>
+    <div class="bottoni">
+      <button type="submit" value="chiudi">Chiudi</button>
+      <button type="button" id="genera-ok" class="primo-b">Scarica il file</button>
+    </div>
+  </form>
+</dialog>
+</body>
+</html>

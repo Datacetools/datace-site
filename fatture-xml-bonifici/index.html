@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO (brief 069) -->
+  <title>Da fatture XML a bonifici: scadenzario fornitori | Datace</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Carica lo ZIP delle fatture ricevute: tabella dei fornitori con scadenze e IBAN e file dei bonifici per la banca. Gratis, senza account, nel browser." />
+  <link rel="canonical" href="https://datacetools.com/fatture-xml-bonifici/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://datacetools.com/fatture-xml-bonifici/" />
+  <meta property="og:title"       content="Da fatture XML a bonifici: scadenzario fornitori | Datace" />
+  <meta property="og:description" content="Carica lo ZIP delle fatture ricevute: tabella dei fornitori con scadenze e IBAN e file dei bonifici per la banca. Gratis, senza account, nel browser." />
+  <meta property="og:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Datace: strumenti gratuiti per aziende e commercialisti" />
+  <meta name="twitter:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta name="twitter:card"       content="summary_large_image" />
+
+  <!-- JSON-LD: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Datace: Fatture XML in bonifici",
+    "url": "https://datacetools.com/fatture-xml-bonifici/app/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "All",
+    "description": "Carica lo ZIP delle fatture ricevute: tabella dei fornitori con scadenze e IBAN e file dei bonifici per la banca. Gratis, senza account, nel browser.",
+    "inLanguage": "it",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "featureList": [
+      "Legge lo ZIP delle fatture e i file .xml e .p7m nel browser",
+      "Scadenzario con filtri e dashboard",
+      "Controllo degli IBAN",
+      "File dei bonifici per la banca (CBI)",
+      "Salvataggio in Excel"
+    ],
+    "publisher": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" }
+  }
+  </script>
+
+  <!-- JSON-LD: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Datace", "item": "https://datacetools.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Fatture XML in bonifici", "item": "https://datacetools.com/fatture-xml-bonifici/" }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage (testo uguale alla pagina) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Serve un account?", "acceptedAnswer": { "@type": "Answer", "text": "No. Apri la pagina e carichi i file." } },
+      { "@type": "Question", "name": "I miei file vengono inviati a Datace?", "acceptedAnswer": { "@type": "Answer", "text": "No. I file sono letti nel tuo browser e non vengono inviati a Datace." } },
+      { "@type": "Question", "name": "Dove scarico lo ZIP delle fatture?", "acceptedAnswer": { "@type": "Answer", "text": "Dal portale «Fatture e Corrispettivi» dell'Agenzia delle Entrate, con una richiesta di download massivo. La guida spiega i passaggi." } },
+      { "@type": "Question", "name": "E se nella fattura manca l'IBAN?", "acceptedAnswer": { "@type": "Answer", "text": "Succede spesso, perché l'IBAN nella fattura è facoltativo. La pagina te lo segnala e lo scrivi nella tabella, con il controllo mentre digiti." } },
+      { "@type": "Question", "name": "Posso riprendere il lavoro il giorno dopo?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Scarichi il salvataggio in Excel e lo riapri al prossimo accesso: stati, IBAN e scadenze corretti tornano al loro posto." } },
+      { "@type": "Question", "name": "Funziona con la mia banca?", "acceptedAnswer": { "@type": "Answer", "text": "Il file segue lo stesso tracciato di Bonifici massivi XML. Prima di confermare, la tua banca ti mostra un riepilogo con totale e numero di operazioni: controllalo." } }
+    ]
+  }
+  </script>
+
+  <!-- Tailwind compilato (sorgente: _tailwind/sito.css) e Inter servito dal sito:
+       nessuna richiesta a CDN o a Google Fonts. -->
+  <link rel="stylesheet" href="/tailwind.css" />
+
+  <style>
+    :root { --navy:#060E1F; --navy2:#0A1628; --navy3:#0F2040; --gold:#F59E0B; --gold2:#FBBF24; --teal:#1d7a94; --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12); --muted:rgba(255,255,255,0.62); }
+    * { box-sizing:border-box; }
+    body { background:var(--navy); color:white; }
+    .logo-bar { transform-box:fill-box; transform-origin:left center; }
+    .logo-bar-1 { animation:barStream 2.8s ease-in-out infinite 0s; }
+    .logo-bar-2 { animation:barStream 2.8s ease-in-out infinite .22s; }
+    .logo-bar-3 { animation:barStream 2.8s ease-in-out infinite .44s; }
+    @keyframes barStream { 0%,100%{transform:scaleX(1);opacity:1;} 30%{transform:scaleX(0.32);opacity:0.5;} 60%{transform:scaleX(1);opacity:1;} }
+    .dark-card { background:linear-gradient(135deg,rgba(15,32,64,.8),rgba(6,14,31,.9)); border:1px solid var(--border); border-radius:20px; padding:24px; }
+    /* Etichetta Beta in ambra, come la card della home (l'ambra dell'avviso in home; testo 11,3:1) */
+    .beta { display:inline-block; font-size:12px; font-weight:700; letter-spacing:.05em; padding:4px 11px; border-radius:999px; background:rgba(245,158,11,.12); color:#fcd34d; border:1px solid rgba(245,158,11,.3); vertical-align:middle; }
+    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:white; color:#0F2040; font-weight:700; font-size:14px; padding:14px 28px; border-radius:12px; transition:transform .2s ease, box-shadow .2s ease; text-decoration:none; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,255,255,.15); }
+    .btn-secondary { display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,.2); color:white; font-weight:600; font-size:14px; padding:14px 28px; border-radius:12px; transition:background .2s ease; text-decoration:none; }
+    .btn-secondary:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.35); }
+    .testo h2 { font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; letter-spacing:-.02em; margin-bottom:16px; }
+    .testo p { font-size:15px; color:var(--muted); line-height:1.8; margin-bottom:14px; }
+    .testo a { color:#93c5fd; text-decoration:underline; }
+    .faq-item summary { list-style:none; }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item[open] summary .faq-icon { transform:rotate(45deg); }
+    .faq-icon { transition:transform 0.2s ease; }
+    .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; align-items:start; }
+    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-bottom:16px; }
+    .footer-link { display:block; font-size:14px; color:rgba(255,255,255,.62); margin-bottom:10px; text-decoration:none; transition:color .2s ease; }
+    .footer-link:hover { color:white; }
+    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
+    @media (max-width:768px) { .footer-grid { grid-template-columns:1fr; gap:32px; } .footer-bottom { flex-direction:column; gap:8px; text-align:center; } }
+    @media (prefers-reduced-motion: reduce) { .logo-bar { animation:none; } }
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
+</head>
+
+<body class="font-sans antialiased" style="background:#060E1F;color:white;">
+
+<!-- HEADER -->
+<!-- DATACE HEADER START -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <svg class="w-9 h-9 flex-shrink-0" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" style="color:rgba(255,255,255,.62);">
+      <a href="/#strumenti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Strumenti</a>
+      <a href="/guida/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Guide</a>
+      <a href="/chi-siamo" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Chi sono</a>
+      <a href="/#contatti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Contatti</a>
+    </nav>
+    <a href="/#strumenti" style="background:white;color:#0f2040;font-weight:700;font-size:13px;padding:9px 20px;border-radius:10px;letter-spacing:.01em;transition:all .2s ease;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Inizia ora</a>
+  </div>
+</header>
+<!-- DATACE HEADER END -->
+
+<!-- HERO (brief 070: solo la pillola Beta, due pulsanti) -->
+<section class="px-6 py-24" style="background:var(--navy);position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20%;left:-10%;width:55%;height:80%;background:radial-gradient(ellipse,rgba(29,122,148,.18) 0%,transparent 65%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-10%;right:-5%;width:45%;height:70%;background:radial-gradient(ellipse,rgba(245,158,11,.07) 0%,transparent 60%);pointer-events:none;"></div>
+  <div class="max-w-3xl mx-auto" style="position:relative;z-index:1;">
+    <div class="mb-5"><span class="beta">Beta</span></div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;" class="mb-5">Fatture XML in bonifici</h1>
+    <p style="font-size:1.2rem;color:white;line-height:1.6;font-weight:600;" class="mb-5 max-w-2xl">Dallo ZIP delle fatture ricevute a uno scadenzario dei fornitori e al file dei bonifici per l'home banking.</p>
+    <p style="font-size:1.05rem;color:var(--muted);line-height:1.8;" class="mb-8 max-w-2xl">Carica lo ZIP delle fatture elettroniche ricevute: Datace legge le fatture XML e .p7m e le mette in una tabella con fornitore, importo, scadenza e IBAN. Da lì scegli cosa pagare e scarichi il file dei bonifici per la banca. Non serve un account e i file vengono letti nel tuo browser, non sono inviati a Datace.</p>
+    <div class="flex flex-wrap gap-3">
+      <a data-umami-event="apri-strumento" data-umami-event-tool="fornitori" href="/fatture-xml-bonifici/app/" class="btn-primary">
+        Apri lo strumento
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <a href="#come-funziona" class="btn-secondary">Come funziona</a>
+    </div>
+  </div>
+</section>
+
+<!-- COME FUNZIONA -->
+<section id="come-funziona" class="px-6 py-20" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Come funziona</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="dark-card">
+        <div style="width:44px;height:44px;border-radius:14px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><span style="font-size:17px;font-weight:800;color:var(--gold);">1</span></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7;"><strong style="color:white;">Carica le fatture.</strong> Trascina lo ZIP scaricato dal portale dell'Agenzia delle Entrate, oppure i file .xml e .p7m. Se non hai ancora lo ZIP, la <a href="/guida/scaricare-fatture-elettroniche-ricevute-zip/" style="color:#93c5fd;text-decoration:underline;">guida su come scaricare in blocco le fatture elettroniche ricevute</a> spiega dove si trova.</p>
+      </div>
+      <div class="dark-card">
+        <div style="width:44px;height:44px;border-radius:14px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><span style="font-size:17px;font-weight:800;color:var(--gold);">2</span></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7;"><strong style="color:white;">Controlla la tabella.</strong> Ogni riga è una rata di pagamento. Se l'IBAN manca, lo scrivi tu e la pagina lo controlla mentre digiti.</p>
+      </div>
+      <div class="dark-card">
+        <div style="width:44px;height:44px;border-radius:14px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><span style="font-size:17px;font-weight:800;color:#2a9db5;">3</span></div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7;"><strong style="color:white;">Scegli e scarica.</strong> Le righe da pagare diventano il file per la banca. Puoi anche scaricare un salvataggio in Excel e riprendere il lavoro un altro giorno.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONI -->
+<section class="px-6 py-20" style="background:var(--navy);">
+  <div class="max-w-3xl mx-auto testo">
+    <h2>Scadenzario fornitori da fatture XML</h2>
+    <p>La tabella funziona come uno scadenzario: per ogni fattura ricevuta vedi quanto devi, a chi e entro quando. Puoi filtrare per fornitore, modalità di pagamento, stato, IBAN e scadenza, e cercare per nome o numero. La dashboard somma quanto resta da pagare, quanto è scaduto e quanto scade nei prossimi 30 giorni. Le note di credito vengono sottratte. Gli addebiti automatici, come l'addebito diretto SEPA, restano in tabella ma non entrano nel file dei bonifici.</p>
+    <p>La fattura non dice se è stata pagata. Lo stato «Pagato» lo segni tu, e il salvataggio in Excel lo conserva.</p>
+
+    <h2 style="margin-top:48px;">Pagamento fornitori da fatture elettroniche</h2>
+    <p>Dalle righe scelte la pagina prepara il file dei bonifici in formato CBI per l'home banking, come in <a href="/bonifici-massivi-xml/">Bonifici massivi XML</a>. Inserisci ragione sociale, IBAN di addebito, CUC e data di esecuzione. Prima di scaricare, la pagina controlla gli IBAN e sostituisce i caratteri che la banca non accetta, come gli accenti e la «&amp;», mostrando cosa ha cambiato. Le righe senza un IBAN valido restano fuori e la pagina dice quali.</p>
+
+    <h2 style="margin-top:48px;">Cosa serve e cosa non viene inviato</h2>
+    <p>Serve lo ZIP delle fatture ricevute, o i singoli file .xml e .p7m. Niente registrazione e nessuna email. I file non vengono inviati a Datace: la pagina li legge nel browser e, quando la chiudi, la tabella sparisce. Per non perdere il lavoro scarichi il salvataggio.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);" class="px-6 py-20">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Domande frequenti</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;"><span style="font-weight:600;font-size:14px;padding-right:16px;">Serve un account?</span><svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Apri la pagina e carichi i file.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;"><span style="font-weight:600;font-size:14px;padding-right:16px;">I miei file vengono inviati a Datace?</span><svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. I file sono letti nel tuo browser e non vengono inviati a Datace.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;"><span style="font-weight:600;font-size:14px;padding-right:16px;">Dove scarico lo ZIP delle fatture?</span><svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Dal portale «Fatture e Corrispettivi» dell'Agenzia delle Entrate, con una richiesta di download massivo. La <a href="/guida/scaricare-fatture-elettroniche-ricevute-zip/" style="color:#93c5fd;">guida</a> spiega i passaggi.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;"><span style="font-weight:600;font-size:14px;padding-right:16px;">E se nella fattura manca l'IBAN?</span><svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Succede spesso, perché l'IBAN nella fattura è facoltativo. La pagina te lo segnala e lo scrivi nella tabella, con il controllo mentre digiti.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;"><span style="font-weight:600;font-size:14px;padding-right:16px;">Posso riprendere il lavoro il giorno dopo?</span><svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì. Scarichi il salvataggio in Excel e lo riapri al prossimo accesso: stati, IBAN e scadenze corretti tornano al loro posto.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;"><span style="font-weight:600;font-size:14px;padding-right:16px;">Funziona con la mia banca?</span><svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Il file segue lo stesso tracciato di Bonifici massivi XML. Prima di confermare, la tua banca ti mostra un riepilogo con totale e numero di operazioni: controllalo.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SU MISURA (testo come nelle guide) -->
+<section class="px-6 py-16" style="background:var(--navy);border-top:1px solid var(--border);">
+  <div class="max-w-3xl mx-auto dark-card text-center" style="padding:32px;">
+    <h2 class="text-2xl font-extrabold mb-3">Il tuo caso è diverso?</h2>
+    <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:24px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Raccontaci il tuo caso:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+      <a href="https://www.linkedin.com/in/davide-sgroia/" target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="vetrina-fornitori" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        Profilo LinkedIn di Davide Sgroia
+      </a>
+      <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Fatture%20XML%20in%20bonifici&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="vetrina-fornitori" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Scrivici il tuo caso
+      </a>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,.4);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Fatture%20XML%20in%20bonifici&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="vetrina-fornitori" style="color:#F59E0B;">info@datacetools.com</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+        <a href="/fatture-xml-bonifici/" class="footer-link">Fatture XML in bonifici</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
+        <a href="/privacy" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+
+</body>
+</html>

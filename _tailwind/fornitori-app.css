@@ -1,0 +1,31 @@
+/* SORGENTE del CSS di /fatture-xml-bonifici/app/ (le cartelle con "_" non escono online).
+   Come _tailwind/bonifici-app.css. Si ricompila dalla radice del sito, con Tailwind v4.3.3
+   (la CLI è in fatturaxls-web/browser, versione bloccata), ogni volta che nella pagina si
+   aggiunge o si toglie una classe (NODE_PATH dice alla CLI dove trovare "tailwindcss"):
+
+     $env:NODE_PATH = (Resolve-Path ..\fatturaxls-web\browser\node_modules).Path
+     ..\fatturaxls-web\browser\node_modules\.bin\tailwindcss -i _tailwind/fornitori-app.css -o fatture-xml-bonifici/app/tailwind.css --minify
+
+   Le righe della tabella le scrive app.min.js con le classi di /comune/app.css, non di
+   Tailwind: basta leggere la pagina. Il prodotto si committa (GitHub Pages non compila). */
+@import "tailwindcss" source(none);
+@source "../fatture-xml-bonifici/app/index.html";
+
+/* Inter come nelle altre app (regola di Davide, 3/11/2026: elementi comuni identici). */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --font-sans: Inter, system-ui, sans-serif;
+}
+
+/* Dalla v4 i pulsanti hanno il cursore normale: qui restano con la manina. */
+@layer base {
+  button:not(:disabled) { cursor: pointer; }
+}

@@ -1,0 +1,99 @@
+/* Componenti comuni delle app (regola di Davide, 3/11/2026: stesso stile, stesso codice).
+   Copiati riga per riga dalle pagine online: colori, card, zona di trascinamento, testata
+   della tabella, logo e footer da bonifici-massivi-xml/app/; KPI, barre e pulsanti a
+   pillola (.scelta) da fattura-elettronica-excel/app/. Oggi li usa fatture-xml-bonifici/app/;
+   Bonifici, Fattura e F24 hanno ancora la loro copia nella pagina: spostarle qui è da fare. */
+:root {
+  --navy:   #060E1F; --navy2: #0A1628; --navy3: #0F2040;
+  --gold:   #F59E0B; --gold2: #FBBF24; --teal: #1d7a94;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+  --muted:  rgba(255,255,255,0.45);
+}
+* { box-sizing: border-box; }
+body { background: var(--navy); color: white; }
+
+/* Logo bars */
+.logo-bar { transform-box: fill-box; transform-origin: left center; }
+.logo-bar-1 { animation: barStream 2.8s ease-in-out infinite 0s; }
+.logo-bar-2 { animation: barStream 2.8s ease-in-out infinite .22s; }
+.logo-bar-3 { animation: barStream 2.8s ease-in-out infinite .44s; }
+@keyframes barStream {
+  0%,100% { transform: scaleX(1);    opacity: 1;   }
+  30%     { transform: scaleX(0.32); opacity: 0.5; }
+  60%     { transform: scaleX(1);    opacity: 1;   }
+}
+
+/* Dark card */
+.dark-card {
+  background: linear-gradient(135deg, rgba(15,32,64,.85), rgba(6,14,31,.95));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+/* Drop zone (in Bonifici è #drop-zone) */
+.drop-zone {
+  border: 2px dashed rgba(255,255,255,.15);
+  border-radius: 16px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--teal);
+  background: rgba(29,122,148,.08);
+}
+
+/* Tabella (in Bonifici #preview-wrap) */
+.scorre::-webkit-scrollbar { width: 6px; height: 6px; }
+.scorre::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
+.scorre::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 3px; }
+.th { color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95); }
+
+/* KPI e grafici (Fattura, brief 036) */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.kpi { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-width: 0; }
+.kpi-t { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.kpi-v { font-size: 20px; font-weight: 700; font-family: monospace; margin-top: 4px; overflow-wrap: anywhere; }
+.kpi-n { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 4px; }
+.an-note { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 4px; }
+.an-blocco { margin-top: 24px; }
+.an-h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.barra { display: grid; grid-template-columns: minmax(0, 38%) 1fr auto; gap: 10px; align-items: center; font-size: 12px; margin-bottom: 6px; }
+.barra-nome { color: rgba(255,255,255,.75); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.barra-fondo { background: rgba(255,255,255,.05); border-radius: 4px; height: 12px; }
+.barra-pieno { background: var(--gold); border-radius: 4px; height: 12px; min-width: 2px; }
+.barra-pieno.neg { background: #f87171; }
+.barra-num { font-family: monospace; color: rgba(255,255,255,.7); text-align: right; }
+.scelta { font-size: 12px; border-radius: 999px; padding: 6px 14px; border: 1px solid var(--border2); background: transparent; color: rgba(255,255,255,.7); cursor: pointer; }
+.scelta[aria-pressed="true"] { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.4); color: var(--gold); }
+@media (max-width: 640px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .barra { grid-template-columns: minmax(0, 1fr) auto; }
+  .barra-fondo { grid-column: 1 / -1; grid-row: 2; }
+}
+
+/* Footer grid */
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: start; }
+.footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 16px; }
+.footer-link { display: block; font-size: 14px; color: rgba(255,255,255,.45); margin-bottom: 10px; text-decoration: none; transition: color .2s ease; }
+.footer-link:hover { color: white; }
+.footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: rgba(255,255,255,.2); }
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+
+/* Area di lavoro chiara (brief 061): gli stessi componenti su fondo chiaro, coi colori della
+   pagina Aggiornamenti (sfondo #f1f5f9, schede bianche, testi in blu scuro, bordi sottili).
+   Intestazione e barre restano scure: stanno fuori da .chiaro. Oro solo per accenti; come
+   testo su bianco l'oro non si legge, al suo posto l'ambra scura (#92400e). */
+.chiaro { --border: #e2e8f0; --border2: #cbd5e1; --muted: #64748b; color: #0f2040; }
+.chiaro .scheda { background: white; border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+.chiaro .drop-zone { border-color: var(--border2); }
+.chiaro .drop-zone:hover, .chiaro .drop-zone.drag-over { border-color: var(--teal); background: rgba(29,122,148,.06); }
+.chiaro .scorre::-webkit-scrollbar-track { background: #f1f5f9; }
+.chiaro .scorre::-webkit-scrollbar-thumb { background: var(--border2); }
+.chiaro .th { color: #475569; background: #eef2f9; } /* tinta navy chiara (brief 064), 6,8:1 */
+.chiaro .kpi { background: white; }
+.chiaro .kpi-n, .chiaro .an-note { color: var(--muted); }
+.chiaro .scelta { background: white; color: #334155; }
+.chiaro .scelta[aria-pressed="true"] { background: #fef3c7; border-color: var(--gold); color: #92400e; }
