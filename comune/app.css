@@ -5,7 +5,7 @@
    Bonifici, Fattura e F24 hanno ancora la loro copia nella pagina: spostarle qui è da fare. */
 :root {
   --navy:   #060E1F; --navy2: #0A1628; --navy3: #0F2040;
-  --gold:   #F59E0B; --gold2: #FBBF24; --teal: #1d7a94;
+  --gold:   #F59E0B; --gold2: #FBBF24; --teal: #2a9db5; /* teal su scuro; su chiaro #1d7a94 (.chiaro, brief 075) */
   --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
   --muted:  rgba(255,255,255,0.45);
 }
@@ -86,7 +86,7 @@ body { background: var(--navy); color: white; }
    pagina Aggiornamenti (sfondo #f1f5f9, schede bianche, testi in blu scuro, bordi sottili).
    Intestazione e barre restano scure: stanno fuori da .chiaro. Oro solo per accenti; come
    testo su bianco l'oro non si legge, al suo posto l'ambra scura (#92400e). */
-.chiaro { --border: #e2e8f0; --border2: #cbd5e1; --muted: #64748b; color: #0f2040; }
+.chiaro { --border: #e2e8f0; --border2: #cbd5e1; --muted: #64748b; --teal: #1d7a94; color: #0f2040; }
 .chiaro .scheda { background: white; border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
 .chiaro .drop-zone { border-color: var(--border2); }
 .chiaro .drop-zone:hover, .chiaro .drop-zone.drag-over { border-color: var(--teal); background: rgba(29,122,148,.06); }
