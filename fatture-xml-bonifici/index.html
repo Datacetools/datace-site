@@ -79,6 +79,7 @@
   <!-- Tailwind compilato (sorgente: _tailwind/sito.css) e Inter servito dal sito:
        nessuna richiesta a CDN o a Google Fonts. -->
   <link rel="stylesheet" href="/tailwind.css" />
+  <link rel="stylesheet" href="/comune/vetrina.css" />
 
   <style>
     :root { --navy:#060E1F; --navy2:#0A1628; --navy3:#0F2040; --gold:#F59E0B; --gold2:#FBBF24; --teal:#2a9db5; --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12); --muted:rgba(255,255,255,0.62); }
@@ -110,38 +111,6 @@
     .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
     @media (max-width:768px) { .footer-grid { grid-template-columns:1fr; gap:32px; } .footer-bottom { flex-direction:column; gap:8px; text-align:center; } }
     @media (prefers-reduced-motion: reduce) { .logo-bar { animation:none; } }
-    /* ── Documento che si trasforma (brief 078, prima bozza): file → tabella → IBAN → file per la banca.
-       Un ciclo di 6 s, stessa curva per tutti; si animano solo transform e opacity (niente filtri).
-       Per le altre vetrine si cambia solo il contenuto dell'SVG: classi e @keyframes restano questi.
-       Senza animazione (movimento ridotto) resta il fotogramma finale: tabella piena e file in uscita. */
-    .f24hub-wrap { display:flex; flex-direction:column; gap:16px; max-width:560px; margin:0 auto; width:100%; }
-    .f24hub { width:100%; height:auto; display:block; }
-    .doc-anim * { transform-box:fill-box; }
-    .doc-in, .doc-tab, .doc-r, .doc-v, .doc-out, .doc-ok { animation:6s cubic-bezier(.4,0,.2,1) infinite; }
-    .doc-in { opacity:0; animation-name:docIn; }
-    .doc-tab { transform-origin:center; animation-name:docTab; }
-    .doc-r1 { animation-name:docR1; } .doc-r2 { animation-name:docR2; } .doc-r3 { animation-name:docR3; } .doc-r4 { animation-name:docR4; }
-    .doc-v { transform-origin:left center; }
-    .doc-v1 { animation-name:docV1; } .doc-v2 { animation-name:docV2; } .doc-v3 { animation-name:docV3; } .doc-v4 { animation-name:docV4; }
-    .doc-out { animation-name:docOut; }
-    .doc-ok { transform-origin:center; animation-name:docOk; }
-    @keyframes docIn  { 0% { opacity:0; transform:translateX(-24px); } 8%,18% { opacity:1; transform:none; } 26%,100% { opacity:0; transform:translateX(70px) scale(.9); } }
-    @keyframes docTab { 0%,18% { opacity:0; transform:scale(.97); } 26%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docR1 { 0%,26% { opacity:0; transform:translateY(6px); } 31%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docR2 { 0%,31% { opacity:0; transform:translateY(6px); } 36%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docR3 { 0%,36% { opacity:0; transform:translateY(6px); } 41%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docR4 { 0%,41% { opacity:0; transform:translateY(6px); } 46%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docV1 { 0%,50% { opacity:0; transform:scaleX(0); } 55%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docV2 { 0%,55% { opacity:0; transform:scaleX(0); } 60%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docV3 { 0%,60% { opacity:0; transform:scaleX(0); } 65%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docV4 { 0%,65% { opacity:0; transform:scaleX(0); } 70%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docOut { 0%,72% { opacity:0; transform:translateX(-50px); } 80%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes docOk  { 0%,80% { opacity:0; transform:scale(.6); } 85%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @media (max-width:1023px) { .f24hub-wrap { max-width:440px; margin:0 auto; } }
-    @media (max-width:640px) { .f24hub-wrap { display:none; } }
-    @media (prefers-reduced-motion: reduce) {
-      .doc-in, .doc-tab, .doc-r, .doc-v, .doc-out, .doc-ok { animation:none; }
-    }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
 </head>
@@ -238,8 +207,8 @@
             </g>
           </g>
           <g class="doc-out">
-            <g transform="translate(462 118)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="#F59E0B" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="#F59E0B" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">CBI</text></g>
-            <g class="doc-ok"><circle cx="512" cy="120" r="10" fill="#0f2040" stroke="#86efac" stroke-width="1.5"/><path d="M507 120l3.5 3.5 6.5-7" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <g transform="translate(440 118)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="#F59E0B" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="#F59E0B" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">CBI</text></g>
+            <g class="doc-ok"><circle cx="490" cy="120" r="10" fill="#0f2040" stroke="#86efac" stroke-width="1.5"/><path d="M485 120l3.5 3.5 6.5-7" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
           </g>
         </svg>
       </div>

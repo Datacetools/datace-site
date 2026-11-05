@@ -81,6 +81,7 @@
   <!-- Tailwind compilato (sorgente: _tailwind/sito.css) e Inter servito dal sito:
        nessuna richiesta a CDN o a Google Fonts. -->
   <link rel="stylesheet" href="/tailwind.css" />
+  <link rel="stylesheet" href="/comune/vetrina.css" />
 
   <style>
     :root {
@@ -238,37 +239,6 @@
       transition: background .2s ease, border-color .2s ease;
     }
     .btn-secondary:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.35); }
-
-    /* ── Scena della promessa (brief 079, prima bozza; stessa famiglia del 078): dentro la finestra
-       del browser quattro documenti, uno alla volta, passano dal lettore Datace e diventano tabella e
-       risultato. Ciclo di 8 s in 4 turni da 2 s: scansione, righe e conferma girano ogni 2 s; il
-       documento in ingresso e il risultato hanno un ciclo di 8 s spostato di 2 s per turno.
-       Solo transform e opacity, niente filtri. Movimento ridotto: fermo sul primo risultato. */
-    .hub-wrap { display:flex; flex-direction:column; gap:16px; }
-    .hub-svg { width:100%; height:auto; display:block; }
-    .home-anim * { transform-box:fill-box; }
-    .doc-i, .doc-o, .doc-scan, .doc-row, .doc-ok2 { animation:cubic-bezier(.4,0,.2,1) infinite; }
-    .doc-i, .doc-o { opacity:0; animation-duration:8s; }
-    .doc-i { animation-name:homeIn; } .doc-o { animation-name:homeOut; }
-    .t2 { animation-delay:2s; } .t3 { animation-delay:4s; } .t4 { animation-delay:6s; }
-    .doc-scan { opacity:0; animation-duration:2s; animation-name:homeScan; }
-    .doc-row { animation-duration:2s; }
-    .doc-row1 { animation-name:homeRow1; } .doc-row2 { animation-name:homeRow2; } .doc-row3 { animation-name:homeRow3; }
-    .doc-ok2 { transform-origin:center; animation-duration:2s; animation-name:homeOk; }
-    @keyframes homeIn   { 0% { opacity:0; transform:translateX(-20px); } 5%,12% { opacity:1; transform:none; } 15%,100% { opacity:0; transform:translateX(24px) scale(.9); } }
-    @keyframes homeOut  { 0%,15% { opacity:0; transform:translateX(-30px); } 19%,23% { opacity:1; transform:none; } 25%,100% { opacity:0; } }
-    @keyframes homeScan { 0%,18% { opacity:0; transform:none; } 22% { opacity:1; transform:none; } 46% { opacity:1; transform:translateY(76px); } 50%,100% { opacity:0; transform:translateY(76px); } }
-    @keyframes homeRow1 { 0%,56% { opacity:0; transform:translateY(4px); } 62%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes homeRow2 { 0%,60% { opacity:0; transform:translateY(4px); } 66%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes homeRow3 { 0%,64% { opacity:0; transform:translateY(4px); } 70%,92% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @keyframes homeOk   { 0%,80% { opacity:0; transform:scale(.6); } 85%,94% { opacity:1; transform:none; } 100% { opacity:0; } }
-    @media (max-width:1023px) { .hub-wrap { max-width:440px; margin:0 auto; } }
-    /* su schermi piccoli il viewBox scala molto: scritte più grandi */
-    @media (max-width:640px) { .home-anim .doc-lbl { font-size:15px; } .home-anim .win-lbl { font-size:16px; } }
-    @media (prefers-reduced-motion: reduce) {
-      .doc-i, .doc-o, .doc-scan, .doc-row, .doc-ok2 { animation:none; }
-      .doc-o.t1 { opacity:1; }
-    }
 
     /* ── Stats ── */
     .stats-section {

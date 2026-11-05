@@ -104,6 +104,7 @@
   <!-- Tailwind compilato (sorgente: _tailwind/sito.css) e Inter servito dal sito:
        nessuna richiesta a CDN o a Google Fonts. -->
   <link rel="stylesheet" href="/tailwind.css" />
+  <link rel="stylesheet" href="/comune/vetrina.css" />
 
   <style>
     :root { --navy:#060E1F; --navy2:#0A1628; --navy3:#0F2040; --gold:#F59E0B; --gold2:#FBBF24; --teal:#2a9db5; --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12); --muted:rgba(255,255,255,0.62); }
@@ -137,35 +138,7 @@
     .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
     @media (max-width:768px) { .footer-grid { grid-template-columns:1fr; gap:32px; } .footer-bottom { flex-direction:column; gap:8px; text-align:center; } }
 
-    /* ── Visual hub input → Datace → output (variante del visual hero della home) ── */
-    .f24hub-wrap { display:flex; flex-direction:column; gap:16px; max-width:560px; margin:0 auto; width:100%; }
-    .f24hub { width:100%; height:auto; display:block; }
-    .f24hub-float-a { animation:f24Float 7s ease-in-out infinite; }
-    .f24hub-float-b { animation:f24Float 8.5s ease-in-out infinite 1.4s; }
-    @keyframes f24Float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-3px); } }
-    .f24hub-flow { stroke-dasharray:18 38; animation:f24Flow 1.6s linear infinite; }
-    .f24hub-flow.o { animation-delay:.8s; }
-    @keyframes f24Flow { to { stroke-dashoffset:-56; } }
-    .f24hub-glow { animation:f24NodeFlash 1.6s linear infinite; }
-    @keyframes f24NodeFlash { 0% { opacity:.32; } 55% { opacity:.22; } 72% { opacity:.6; } 92% { opacity:.55; } 100% { opacity:.32; } }
-    .f24hub-hl, .f24hub-hl-in { opacity:0; }
-    .f24hub-hl-in { animation:f24CardIn 1.6s linear infinite; }
-    .f24hub-hl { animation:f24CardOut 1.6s linear infinite .8s; }
-    @keyframes f24CardIn  { 0% { opacity:.9; } 28% { opacity:.9; } 42% { opacity:0; } 100% { opacity:0; } }
-    @keyframes f24CardOut { 0%,64% { opacity:0; } 72% { opacity:.9; } 97% { opacity:.9; } 100% { opacity:0; } }
-    @media (max-width:1023px) {
-      .f24hub-wrap { max-width:440px; margin:0 auto; }
-      .f24hub-float-a, .f24hub-float-b { animation:none; }
-    }
-    @media (max-width:640px) {
-      .f24hub-wrap { display:none; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .f24hub-flow, .f24hub-glow, .f24hub-hl, .f24hub-hl-in, .f24hub-float-a, .f24hub-float-b, .logo-bar { animation:none; }
-      .f24hub-flow { display:none; }
-      .f24hub-hl, .f24hub-hl-in { opacity:0; }
-      .f24hub-glow { opacity:.3; }
-    }
+    @media (prefers-reduced-motion: reduce) { .logo-bar { animation:none; } }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
 </head>
@@ -229,52 +202,48 @@
       </div>
 
       <div class="f24hub-wrap">
-        <svg class="f24hub" viewBox="0 0 560 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fattura elettronica XML o P7M trasformata da Datace in Excel strutturato">
-          <defs>
-            <linearGradient id="f24HubGold" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/>
-            </linearGradient>
-            <linearGradient id="f24HubNodeBg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/>
-            </linearGradient>
-            <filter id="f24HubBlur" x="-60%" y="-60%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="22"/>
-            </filter>
-          </defs>
-
-          <circle class="f24hub-glow" cx="280" cy="150" r="70" fill="#F59E0B" opacity=".3" filter="url(#f24HubBlur)"/>
-          <g stroke="rgba(255,255,255,.09)" stroke-width="1.5" stroke-linecap="round">
-            <path d="M160 150 L216 150"/>
-            <path d="M344 150 L400 150"/>
+        <svg class="f24hub doc-anim" viewBox="0 0 560 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fattura elettronica XML o P7M trasformata da Datace in Excel strutturato" font-family="Inter,system-ui,sans-serif">
+          <g class="doc-in">
+            <g transform="translate(44 96)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">P7M</text></g>
+            <g transform="translate(32 110)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">XML</text></g>
+            <g transform="translate(20 124)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">XML</text></g>
           </g>
-          <g stroke="#F59E0B" stroke-width="3" stroke-linecap="round">
-            <path class="f24hub-flow" d="M160 150 L216 150"/>
-            <path class="f24hub-flow o" d="M344 150 L400 150"/>
+          <g class="doc-tab">
+            <rect x="150" y="62" width="272" height="176" rx="16" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)"/>
+            <g font-size="8" font-weight="600" letter-spacing=".08em" fill="rgba(255,255,255,.45)">
+              <text x="166" y="92">FORNITORE</text><text x="250" y="92">CLIENTE</text><text x="304" y="92">RIGHE</text><text x="358" y="92">IVA</text>
+            </g>
+            <path d="M150 100 H422" stroke="rgba(255,255,255,.1)"/>
+            <g class="doc-r doc-r1">
+              <rect x="166" y="117" width="56" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="250" y="117" width="30" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="304" y="117" width="34" height="6" rx="3" fill="rgba(255,255,255,.18)"/>
+              <rect x="358" y="112" width="50" height="16" rx="5" fill="none" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 3"/>
+              <rect class="doc-v doc-v1" x="362" y="117" width="42" height="6" rx="3" fill="#2a9db5"/>
+            </g>
+            <path d="M164 135 H408" stroke="rgba(255,255,255,.06)"/>
+            <g class="doc-r doc-r2">
+              <rect x="166" y="143" width="44" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="250" y="143" width="34" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="304" y="143" width="34" height="6" rx="3" fill="rgba(255,255,255,.18)"/>
+              <rect x="358" y="138" width="50" height="16" rx="5" fill="none" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 3"/>
+              <rect class="doc-v doc-v2" x="362" y="143" width="42" height="6" rx="3" fill="#2a9db5"/>
+            </g>
+            <path d="M164 161 H408" stroke="rgba(255,255,255,.06)"/>
+            <g class="doc-r doc-r3">
+              <rect x="166" y="169" width="62" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="250" y="169" width="26" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="304" y="169" width="34" height="6" rx="3" fill="rgba(255,255,255,.18)"/>
+              <rect x="358" y="164" width="50" height="16" rx="5" fill="none" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 3"/>
+              <rect class="doc-v doc-v3" x="362" y="169" width="42" height="6" rx="3" fill="#2a9db5"/>
+            </g>
+            <path d="M164 187 H408" stroke="rgba(255,255,255,.06)"/>
+            <g class="doc-r doc-r4">
+              <rect x="166" y="195" width="50" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="250" y="195" width="32" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="304" y="195" width="34" height="6" rx="3" fill="rgba(255,255,255,.18)"/>
+              <rect x="358" y="190" width="50" height="16" rx="5" fill="none" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 3"/>
+              <rect class="doc-v doc-v4" x="362" y="195" width="42" height="6" rx="3" fill="#2a9db5"/>
+            </g>
           </g>
-
-          <g class="f24hub-float-a" font-family="Inter,system-ui,sans-serif">
-            <rect x="10" y="100" width="150" height="100" rx="14" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)"/>
-            <rect class="f24hub-hl-in" x="10" y="100" width="150" height="100" rx="14" fill="rgba(245,158,11,.06)" stroke="rgba(245,158,11,.55)"/>
-            <circle cx="34" cy="136" r="4" fill="#fca5a5"/>
-            <text x="50" y="141" font-size="13" font-weight="700" fill="rgba(255,255,255,.85)">XML / P7M</text>
-            <text x="34" y="166" font-size="9.5" font-weight="600" fill="rgba(255,255,255,.38)">FatturaPA · File firmati</text>
+          <g class="doc-out">
+            <g transform="translate(440 118)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="#F59E0B" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="#F59E0B" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">Excel</text></g>
+            <g class="doc-ok"><circle cx="490" cy="120" r="10" fill="#0f2040" stroke="#86efac" stroke-width="1.5"/><path d="M485 120l3.5 3.5 6.5-7" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
           </g>
-
-          <g>
-            <rect x="216" y="92" width="128" height="116" rx="26" fill="url(#f24HubNodeBg)" stroke="rgba(245,158,11,.4)" stroke-width="1.5"/>
-            <rect class="logo-bar logo-bar-1" x="250" y="118" width="60" height="9" rx="4.5" fill="url(#f24HubGold)"/>
-            <rect class="logo-bar logo-bar-2" x="250" y="133" width="43" height="9" rx="4.5" fill="white"/>
-            <rect class="logo-bar logo-bar-3" x="250" y="148" width="26" height="9" rx="4.5" fill="white" fill-opacity="0.35"/>
-            <text x="280" y="184" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" letter-spacing="3" fill="rgba(255,255,255,.9)">DATACE</text>
-          </g>
-
-          <g class="f24hub-float-b" font-family="Inter,system-ui,sans-serif">
-            <rect x="400" y="100" width="150" height="100" rx="14" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)"/>
-            <rect class="f24hub-hl" x="400" y="100" width="150" height="100" rx="14" fill="rgba(245,158,11,.06)" stroke="rgba(245,158,11,.55)"/>
-            <circle cx="420" cy="128" r="4" fill="#86efac"/>
-            <text x="436" y="133" font-size="13" font-weight="700" fill="rgba(255,255,255,.85)">Excel</text>
-            <text x="420" y="158" font-size="9.5" font-weight="600" fill="rgba(255,255,255,.38)">Fornitore · Cliente</text>
-            <text x="420" y="174" font-size="9.5" font-weight="600" fill="rgba(255,255,255,.38)">Righe · IVA</text>
+          <g class="doc-x">
+            <rect x="504" y="160" width="8" height="22" rx="3" fill="#F59E0B"/><rect x="516" y="148" width="8" height="34" rx="3" fill="#F59E0B" fill-opacity=".7"/><rect x="528" y="166" width="8" height="16" rx="3" fill="#F59E0B" fill-opacity=".45"/>
           </g>
         </svg>
       </div>
