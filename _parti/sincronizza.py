@@ -1,27 +1,75 @@
 """
-Copia il footer unico (_parti/footer.html) in tutte le pagine del sito.
+Copia le parti comuni (_parti/) in tutte le pagine del sito.
 
-Il footer era ricopiato a mano in ogni pagina: aggiungere o togliere uno
-strumento voleva dire toccare 15 file, ed era facile dimenticarne uno.
-Ora si modifica SOLO _parti/footer.html e si lancia, dalla radice del sito:
+Footer e intestazioni erano ricopiati a mano in ogni pagina: aggiungere o
+togliere uno strumento voleva dire toccare 15-20 file, ed era facile
+dimenticarne uno. Ora si modifica SOLO il file in _parti/ e si lancia, dalla
+radice del sito:
 
-    py _parti/sincronizza.py            # aggiorna le pagine
+    py _parti/sincronizza.py             # aggiorna le pagine
     py _parti/sincronizza.py --controlla # non scrive: dice quali pagine sono diverse
 
-Lo script sostituisce solo ciò che sta fra i marcatori
-<!-- DATACE FOOTER START --> e <!-- DATACE FOOTER END -->: il resto della
-pagina non lo tocca, e rispetta gli a-capo di ogni file.
-Le cartelle che iniziano con "_" non vengono pubblicate da GitHub Pages.
+Le parti (brief 075 per le intestazioni):
+- footer.html      fra <!-- DATACE FOOTER START --> e <!-- DATACE FOOTER END -->
+- header.html      fra <!-- DATACE HEADER START --> e <!-- DATACE HEADER END -->
+                   (sito: home, vetrine, guide, pagine di testo); la voce del
+                   menu della sezione in cui si è (Guide, Chi sono) resta bianca
+- header-app.html  fra <!-- DATACE HEADER APP START --> e <!-- DATACE HEADER APP END -->
+                   (F24, Fattura, Bonifici); nome e sottotitolo dello strumento
+                   stanno in APP qui sotto. Fatture XML in bonifici ha la sua
+                   intestazione fissa e piena (brief 061): non ha i marcatori.
+
+Lo script sostituisce solo ciò che sta fra i marcatori: il resto della pagina
+non lo tocca, e rispetta gli a-capo di ogni blocco. Le pagine senza marcatori
+restano come sono. Le cartelle che iniziano con "_" non vengono pubblicate.
 """
 import pathlib
 import re
 import sys
 
 SITO = pathlib.Path(__file__).resolve().parent.parent
-# utf-8-sig: se footer.html viene salvato con un BOM (lo fa PowerShell, alcuni
-# editor), il BOM NON deve finire nelle pagine: si accumulerebbe a ogni giro.
-FOOTER = (SITO / "_parti" / "footer.html").read_text(encoding="utf-8-sig").strip()
-BLOCCO = re.compile(r"<!-- DATACE FOOTER START -->.*?<!-- DATACE FOOTER END -->", re.S)
+
+APP = {
+    "f24-to-excel/app/index.html": ("F24 in Excel", "Estrai Debiti e Crediti dai tuoi F24"),
+    "fattura-elettronica-excel/app/index.html": ("Fattura in Excel", "FPR12, FPA12, .p7m, notifiche SdI · Excel su 5 fogli"),
+    "bonifici-massivi-xml/app/index.html": ("Bonifici massivi XML", "Da Excel a XML SEPA (CBI) · pronto per l'home banking"),
+}
+# Voce del menu della sezione in cui si è: bianca e in grassetto, senza effetto al passaggio.
+ATTIVA = {"guida": ("/guida/", "Guide"), "chi-siamo": ("/chi-siamo", "Chi sono")}
+VOCE = ('<a href="{href}" style="transition:color .2s" onmouseover="this.style.color=\'white\'" '
+        'onmouseout="this.style.color=\'rgba(255,255,255,.62)\'">{testo}</a>')
+VOCE_ATTIVA = '<a href="{href}" style="color:white;font-weight:600;">{testo}</a>'
+
+
+def parte(nome):
+    # utf-8-sig: se il file viene salvato con un BOM (lo fa PowerShell, alcuni
+    # editor), il BOM NON deve finire nelle pagine: si accumulerebbe a ogni giro.
+    return (SITO / "_parti" / nome).read_text(encoding="utf-8-sig").strip()
+
+
+def header_sito(rel, testo):
+    sezione = rel.split("/")[0]
+    if sezione in ATTIVA:
+        href, voce = ATTIVA[sezione]
+        prima = VOCE.format(href=href, testo=voce)
+        if prima not in testo:
+            raise SystemExit(f"header.html: manca la voce «{voce}»")
+        testo = testo.replace(prima, VOCE_ATTIVA.format(href=href, testo=voce))
+    return testo
+
+
+def header_app(rel, testo):
+    if rel not in APP:
+        raise SystemExit(f"{rel}: ha i marcatori dell'intestazione delle app ma non sta in APP")
+    nome, sotto = APP[rel]
+    return testo.replace("{{nome}}", nome).replace("{{sotto}}", sotto)
+
+
+PARTI = [
+    ("FOOTER", parte("footer.html"), lambda rel, t: t),
+    ("HEADER", parte("header.html"), header_sito),
+    ("HEADER APP", parte("header-app.html"), header_app),
+]
 
 
 def pagine():
@@ -35,16 +83,21 @@ def pagine():
 def main(controlla: bool) -> int:
     diverse = []
     for p in pagine():
+        rel = p.relative_to(SITO).as_posix()
         testo = p.read_bytes().decode("utf-8")
-        trovato = BLOCCO.search(testo)
-        if not trovato:
-            continue  # pagine senza footer standard (404, pagine vecchie, bozze)
-        # Gli a-capo del BLOCCO, non del file: alcune pagine li hanno misti, e
-        # cambiarli farebbe risultare modificate righe identiche.
-        nl = "\r\n" if "\r\n" in trovato.group(0) else "\n"
-        nuovo = BLOCCO.sub(lambda _: FOOTER.replace("\n", nl), testo, count=1)
+        nuovo = testo
+        for nome, blocco, adatta in PARTI:
+            cerca = re.compile(rf"<!-- DATACE {nome} START -->.*?<!-- DATACE {nome} END -->", re.S)
+            trovato = cerca.search(nuovo)
+            if not trovato:
+                continue  # pagine senza questa parte (404, app con intestazione propria)
+            # Gli a-capo del BLOCCO, non del file: alcune pagine li hanno misti, e
+            # cambiarli farebbe risultare modificate righe identiche.
+            nl = "\r\n" if "\r\n" in trovato.group(0) else "\n"
+            sostituto = adatta(rel, blocco).replace("\n", nl)
+            nuovo = cerca.sub(lambda _: sostituto, nuovo, count=1)
         if nuovo != testo:
-            diverse.append(p.relative_to(SITO))
+            diverse.append(rel)
             if not controlla:
                 p.write_bytes(nuovo.encode("utf-8"))
     azione = "da aggiornare" if controlla else "aggiornate"
