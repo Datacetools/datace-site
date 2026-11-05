@@ -1,8 +1,8 @@
 /* Componenti comuni delle app (regola di Davide, 3/11/2026: stesso stile, stesso codice).
    Copiati riga per riga dalle pagine online: colori, card, zona di trascinamento, testata
    della tabella, logo e footer da bonifici-massivi-xml/app/; KPI, barre e pulsanti a
-   pillola (.scelta) da fattura-elettronica-excel/app/. Oggi li usa fatture-xml-bonifici/app/;
-   Bonifici, Fattura e F24 hanno ancora la loro copia nella pagina: spostarle qui è da fare. */
+   pillola (.scelta) da fattura-elettronica-excel/app/. Li usano tutte e 4 le app (dal brief 075
+   anche F24, Fattura e Bonifici, che hanno tolto la loro copia): un ritocco qui vale per tutte. */
 :root {
   --navy:   #060E1F; --navy2: #0A1628; --navy3: #0F2040;
   --gold:   #F59E0B; --gold2: #FBBF24; --teal: #2a9db5; /* teal su scuro; su chiaro #1d7a94 (.chiaro, brief 075) */

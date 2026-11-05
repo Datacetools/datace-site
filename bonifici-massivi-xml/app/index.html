@@ -54,66 +54,13 @@
   <!-- Tailwind compilato da questa pagina (sorgente: _tailwind/bonifici-app.css).
        Nessuna richiesta a terzi: né CDN né font esterni. -->
   <link rel="stylesheet" href="tailwind.css" />
+  <link rel="stylesheet" href="/comune/app.css" />
 
   <style>
-    :root {
-      --navy:   #060E1F; --navy2: #0A1628; --navy3: #0F2040;
-      --gold:   #F59E0B; --gold2: #FBBF24; --teal: #2a9db5;
-      --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
-      --muted:  rgba(255,255,255,0.45);
-    }
-    * { box-sizing: border-box; }
-    body { background: var(--navy); color: white; }
-
-    /* Logo bars */
-    .logo-bar { transform-box: fill-box; transform-origin: left center; }
-    .logo-bar-1 { animation: barStream 2.8s ease-in-out infinite 0s; }
-    .logo-bar-2 { animation: barStream 2.8s ease-in-out infinite .22s; }
-    .logo-bar-3 { animation: barStream 2.8s ease-in-out infinite .44s; }
-    @keyframes barStream {
-      0%,100% { transform: scaleX(1);    opacity: 1;   }
-      30%     { transform: scaleX(0.32); opacity: 0.5; }
-      60%     { transform: scaleX(1);    opacity: 1;   }
-    }
-
-    /* Dark card */
-    .dark-card {
-      background: linear-gradient(135deg, rgba(15,32,64,.85), rgba(6,14,31,.95));
-      border: 1px solid var(--border);
-      border-radius: 20px;
-    }
-
-    /* Drop zone */
-    #drop-zone {
-      border: 2px dashed rgba(255,255,255,.15);
-      border-radius: 16px;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-    #drop-zone:hover, #drop-zone.drag-over {
-      border-color: var(--teal);
-      background: rgba(29,122,148,.08);
-    }
-
-    /* Preview table */
+    /* Colori, card, zona di trascinamento, testata della tabella, footer: /comune/app.css
+       (brief 075). Qui solo ciò che è di questa pagina. */
     /* ~20 righe visibili (intestazione + 20 × 32px), le altre scorrono */
     #preview-wrap { max-height: 672px; overflow-y: auto; overflow-x: auto; }
-    #preview-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
-    #preview-wrap::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
-    #preview-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 3px; }
-    .th { color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95); }
-
-    /* Footer grid */
-    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: start; }
-    .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 16px; }
-    .footer-link { display: block; font-size: 14px; color: rgba(255,255,255,.45); margin-bottom: 10px; text-decoration: none; transition: color .2s ease; }
-    .footer-link:hover { color: white; }
-    .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: rgba(255,255,255,.2); }
-
-    @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-    }
 </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
 </head>
@@ -214,7 +161,7 @@
 
     <!-- Drop Zone -->
     <div id="drop-zone"
-         class="p-10 text-center"
+         class="drop-zone p-10 text-center"
          onclick="document.getElementById('file-input').click()"
          ondragover="handleDragOver(event)"
          ondragleave="handleDragLeave(event)"
@@ -313,7 +260,7 @@
         <ul id="avvisi-list" class="mt-2 space-y-1" style="font-size:12px;color:rgba(252,211,77,.85);"></ul>
       </div>
     </div>
-    <div id="preview-wrap" class="rounded-xl overflow-hidden" style="border:1px solid var(--border);">
+    <div id="preview-wrap" class="scorre rounded-xl overflow-hidden" style="border:1px solid var(--border);">
       <table class="w-full table-fixed text-xs text-left" style="min-width:680px;">
         <colgroup>
           <col style="width:7%"><col style="width:26%"><col style="width:31%"><col style="width:22%"><col style="width:14%">

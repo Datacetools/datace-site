@@ -56,88 +56,12 @@
   <!-- Tailwind compilato in locale (sorgente: tailwind.css in fatturaxls-web).
        Nessuna richiesta a terzi: né CDN né font esterni. -->
   <link rel="stylesheet" href="tailwind.css" />
+  <link rel="stylesheet" href="/comune/app.css" />
 
   <style>
-    :root {
-      --navy:   #060E1F; --navy2: #0A1628; --navy3: #0F2040;
-      --gold:   #F59E0B; --gold2: #FBBF24; --teal: #2a9db5;
-      --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
-      --muted:  rgba(255,255,255,0.45);
-    }
-    * { box-sizing: border-box; }
-    body { background: var(--navy); color: white; }
-
-    /* Logo bars */
-    .logo-bar { transform-box: fill-box; transform-origin: left center; }
-    .logo-bar-1 { animation: barStream 2.8s ease-in-out infinite 0s; }
-    .logo-bar-2 { animation: barStream 2.8s ease-in-out infinite .22s; }
-    .logo-bar-3 { animation: barStream 2.8s ease-in-out infinite .44s; }
-    @keyframes barStream {
-      0%,100% { transform: scaleX(1);    opacity: 1;   }
-      30%     { transform: scaleX(0.32); opacity: 0.5; }
-      60%     { transform: scaleX(1);    opacity: 1;   }
-    }
-
-    /* Dark card */
-    .dark-card {
-      background: linear-gradient(135deg, rgba(15,32,64,.85), rgba(6,14,31,.95));
-      border: 1px solid var(--border);
-      border-radius: 20px;
-    }
-
-    /* Drop zone */
-    #drop-zone {
-      border: 2px dashed rgba(255,255,255,.15);
-      border-radius: 16px;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-    #drop-zone:hover, #drop-zone.drag-over {
-      border-color: var(--teal);
-      background: rgba(29,122,148,.08);
-    }
-
-    /* Preview table */
-    #preview-wrap { max-height: 340px; overflow-y: scroll; overflow-x: auto; }
-    #preview-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
-    #preview-wrap::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
-    #preview-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 3px; }
-
-    /* KPI e grafici (brief 036): barre in HTML, i numeri restano testo della pagina */
-    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-    .kpi { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-width: 0; }
-    .kpi-t { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-    .kpi-v { font-size: 20px; font-weight: 700; font-family: monospace; margin-top: 4px; overflow-wrap: anywhere; }
-    .kpi-n { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 4px; }
-    .an-note { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 4px; }
-    .an-blocco { margin-top: 24px; }
-    .an-h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
-    .barra { display: grid; grid-template-columns: minmax(0, 38%) 1fr auto; gap: 10px; align-items: center; font-size: 12px; margin-bottom: 6px; }
-    .barra-nome { color: rgba(255,255,255,.75); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .barra-fondo { background: rgba(255,255,255,.05); border-radius: 4px; height: 12px; }
-    .barra-pieno { background: var(--gold); border-radius: 4px; height: 12px; min-width: 2px; }
-    .barra-pieno.neg { background: #f87171; }
-    .barra-num { font-family: monospace; color: rgba(255,255,255,.7); text-align: right; }
-    .scelta { font-size: 12px; border-radius: 999px; padding: 6px 14px; border: 1px solid var(--border2); background: transparent; color: rgba(255,255,255,.7); cursor: pointer; }
-    .scelta[aria-pressed="true"] { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.4); color: var(--gold); }
-    @media (max-width: 640px) {
-      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-      .barra { grid-template-columns: minmax(0, 1fr) auto; }
-      .barra-fondo { grid-column: 1 / -1; grid-row: 2; }
-    }
-
-    /* Footer grid */
-    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: start; }
-    .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 16px; }
-    .footer-link { display: block; font-size: 14px; color: rgba(255,255,255,.45); margin-bottom: 10px; text-decoration: none; transition: color .2s ease; }
-    .footer-link:hover { color: white; }
-    .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: rgba(255,255,255,.2); }
-
-    @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-    }
-  #carica { border: 0; padding: 0; margin: 0; min-width: 0; }
+    /* Colori, card, zona di trascinamento, KPI, barre, footer: /comune/app.css (brief 075).
+       Qui solo ciò che è di questa pagina. */
+    #carica { border: 0; padding: 0; margin: 0; min-width: 0; }
 </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
 </head>
@@ -202,7 +126,7 @@
 
     <!-- Drop Zone -->
     <div id="drop-zone"
-         class="p-10 text-center"
+         class="drop-zone p-10 text-center"
          onclick="document.getElementById('file-input').click()"
          ondragover="handleDragOver(event)"
          ondragleave="handleDragLeave(event)"
@@ -292,7 +216,7 @@
       <h2 style="font-size:16px;font-weight:700;">Anteprima fatture estratte</h2>
       <span id="preview-count" class="text-xs px-3 py-1 rounded-full font-semibold" style="background:rgba(245,158,11,.1);color:var(--gold);border:1px solid rgba(245,158,11,.2);"></span>
     </div>
-    <div id="preview-wrap" class="rounded-xl overflow-hidden" style="border:1px solid var(--border);max-height:340px;overflow-y:scroll;overflow-x:auto;">
+    <div id="preview-wrap" class="scorre rounded-xl overflow-hidden" style="border:1px solid var(--border);max-height:340px;overflow-y:scroll;overflow-x:auto;">
       <table class="w-full table-fixed text-xs text-left" style="min-width:760px;">
         <colgroup>
           <col style="width:11%"><col style="width:8%"><col style="width:11%">
