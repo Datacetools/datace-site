@@ -60,12 +60,12 @@
   }
   </script>
 
-  <!-- Tailwind compilato in locale e Inter servito dal sito (sorgente: _tailwind/f24-app.css).
-       Nessuna richiesta a terzi: né CDN né font esterni. -->
+  <!-- Tailwind compilato in locale e Inter servito dal sito (sorgente: _tailwind/f24-app.css) e i
+       componenti comuni delle app (/comune/app.css, brief 075). Nessuna richiesta a terzi: né CDN né font esterni. -->
   <link rel="stylesheet" href="tailwind.css" />
+  <link rel="stylesheet" href="/comune/app.css" />
 
   <style>
-    /* Table scroll: sticky funziona solo su overflow:scroll, non auto */
     /* Row colors per sezione */
     tr.erario  td:first-child { border-left: 3px solid #2563eb; }
     tr.inps    td:first-child { border-left: 3px solid #16a34a; }
@@ -73,35 +73,17 @@
     tr.imu     td:first-child { border-left: 3px solid #d97706; }
     tr.altri   td:first-child { border-left: 3px solid #64748b; }
 
-    /* Tema scuro premium (classi native, nessun override) */
-    .dark-card { background:linear-gradient(135deg,rgba(15,32,64,.85),rgba(6,14,31,.95)); border:1px solid rgba(255,255,255,.07); border-radius:16px; }
-    .dz { border:2px dashed rgba(255,255,255,.15); border-radius:12px; transition:all .2s; cursor:pointer; }
-    .dz:hover, #drop-zone.drag-over { border-color:#2a9db5; background:rgba(29,122,148,.1); }
-    .faq-item { border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
-
-    /* Footer premium multi-colonna + logo animato */
-    .logo-bar { transform-box:fill-box; transform-origin:left center; }
-    .logo-bar-1 { animation:barStream 2.8s ease-in-out infinite 0s; }
-    .logo-bar-2 { animation:barStream 2.8s ease-in-out infinite .22s; }
-    .logo-bar-3 { animation:barStream 2.8s ease-in-out infinite .44s; }
-    @keyframes barStream { 0%,100%{transform:scaleX(1);opacity:1;} 30%{transform:scaleX(.32);opacity:.5;} 60%{transform:scaleX(1);opacity:1;} }
-    .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; align-items:start; }
-    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-bottom:16px; }
-    .footer-link { display:block; font-size:14px; color:rgba(255,255,255,.45) !important; margin-bottom:10px; text-decoration:none; transition:color .2s ease; }
-    .footer-link:hover { color:#fff !important; }
-    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
-    @media(max-width:768px){ .footer-grid{grid-template-columns:1fr;gap:32px;} .footer-bottom{flex-direction:column;gap:8px;text-align:center;} }
-    /* Il calcolo dopo l'elaborazione (brief 039): debiti meno crediti uguale saldo, saldo grande */
-    .calcolo { display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:16px; }
+    /* Il calcolo dopo l'elaborazione (brief 039): debiti meno crediti uguale saldo, saldo grande.
+       .kpi-t e .kpi-n vengono da comune/app.css; .kpi-v resta qui (brief 075): con i 20 px fissi
+       di Fattura un importo grande andrebbe a capo dentro la sua colonna. */
+    .calcolo { display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:14px; padding:16px; }
     .voce { flex:1 1 0; min-width:0; container-type:inline-size; }
     .voce-saldo { flex-grow:1.6; }
     .op { font-size:22px; font-weight:700; color:rgba(255,255,255,.4); flex-shrink:0; }
-    .kpi-t { font-size:11px; color:rgba(255,255,255,.62); text-transform:uppercase; letter-spacing:.08em; }
     /* Un importo non va mai a capo e sta nella sua colonna: «€ 123.456.789,01» (16 caratteri
        da 0,6 em) entra se la cifra è al massimo un decimo della larghezza (10cqi). */
-    .kpi-v { font-size:18px; font-size:clamp(13px,10cqi,18px); font-weight:700; font-family:monospace; margin-top:4px; white-space:nowrap; }
-    .voce-saldo .kpi-v { font-size:28px; font-size:clamp(16px,10cqi,30px); color:#F59E0B; }
-    .kpi-n { font-size:11px; color:rgba(255,255,255,.5); margin-top:4px; }
+    .voce .kpi-v { font-size:18px; font-size:clamp(13px,10cqi,18px); overflow-wrap:normal; white-space:nowrap; }
+    .voce-saldo .kpi-v { font-size:28px; font-size:clamp(16px,10cqi,30px); color:var(--gold); }
     @media(max-width:560px){ .calcolo{flex-direction:column;align-items:stretch;gap:6px;} .op{text-align:center;line-height:1;} }
 </style>
 
@@ -142,41 +124,39 @@
 </header>
 
 <!-- ─── MAIN ────────────────────────────────────────────────────────────── -->
-<main class="max-w-4xl mx-auto px-4 py-10 space-y-8">
+<main class="max-w-4xl mx-auto px-4 py-10 space-y-6">
 
   <!-- Browser non adatti (controllo.js): al posto dello strumento, uno di questi due -->
   <p id="safari" role="alert" hidden class="dark-card p-6" style="font-size:15px;color:#fcd34d;">Safari e i browser di iPhone e iPad non sono ancora supportati. Apri la pagina da un computer con Chrome, Edge, Firefox, Brave o Opera.</p>
   <p id="non-supportato" role="alert" hidden class="dark-card p-6" style="font-size:15px;color:#fcd34d;">Questo browser non è supportato. Apri la pagina con Chrome, Edge, Firefox, Brave o Opera.</p>
 
-  <div id="strumento" class="space-y-8">
+  <div id="strumento" class="space-y-6">
   <!-- CARD UPLOAD -->
   <section class="dark-card p-8">
 
     <!-- Novità -->
     <div class="flex gap-3 items-start rounded-xl px-4 py-3 mb-6" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
       <span class="flex-shrink-0 uppercase tracking-wide" style="font-weight:800;font-size:11px;color:#F59E0B;line-height:20px;">Novità</span>
-      <p class="text-gray-200 text-sm">F24 in Excel ora funziona nel browser: il PDF resta sul tuo computer e non viene inviato a Datace. Se qualcosa non ti torna, scrivicelo nel feedback qui sotto. <a href="https://datacetools.com/aggiornamenti/" target="_blank" rel="noopener" style="color:#F59E0B;text-decoration:underline;">Tutti gli aggiornamenti</a></p>
+      <p style="font-size:14px;color:rgba(255,255,255,.85);">F24 in Excel ora funziona nel browser: il PDF resta sul tuo computer e non viene inviato a Datace. Se qualcosa non ti torna, scrivicelo nel feedback qui sotto. <a href="https://datacetools.com/aggiornamenti/" target="_blank" rel="noopener" style="color:#F59E0B;text-decoration:underline;">Tutti gli aggiornamenti</a></p>
     </div>
 
-    <h2 class="text-lg font-semibold text-white mb-1">Scegli i tuoi F24</h2>
-    <p class="text-sm text-gray-400 mb-6">Fino a 10 PDF · Max 20 MB ciascuno · 100 MB in tutto · Vengono elaborati insieme in un unico Excel</p>
-
+    <h2 style="font-size:17px;font-weight:700;margin-bottom:4px;">Scegli i tuoi F24</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Fino a 10 PDF · Max 20 MB ciascuno · 100 MB in tutto · Vengono elaborati insieme in un unico Excel</p>
 
     <!-- Drop Zone -->
     <div id="drop-zone"
-         class="border-2 border-dashed border-white/15 rounded-xl p-10 text-center cursor-pointer
-                transition-all duration-200 hover:border-brand" style="transition:all 0.2s;" onmouseenter="this.style.borderColor='#2a9db5';this.style.background='rgba(29,122,148,.12)';" onmouseleave="this.style.borderColor='';this.style.background='';"
+         class="drop-zone p-10 text-center"
          onclick="document.getElementById('file-input').click()"
          ondragover="handleDragOver(event)"
          ondragleave="handleDragLeave(event)"
          ondrop="handleDrop(event)">
 
-      <svg class="mx-auto w-12 h-12 text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+      <svg class="mx-auto w-12 h-12 mb-4" style="color:rgba(255,255,255,.2);" fill="none" stroke="currentColor" viewBox="0 0 48 48">
         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <p class="text-gray-300 font-medium">Trascina i PDF qui</p>
-      <p class="text-gray-500 text-sm mt-1">oppure <span class="underline" style="color:#2a9db5;">clicca per selezionare</span></p>
+      <p style="font-weight:600;color:rgba(255,255,255,.7);">Trascina i PDF qui</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:4px;">oppure <span style="color:var(--teal);text-decoration:underline;">clicca per selezionare</span></p>
     </div>
 
     <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.6);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;text-align:center;"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg><span><strong style="color:white;">Il file è elaborato dal browser e non viene inviato a Datace.</strong></span> <a href="https://datacetools.com/privacy/" style="color:#F59E0B;text-decoration:underline;">Privacy</a></p>
@@ -196,10 +176,8 @@
     <button id="btn-elabora"
             onclick="elabora()"
             disabled
-            class="mt-6 w-full py-3 px-6 rounded-xl font-semibold text-white text-sm
-                   bg-white/10 cursor-not-allowed transition-all duration-200
-                   disabled:opacity-60"
-            data-enabled-class="bg-brand hover:bg-brand-dark cursor-pointer shadow-md hover:shadow-lg active:scale-95">
+            class="mt-6 w-full py-3.5 px-6 rounded-xl font-bold text-sm transition-all duration-200"
+            style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.3);cursor:not-allowed;border:1px solid rgba(255,255,255,.08);">
       <span id="btn-label" class="flex items-center justify-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -216,11 +194,10 @@
         <div class="relative w-24 h-24">
           <svg class="w-24 h-24 -rotate-90" viewBox="0 0 100 100">
             <!-- Traccia sfondo -->
-            <circle cx="50" cy="50" r="40"
-                    fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8"/>
             <!-- Traccia progresso -->
             <circle id="progress-ring" cx="50" cy="50" r="40"
-                    fill="none" stroke="#1c3461" stroke-width="8"
+                    fill="none" stroke="#F59E0B" stroke-width="8"
                     stroke-linecap="round"
                     stroke-dasharray="251.2"
                     stroke-dashoffset="251.2"
@@ -228,13 +205,13 @@
           </svg>
           <!-- Percentuale al centro -->
           <div class="absolute inset-0 flex flex-col items-center justify-center">
-            <span id="progress-pct" class="text-2xl font-bold leading-none" style="color:#5cc6dc;">0%</span>
+            <span id="progress-pct" class="text-2xl font-bold leading-none" style="color:var(--gold);">0%</span>
           </div>
         </div>
-        <span id="status-msg" class="text-sm text-gray-400">Elaborazione in corso…</span>
+        <span id="status-msg" style="font-size:13px;color:var(--muted);">Elaborazione in corso…</span>
       </div>
-      <div id="status-success" class="hidden animate-bounce-in flex items-center gap-2 text-sm text-green-300 bg-green-500/10 rounded-lg px-4 py-3" style="flex-wrap:wrap;">
-        <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div id="status-success" class="hidden animate-bounce-in flex items-center gap-2 text-sm rounded-xl px-4 py-3" style="flex-wrap:wrap;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#86efac;">
+        <svg class="w-5 h-5 shrink-0" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
         <span id="success-msg">Excel scaricato con successo!</span>
@@ -248,75 +225,75 @@
           <div class="op" aria-hidden="true">=</div>
           <div class="voce voce-saldo"><div class="kpi-t">Saldo da versare</div><div class="kpi-v" id="kpi-saldo"></div><div class="kpi-n hidden" id="kpi-saldo-credito">a credito</div><div class="kpi-n hidden" id="kpi-saldo-controllare" style="color:#fcd34d;">da controllare</div></div>
         </div>
-        <p id="avviso-totali" class="hidden mt-3 text-sm rounded-lg px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);"></p>
+        <p id="avviso-totali" class="hidden mt-3 text-sm rounded-xl px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);"></p>
         <p id="kpi-base" class="kpi-n" style="margin-top:8px;"></p>
-        <p id="avviso-doppioni" class="hidden mt-3 text-sm rounded-lg px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);">Hai scelto due volte lo stesso file: i totali lo contano due volte.</p>
+        <p id="avviso-doppioni" class="hidden mt-3 text-sm rounded-xl px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">Hai scelto due volte lo stesso file: i totali lo contano due volte.</p>
       </div>
     </div>
   </section>
 
   <!-- COME FUNZIONA -->
   <section class="dark-card p-6">
-    <h2 class="text-lg font-semibold text-white mb-4">Come funziona</h2>
-    <div class="grid sm:grid-cols-3 gap-4">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:20px;">Come funziona</h2>
+    <div class="grid sm:grid-cols-3 gap-5">
       <div class="flex gap-3 items-start">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
-          <span style="font-weight:800;font-size:14px;color:#F59E0B;">1</span>
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+          <span style="font-weight:800;font-size:14px;color:var(--gold);">1</span>
         </div>
         <div>
-          <p class="font-medium text-gray-200 text-sm">Scegli</p>
-          <p class="text-gray-400 text-xs mt-0.5">Trascina uno o più PDF F24 dell'Agenzia delle Entrate</p>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Scegli</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Trascina uno o più PDF F24 dell'Agenzia delle Entrate</p>
         </div>
       </div>
       <div class="flex gap-3 items-start">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
-          <span style="font-weight:800;font-size:14px;color:#F59E0B;">2</span>
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+          <span style="font-weight:800;font-size:14px;color:var(--gold);">2</span>
         </div>
         <div>
-          <p class="font-medium text-gray-200 text-sm">Elabora</p>
-          <p class="text-gray-400 text-xs mt-0.5">Il motore estrae codici tributo, importi, banca e data di versamento da ogni pagina</p>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Elabora</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Il motore estrae codici tributo, importi, banca e data di versamento da ogni pagina</p>
         </div>
       </div>
       <div class="flex gap-3 items-start">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(29,122,148,.2);border:1px solid rgba(29,122,148,.3);">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(29,122,148,.2);border:1px solid rgba(29,122,148,.3);">
           <span style="font-weight:800;font-size:14px;color:#2a9db5;">3</span>
         </div>
         <div>
-          <p class="font-medium text-gray-200 text-sm">Scarica</p>
-          <p class="text-gray-400 text-xs mt-0.5">Ricevi un Excel con 3 fogli: Dettaglio, Riepilogo, Per Anno</p>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Scarica</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Ricevi un Excel con 3 fogli: Dettaglio, Riepilogo, Per Anno</p>
         </div>
       </div>
     </div>
   </section>
   </div>
 
-</main>
-
-<!-- ─── FEEDBACK ──────────────────────────────────────────────────────────── -->
-<section class="max-w-4xl mx-auto px-4 py-10">
-  <div class="dark-card p-6 text-center">
-    <h2 class="text-lg font-semibold text-white mb-1">Lascia un feedback</h2>
-    <p class="text-sm text-gray-400 mb-5">Hai usato F24 in Excel? Dicci cosa ne pensi, ci aiuta a migliorare.</p>
+  <!-- FEEDBACK -->
+  <section class="dark-card p-6 text-center">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">Lascia un feedback</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:32px;">Hai usato F24 in Excel? Dicci cosa ne pensi, ci aiuta a migliorare.</p>
     <form action="https://formspree.io/f/mreddazr" method="POST" class="space-y-3 text-left">
       <input type="hidden" name="tool" value="F24 in Excel" />
       <input type="text" name="name" placeholder="Nome (opzionale)"
-             class="w-full border border-white/15 bg-white/5 text-white placeholder-white/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent" style="--tw-ring-color:#2a9db5;" />
+             class="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+             style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:white;"
+             onfocus="this.style.borderColor='rgba(29,122,148,.6)'" onblur="this.style.borderColor='rgba(255,255,255,.07)'" />
       <textarea name="message" rows="3" placeholder="Il tuo feedback..." required
-                class="w-full border border-white/15 bg-white/5 text-white placeholder-white/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent resize-none" style="--tw-ring-color:#2a9db5;"></textarea>
+                class="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none resize-none"
+                style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:white;"
+                onfocus="this.style.borderColor='rgba(29,122,148,.6)'" onblur="this.style.borderColor='rgba(255,255,255,.07)'"></textarea>
       <button type="submit"
-              class="w-full py-2.5 px-6 rounded-xl font-semibold text-white text-sm transition-all duration-200"
-              style="background:#1c3461;" onmouseenter="this.style.background='#2a9db5'" onmouseleave="this.style.background='#1c3461'">
+              class="w-full py-2.5 px-6 rounded-xl font-bold text-sm transition-all duration-200"
+              style="background:white;color:#0f2040;"
+              onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
         Invia feedback
       </button>
     </form>
-  </div>
-</section>
+  </section>
 
-<!-- CONTATTI -->
-<section class="max-w-4xl mx-auto px-4 pb-8">
-  <div class="dark-card p-6 text-center">
+  <!-- CONTATTI -->
+  <section class="dark-card p-6 text-center">
     <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">Il tuo caso è diverso?</h2>
-    <p style="font-size:13px;color:rgba(255,255,255,.45);margin-bottom:20px;">Formato particolare, altro gestionale, report da preparare ogni mese: posso costruire una soluzione su misura. Per segnalazioni, supporto o per raccontarmi il tuo caso:</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Formato particolare, altro gestionale, report da preparare ogni mese: posso costruire una soluzione su misura. Per segnalazioni, supporto o per raccontarmi il tuo caso:</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
       <a href="https://www.linkedin.com/in/davide-sgroia/" target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="tool-f24" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;" onmouseover="this.style.background='rgba(255,255,255,.1)';this.style.borderColor='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
         <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
@@ -328,8 +305,9 @@
       </a>
     </div>
     <p style="font-size:13px;color:rgba(255,255,255,.4);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="tool-f24" style="color:#F59E0B;">info@datacetools.com</a></p>
-  </div>
-</section>
+  </section>
+
+</main>
 
 <!-- DATACE FOOTER START -->
 <footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
@@ -552,17 +530,16 @@ function renderFileList() {
   if (selectedFiles.length === 0) { wrap.classList.add('hidden'); return; }
   wrap.classList.remove('hidden');
   wrap.innerHTML = selectedFiles.map((f, i) => `
-    <div class="flex items-center justify-between bg-white/5 rounded-lg px-3 py-2 text-sm">
-      <div class="flex items-center gap-2 min-w-0">
-        <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+    <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:8px 12px;">
+      <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+        <svg class="w-4 h-4 shrink-0" style="color:#2a9db5;" fill="currentColor" viewBox="0 0 24 24">
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/>
         </svg>
-        <span class="truncate text-gray-200">${escHtml(f.name)}</span>
-        <span class="text-gray-500 flex-shrink-0">${formatBytes(f.size)}</span>
+        <span style="font-size:13px;color:rgba(255,255,255,.8);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(f.name)}</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.3);flex-shrink:0;">${formatBytes(f.size)}</span>
       </div>
-      <button onclick="removeFile(${i})"
-              class="text-gray-500 hover:text-red-500 ml-3 flex-shrink-0 transition-colors"
-              title="Rimuovi">
+      <button onclick="removeFile(${i})" style="color:rgba(255,255,255,.3);margin-left:12px;flex-shrink:0;transition:color .2s;background:none;border:none;cursor:pointer;"
+              onmouseover="this.style.color='#fca5a5'" onmouseout="this.style.color='rgba(255,255,255,.3)'" title="Rimuovi">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -575,11 +552,13 @@ function updateButton() {
   const btn = document.getElementById('btn-elabora');
   if (selectedFiles.length === 0) {
     btn.disabled = true;
-    btn.className = btn.className.replace(/bg-brand[^\s]*/g, 'bg-white/10 cursor-not-allowed');
+    btn.style.cssText = 'background:rgba(255,255,255,.06);color:rgba(255,255,255,.25);cursor:not-allowed;border:1px solid rgba(255,255,255,.06);';
+    btn.onmouseover = btn.onmouseout = null;
   } else {
     btn.disabled = false;
-    btn.className = 'mt-6 w-full py-3 px-6 rounded-xl font-semibold text-white text-sm ' +
-      'bg-brand hover:bg-datace-teal cursor-pointer shadow-md hover:shadow-lg active:scale-95 transition-all duration-200';
+    btn.style.cssText = 'background:white;color:#0f2040;cursor:pointer;border:none;box-shadow:0 4px 20px rgba(255,255,255,.1);';
+    btn.onmouseover = () => btn.style.opacity = '0.85';
+    btn.onmouseout  = () => btn.style.opacity = '1';
   }
 }
 
@@ -598,7 +577,7 @@ function setRingPct(pct) {
   if (label) label.textContent = pct + '%';
 
   // Colore: blu → verde al 100%
-  if (ring) ring.style.stroke = pct >= 100 ? '#16a34a' : '#1c3461';
+  if (ring) ring.style.stroke = pct >= 100 ? '#86efac' : '#F59E0B';
 }
 
 /* Il cerchio segue il tempo stimato: arriva al 90% quando la stima è passata, poi resta

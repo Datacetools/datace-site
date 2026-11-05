@@ -23,10 +23,7 @@
 }
 
 @theme {
-  --color-brand: #1c3461; --color-brand-light: #2a9db5; --color-brand-dark: #152747;
-  --color-datace-navy: #1c3461; --color-datace-teal: #2a9db5; --color-datace-gold: #c4972b;
   --font-sans: Inter, system-ui, sans-serif;
-  --animate-pulse-slow: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-bounce-in: bounceIn 0.4s ease-out;
 
   @keyframes bounceIn {
@@ -36,9 +33,8 @@
   }
 }
 
-/* Dalla v4 i pulsanti hanno il cursore normale e i bordi prendono il colore del testo:
-   qui restano come con il CDN (v3). */
+/* Dalla v4 i pulsanti hanno il cursore normale: qui restano con la manina.
+   Colori e componenti: comune/app.css, come nelle altre app (brief 075). */
 @layer base {
   button:not(:disabled) { cursor: pointer; }
-  *, ::after, ::before { border-color: var(--color-gray-200, currentColor); }
 }
