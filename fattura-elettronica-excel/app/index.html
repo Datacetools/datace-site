@@ -549,7 +549,7 @@ function renderFileList() {
   if (selectedFiles.length === 0) { wrap.classList.add('hidden'); return; }
   wrap.classList.remove('hidden');
   wrap.innerHTML = selectedFiles.map((f, i) => `
-    <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:8px 12px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:8px 12px;">
       <div style="display:flex;align-items:center;gap:8px;min-width:0;">
         <svg class="w-4 h-4 shrink-0" style="color:#2a9db5;" fill="currentColor" viewBox="0 0 24 24">
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/>
