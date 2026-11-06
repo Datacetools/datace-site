@@ -76,3 +76,10 @@
   .doc-i, .doc-o, .doc-scan, .doc-row, .doc-ok2, .doc-anim .ace-b, .home-anim .ace-b { animation:none; }
   .doc-o.t1 { opacity:1; }
 }
+
+/* ── Fascia dei numeri delle vetrine F24, Fattura e Bonifici (brief 086): stesso stile per ogni blocco.
+   La home ha la sua fascia (.kpi-block) e non usa .fascia. ── */
+.fascia > div { display:flex; flex-direction:column; justify-content:flex-start; align-items:center; min-height:96px; }
+.fascia > div + div { border-left:1px solid rgba(255,255,255,.07); }
+.fascia .stat-num { font-size:1.75rem; font-weight:800; line-height:1.1; background:linear-gradient(135deg,#fff,#93c5fd); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.fascia .stat-sub { font-size:13px; color:var(--muted); margin-top:6px; }

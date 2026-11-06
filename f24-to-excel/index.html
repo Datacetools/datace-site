@@ -159,7 +159,6 @@
 
     .grad-text { background:linear-gradient(90deg,#fff 0%,#93c5fd 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
-    .stat-num { font-size:2.8rem; font-weight:800; line-height:1; background:linear-gradient(135deg,#fff,#93c5fd); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
     .dark-card { background:linear-gradient(135deg,rgba(15,32,64,.8),rgba(6,14,31,.9)); border:1px solid var(--border); border-radius:20px; padding:24px; transition:border-color .3s ease, transform .3s ease; }
     .dark-card:hover { border-color:rgba(255,255,255,.14); transform:translateY(-3px); }
@@ -310,11 +309,11 @@
 </section>
 <!-- STATS BAR -->
 <div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
-  <div class="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">Gratuito</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">senza registrazione</div></div>
-    <div style="border-left:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;"><div style="font-size:1.1rem;font-weight:800;color:white;line-height:1.2;">10 PDF</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">per volta</div></div>
-    <div style="border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">4.000+</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Codici tributo<br/>riconosciuti</div></div>
-    <div style="border-left:1px solid rgba(255,255,255,.07);"><div class="stat-num">20 MB</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">per ogni PDF</div></div>
+  <div class="max-w-4xl mx-auto fascia grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+    <div><div class="stat-num">Gratuito</div><div class="stat-sub">senza registrazione</div></div>
+    <div><div class="stat-num">10 PDF</div><div class="stat-sub">per volta</div></div>
+    <div><div class="stat-num">4.000+</div><div class="stat-sub">Codici tributo<br/>riconosciuti</div></div>
+    <div><div class="stat-num">20 MB</div><div class="stat-sub">per ogni PDF</div></div>
   </div>
 </div>
 
