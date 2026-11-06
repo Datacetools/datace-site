@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Riepilogo IVA acquisti da fatture XML | Guida Datace</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Come ottenere imponibile e IVA per aliquota da molte fatture elettroniche XML in Excel, come base per preparare o controllare il registro IVA acquisti." />
+  <link rel="canonical" href="https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel/" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article" />
+  <meta property="og:url"         content="https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel/" />
+  <meta property="og:title"       content="Riepilogo IVA acquisti da fatture XML | Guida Datace" />
+  <meta property="og:description" content="Come ottenere imponibile e IVA per aliquota da molte fatture elettroniche XML in Excel, come base per preparare o controllare il registro IVA acquisti." />
+  <meta property="og:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Datace: strumenti gratuiti per aziende e commercialisti" />
+  <meta name="twitter:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta name="twitter:card"       content="summary_large_image" />
+
+  <!-- JSON-LD: Article + HowTo + FAQPage + BreadcrumbList -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel#article",
+      "headline": "Come ottenere il riepilogo IVA degli acquisti dalle fatture XML in Excel",
+      "description": "Come ottenere imponibile e IVA per aliquota da molte fatture elettroniche XML in Excel, come base per preparare o controllare il registro IVA acquisti.",
+      "url": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel/",
+      "inLanguage": "it",
+      "author": {
+        "@type": "Organization",
+        "name": "Datace",
+        "url": "https://datacetools.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Datace",
+        "url": "https://datacetools.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://datacetools.com/images/logo-icon.svg"
+        }
+      },
+      "datePublished": "2026-11-06",
+      "dateModified": "2026-11-06"
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel#howto",
+      "name": "Come ottenere il riepilogo IVA degli acquisti dalle fatture XML in Excel",
+      "description": "Come ottenere imponibile e IVA per aliquota da molte fatture elettroniche XML in Excel, come base per preparare o controllare il registro IVA acquisti.",
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "Fattura elettronica in Excel"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Apri lo strumento",
+          "text": "Apri Fattura elettronica in Excel.",
+          "url": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel#step-1"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Scegli i file",
+          "text": "Trascina i file XML o .xml.p7m nell'area di caricamento, oppure clicca per sceglierli. Se le fatture sono in uno ZIP, estrai prima i file. I file restano sul tuo computer: li legge il browser e non vengono inviati a Datace.",
+          "url": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel#step-2"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Leggi il riepilogo a schermo",
+          "text": "Prima di scaricare, la pagina mostra il numero di documenti, l'imponibile, l'IVA in fattura e il totale, calcolati al netto delle note di credito, il grafico «Imponibile e IVA per aliquota» e gli avvisi sui documenti non sommati.",
+          "url": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel#step-3"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Scarica l'Excel e usa il foglio Riepilogo IVA",
+          "text": "Premi Elabora e scarica Excel. Il foglio Riepilogo IVA ha una riga per ogni aliquota di ogni fattura, con gli importi scritti nel file XML; in Excel, con Inserisci, Tabella pivot, puoi sommarli per Aliquota IVA % e Natura. I totali di riferimento restano quelli a schermo.",
+          "url": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel#step-4"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Posso ottenere il registro IVA acquisti da fatture XML con Datace?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ottieni il riepilogo di imponibile e IVA per aliquota, non il registro: non ci sono protocolli né date di registrazione. La registrazione resta nel tuo gestionale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quante fatture posso elaborare insieme?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto. Un singolo file XML può contenere più fatture (lotti): ognuna è riportata separatamente."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Le note di credito vengono sottratte?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì, nei totali mostrati dalla pagina. Nell'Excel restano con il segno scritto nel file, positivo o negativo: si riconoscono dalla colonna Tipo documento."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Perché il totale è diverso da quello del mio gestionale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Guarda gli avvisi sotto il riepilogo: doppioni, documenti in altra valuta e documenti di integrazione, autofattura o acconto non sono sommati."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "I miei dati vengono salvati o condivisi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le fatture vengono lette e convertite dal tuo browser: Datace non le riceve, quindi non le salva e non le condivide. Non esiste un archivio e non c'è registrazione."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Datace",
+          "item": "https://datacetools.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guide",
+          "item": "https://datacetools.com/guida/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Riepilogo IVA degli acquisti dalle fatture XML in Excel",
+          "item": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <!-- Tailwind compilato (sorgente: _tailwind/sito.css) e Inter servito dal sito:
+       nessuna richiesta a CDN o a Google Fonts. -->
+  <link rel="stylesheet" href="/tailwind.css" />
+  <style>
+    :root{--navy:#060E1F;--navy2:#0A1628;--navy3:#0F2040;--gold:#F59E0B;--teal:#1d7a94;--border:rgba(255,255,255,0.07);--muted:rgba(255,255,255,0.62);}
+    *{box-sizing:border-box;}body{font-family:'Inter',sans-serif;}
+    .logo-bar{transform-box:fill-box;transform-origin:left center;}
+    .logo-bar-1{animation:barStream 2.8s ease-in-out infinite 0s;}
+    .logo-bar-2{animation:barStream 2.8s ease-in-out infinite .22s;}
+    .logo-bar-3{animation:barStream 2.8s ease-in-out infinite .44s;}
+    @keyframes barStream{0%,100%{transform:scaleX(1);opacity:1;}30%{transform:scaleX(0.32);opacity:0.5;}60%{transform:scaleX(1);opacity:1;}}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:500;color:#93c5fd;letter-spacing:.04em;}
+    .pill-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;align-items:start;}
+    .footer-col-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:16px;}
+    .footer-link{display:block;font-size:14px;color:rgba(255,255,255,.62);margin-bottom:10px;text-decoration:none;transition:color .2s ease;}
+    .footer-link:hover{color:white;}
+    .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.2);}
+    @media(max-width:768px){.footer-grid{grid-template-columns:1fr;gap:32px;}.footer-bottom{flex-direction:column;gap:8px;text-align:center;}}
+    .prose h2{font-size:1.4rem;font-weight:800;color:#0f2040;letter-spacing:-.01em;margin:2.2rem 0 .8rem;}
+    .prose h3{font-size:1.08rem;font-weight:700;color:#1c3461;margin:1.6rem 0 .5rem;}
+    .prose p{color:#475569;line-height:1.85;margin-bottom:.85rem;font-size:1rem;}
+    .prose ul{list-style:disc;padding-left:1.5rem;color:#475569;line-height:1.85;margin-bottom:1rem;}
+    .prose li{margin-bottom:.4rem;}
+    .prose strong{color:#0f2040;}
+    .prose a{color:#1d7a94;text-decoration:underline;}
+    .card{background:white;border:1px solid #e5e7eb;border-radius:18px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+    .faq-q{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:18px 20px;}
+    .faq-q summary{font-weight:600;color:#0f2040;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+    .faq-q summary::-webkit-details-marker{display:none;}
+    .faq-q p{margin-top:10px;color:#475569;font-size:.92rem;line-height:1.7;}
+    .faq-q[open] summary .chev{transform:rotate(180deg);}
+    .chev{transition:transform .2s;color:#94a3b8;flex-shrink:0;}
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
+</head>
+<body class="antialiased" style="background:#f1f5f9;">
+
+<!-- HEADER -->
+<!-- DATACE HEADER START -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <svg class="w-9 h-9 flex-shrink-0" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" style="color:rgba(255,255,255,.62);">
+      <a href="/#strumenti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Strumenti</a>
+      <a href="/guida/" style="color:white;font-weight:600;">Guide</a>
+      <a href="/chi-siamo" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Chi sono</a>
+      <a href="/raccontaci/" class="hidden lg:inline" data-umami-event="raccontaci-link" data-umami-event-origine="header" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Raccontaci</a>
+      <a href="/#contatti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Contatti</a>
+    </nav>
+    <a href="/#strumenti" style="background:white;color:#0f2040;font-weight:700;font-size:13px;padding:9px 20px;border-radius:12px;letter-spacing:.01em;transition:all .2s ease;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Inizia ora</a>
+  </div>
+</header>
+<!-- DATACE HEADER END -->
+
+
+<!-- BREADCRUMB -->
+<div style="background:var(--navy2);border-bottom:1px solid var(--border);" class="py-2 px-6">
+  <div class="max-w-5xl mx-auto text-xs flex items-center gap-1.5" style="color:rgba(255,255,255,.55);">
+    <a href="/">Datace</a><span>/</span><a href="/guida/">Guide</a><span>/</span>
+    <span style="color:rgba(255,255,255,.6);">Riepilogo IVA degli acquisti dalle fatture XML in Excel</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="px-6 py-16" style="background:linear-gradient(135deg,#0f2040 0%,#0A1628 55%,#060E1F 100%);position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20%;left:-5%;width:50%;height:80%;background:radial-gradient(ellipse,rgba(29,122,148,.16) 0%,transparent 65%);"></div>
+  <div class="max-w-3xl mx-auto" style="position:relative;z-index:1;color:white;">
+    <div class="mb-4 flex items-center gap-3">
+      <span class="pill"><span class="pill-dot"></span> Guida pratica</span>
+      <span style="font-size:12px;color:var(--muted);">Lettura 5 min</span>
+    </div>
+    <h1 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;">Come ottenere il riepilogo IVA degli acquisti dalle fatture XML in Excel</h1>
+    <p style="color:rgba(255,255,255,.6);font-size:1.05rem;line-height:1.7;margin-top:14px;max-width:42rem;">Chi riceve molte fatture elettroniche ha spesso bisogno di sapere, per ogni aliquota IVA, quanto è l'imponibile e quanta l'imposta: per controllare i totali, preparare i dati per il commercialista o confrontarli con il gestionale. Questa guida mostra come ottenere quel riepilogo da un gruppo di fatture XML con Fattura elettronica in Excel. Il file è elaborato dal browser e non viene inviato a Datace.</p>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section style="background:#f1f5f9;" class="px-6 py-14">
+  <div class="max-w-5xl mx-auto grid lg:grid-cols-3 gap-10">
+    <article class="prose lg:col-span-2 card" style="padding:36px 40px;">
+      <h2 style="margin-top:0;">Cosa serve prima di iniziare</h2>
+      <p>Le fatture ricevute in XML o .xml.p7m. Se le hai in uno ZIP scaricato dal portale «Fatture e Corrispettivi» dell'Agenzia delle Entrate, estrai prima i file: lo strumento legge i file .xml e .p7m, non lo ZIP. Se non hai ancora lo ZIP, la <a href="/guida/scaricare-fatture-elettroniche-ricevute-zip/">guida su come scaricare in blocco le fatture elettroniche ricevute</a> spiega dove si trova. Puoi elaborare fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto.</p>
+
+      <h2 id="step-1">Passo 1: apri lo strumento</h2>
+      <p>Apri <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="/fattura-elettronica-excel/app/">Fattura elettronica in Excel</a>.</p>
+      <h2 id="step-2">Passo 2: scegli i file</h2>
+      <p>Trascina i file XML o .xml.p7m nell'area di caricamento, oppure clicca per sceglierli. I file restano sul tuo computer: li legge il browser e non vengono inviati a Datace.</p>
+      <h2 id="step-3">Passo 3: leggi il riepilogo a schermo</h2>
+      <p>Prima di scaricare, la pagina mostra il numero di documenti, l'imponibile, l'IVA in fattura e il totale, calcolati al netto delle note di credito, e il grafico «Imponibile e IVA per aliquota». Sotto compaiono gli avvisi: documenti con reverse charge, in split payment, doppioni non contati, documenti in altra valuta non sommati e documenti di integrazione, autofattura o acconto non sommati. Leggili prima di fidarti del totale.</p>
+      <h2 id="step-4">Passo 4: scarica l'Excel e usa il foglio Riepilogo IVA</h2>
+      <p>Premi <strong>Elabora e scarica Excel</strong>. Il foglio <strong>Riepilogo IVA</strong> ha una riga per ogni aliquota di ogni fattura, con le colonne File, Numero fattura, Data, Aliquota IVA %, Imponibile, Imposta, Natura, Esigibilita IVA, Tipo documento e Fornitore. Gli importi sono quelli scritti nel file XML. Per sommare per aliquota, in Excel scegli <strong>Inserisci, Tabella pivot</strong>: metti Tipo documento nei filtri, Aliquota IVA % e Natura nelle righe, Imponibile e Imposta nei valori. I totali di riferimento restano quelli a schermo: la tabella pivot somma gli importi come sono nel file e non garantisce gli stessi totali della pagina.</p>
+      <p>Il primo foglio, <strong>Riepilogo Fatture</strong>, ha il banner di Datace nella riga 1. Se ci costruisci una tabella pivot, seleziona prima i dati a partire dalla riga 2, che contiene le intestazioni: altrimenti Excel include anche il banner.</p>
+
+      <h2>Come leggere i numeri</h2>
+      <ul>
+        <li><strong>Note di credito</strong>: nei totali a schermo sono in meno. Nell'Excel hanno il segno scritto nel file, positivo o negativo a seconda di chi le ha emesse: con il filtro Tipo documento le vedi a parte, ma prima di sommarle guarda il segno di ciascuna.</li>
+        <li><strong>Reverse charge</strong>: sulla parte in reverse charge l'IVA scritta nella fattura è 0. La colonna Natura del foglio Riepilogo IVA indica la natura dell'operazione.</li>
+        <li><strong>Split payment</strong>: la colonna Esigibilita IVA mostra «Scissione pagamenti (split payment)» e l'IVA non va al fornitore.</li>
+        <li><strong>Cosa non viene sommato nei totali a schermo</strong>: la pagina somma fatture, note di credito, note di debito, parcelle e fatture differite. Non somma integrazioni, autofatture e acconti, né i doppioni e i documenti in altra valuta. Nell'Excel trovi tutti i documenti, con il loro Tipo documento; doppioni e documenti in altra valuta si riconoscono nel foglio Riepilogo Fatture (colonna Divisa, oppure lo stesso numero dello stesso fornitore due volte).</li>
+        <li><strong>Cosa non viene letto</strong>: le fatture semplificate e i corrispettivi finiscono tra gli scarti, con il motivo. Ritenute e bollo non vengono lette, quindi non sono nell'Excel.</li>
+      </ul>
+    </article>
+
+    <!-- SIDEBAR -->
+    <aside class="lg:col-span-1 flex flex-col gap-5">
+      <div class="card">
+        <h3 class="font-bold mb-4 text-sm" style="color:#0f2040;">Fattura elettronica in Excel supporta</h3>
+        <ul class="flex flex-col gap-2 text-sm" style="color:#475569;">
+          <li>✓ Fattura Elettronica XML (FatturaPA 1.2)</li><li>✓ File firmati .xml.p7m (CAdES)</li><li>✓ Tipi documento ordinari (le semplificate TD07-TD09 non sono lette)</li><li>✓ Fino a 50 file per volta</li><li>✓ Lotti multi-fattura nello stesso XML</li><li>✓ Excel con fogli strutturati</li>
+        </ul>
+        <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="/fattura-elettronica-excel/app/" class="mt-5 flex items-center justify-center gap-2 text-white text-sm font-semibold px-4 py-2.5 rounded-xl" style="background:#1c3461;">Apri Fattura elettronica in Excel →</a>
+      </div>
+      <div class="card">
+        <h3 class="font-bold mb-4 text-sm" style="color:#0f2040;">Altre guide</h3>
+        <ul class="flex flex-col gap-3 text-sm">
+          <li><a href="/guida/" style="color:#1d7a94;font-weight:600;">Tutte le guide Datace</a></li>
+          <li><a href="/guida/come-convertire-fattura-elettronica-excel/" style="color:#64748b;">Come convertire la fattura elettronica in Excel</a></li>
+          <li><a href="/guida/scaricare-fatture-elettroniche-ricevute-zip/" style="color:#64748b;">Come scaricare in blocco le fatture elettroniche ricevute</a></li>
+          <li><a href="/guida/come-convertire-f24-excel/" style="color:#64748b;">Come convertire un F24 PDF in Excel</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:white;border-top:1px solid #e5e7eb;" class="px-6 py-14">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl font-extrabold text-center mb-8" style="color:#0f2040;">Domande frequenti</h2>
+    <div class="flex flex-col gap-3">
+      <details class="faq-q"><summary>Posso ottenere il registro IVA acquisti da fatture XML con Datace?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Ottieni il riepilogo di imponibile e IVA per aliquota, non il registro: non ci sono protocolli né date di registrazione. La registrazione resta nel tuo gestionale.</p></details>
+      <details class="faq-q"><summary>Quante fatture posso elaborare insieme?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto. Un singolo file XML può contenere più fatture (lotti): ognuna è riportata separatamente.</p></details>
+      <details class="faq-q"><summary>Le note di credito vengono sottratte?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Sì, nei totali mostrati dalla pagina. Nell'Excel restano con il segno scritto nel file, positivo o negativo: si riconoscono dalla colonna Tipo documento.</p></details>
+      <details class="faq-q"><summary>Perché il totale è diverso da quello del mio gestionale?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Guarda gli avvisi sotto il riepilogo: doppioni, documenti in altra valuta e documenti di integrazione, autofattura o acconto non sono sommati.</p></details>
+      <details class="faq-q"><summary>I miei dati vengono salvati o condivisi?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Le fatture vengono lette e convertite dal tuo browser: Datace non le riceve, quindi non le salva e non le condivide. Non esiste un archivio e non c'è registrazione.</p></details>
+    </div>
+  </div>
+</section>
+
+
+<!-- SU MISURA -->
+<section style="background:#f8fafc;border-top:1px solid #e5e7eb;" class="px-6 py-14">
+  <div class="max-w-3xl mx-auto" style="background:white;border:1px solid #e5e7eb;border-radius:18px;padding:32px;text-align:center;">
+    <h2 class="text-2xl font-extrabold mb-3" style="color:#0f2040;">Il tuo caso è diverso?</h2>
+    <p style="font-size:15px;color:#475569;line-height:1.7;margin-bottom:24px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Raccontaci il tuo caso:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+      <a href="https://www.linkedin.com/in/davide-sgroia/" target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="guida-riepilogo-iva" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#0f2040;border:1px solid #0f2040;color:white;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        Profilo LinkedIn di Davide S.
+      </a>
+      <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20riepilogo%20IVA&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="guida-riepilogo-iva" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Scrivici il tuo caso
+      </a>
+    </div>
+    <p style="font-size:13px;color:#64748b;margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20riepilogo%20IVA&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="guida-riepilogo-iva" style="color:#b45309;">info@datacetools.com</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+        <a href="/fatture-xml-bonifici/" class="footer-link">Fatture XML in bonifici</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
+        <a href="/privacy" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+
+</body>
+</html>

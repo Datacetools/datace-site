@@ -381,7 +381,7 @@ def _build_dataframes(fatture: list):
         for r in f['righe']:
             righe_rows.append({'File': f['file'], 'Numero fattura': f['numero'], 'Data': f['data'], 'Fornitore': forn['nome'], 'Linea': r['linea'], 'Descrizione': r['descrizione'], 'Quantita': r['quantita'], 'U.M.': r['unita'], 'Prezzo unitario': r['prezzo_unitario'], 'Prezzo totale': r['prezzo_totale'], 'Aliquota IVA %': r['aliquota'], 'Natura': NATURA.get(r['natura_cod'], r['natura_cod']), '_divisa': f['divisa']})
         for v in f['riepilogo_iva']:
-            iva_rows.append({'File': f['file'], 'Numero fattura': f['numero'], 'Data': f['data'], 'Aliquota IVA %': v['aliquota'], 'Imponibile': v['imponibile'], 'Imposta': v['imposta'], 'Natura': v['natura'], 'Esigibilita IVA': v['esigibilita'], '_divisa': f['divisa']})
+            iva_rows.append({'File': f['file'], 'Numero fattura': f['numero'], 'Data': f['data'], 'Aliquota IVA %': v['aliquota'], 'Imponibile': v['imponibile'], 'Imposta': v['imposta'], 'Natura': v['natura'], 'Esigibilita IVA': v['esigibilita'], 'Tipo documento': f['tipo'], 'Fornitore': forn['nome'], '_divisa': f['divisa']})
         for al in f.get('allegati', []):
             allegati_rows.append({'File': f['file'], 'Numero fattura': f['numero'], 'Data': f['data'], 'Nome allegato': al['nome'], 'Formato': al['formato'], 'Descrizione': al['descrizione'], 'Compressione': al['compressione']})
     return (pd.DataFrame(riepilogo_rows), pd.DataFrame(righe_rows), pd.DataFrame(iva_rows), pd.DataFrame(notifiche_rows), pd.DataFrame(allegati_rows))
