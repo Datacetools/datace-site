@@ -433,7 +433,7 @@
         restano fuori, ma solo se l'utente lo conferma. Il motore rifiuta comunque una
         generazione con righe a zero senza conferma (escludi).
      Lo stesso riquadro, con il solo pulsante «Ho capito», spiega i file troppo pesanti.
-     2. avvisi (codice fiscale, doppioni): spiegati per tipo. Qui la barriera è solo
+     2. avvisi (codice fiscale, doppioni, data già passata): spiegati per tipo. Qui la barriera è solo
         nel browser: un avviso non blocca il file, chiede soltanto. -->
 <div id="conferma" class="hidden fixed inset-0 z-[60] items-center justify-center px-4"
      style="background:rgba(4,8,15,.75);backdrop-filter:blur(6px);"
@@ -612,7 +612,6 @@ const MSG_PESANTE = 'Il file è troppo pesante per essere letto. Di solito dipen
 function testoErrore(e) {
   if (e === 'Beneficiari: al massimo 10000 bonifici per file.') return MSG_PIU_DI_10000;
   if (e === 'Beneficiari: il foglio ha troppe righe (al massimo 10000 bonifici).') return MSG_TROPPE_RIGHE;
-  if (/^Distinta: la data di esecuzione .* è già passata\.$/.test(e)) return e + ' Il controllo usa la data del computer.';
   return e;
 }
 
