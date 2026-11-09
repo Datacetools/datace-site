@@ -85,7 +85,7 @@
           "@type": "HowToStep",
           "position": 3,
           "name": "Leggi il riepilogo a schermo",
-          "text": "Prima di scaricare, la pagina mostra il numero di documenti, l'imponibile, l'IVA in fattura e il totale, calcolati al netto delle note di credito, il grafico «Imponibile e IVA per aliquota» e gli avvisi sui documenti non sommati.",
+          "text": "Prima di scaricare, la pagina mostra il numero di documenti, l'imponibile, l'IVA in fattura e il totale, al netto delle note di credito, e il grafico «Imponibile e IVA per aliquota». Sotto compaiono gli avvisi: documenti in reverse charge o in split payment, doppioni, documenti in altra valuta e documenti di altro tipo che non entrano nei totali. Leggili prima di usare i numeri.",
           "url": "https://datacetools.com/guida/riepilogo-iva-acquisti-fatture-xml-excel#step-3"
         },
         {
@@ -130,7 +130,7 @@
           "name": "Perché il totale è diverso da quello del mio gestionale?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Guarda gli avvisi sotto il riepilogo: doppioni, documenti in altra valuta e documenti di integrazione, autofattura o acconto non sono sommati."
+            "text": "Guarda gli avvisi sotto il riepilogo: doppioni, documenti in altra valuta e documenti di altro tipo, come acconti e autofatture, non entrano nei totali. L'elenco dei tipi sommati è in «Come leggere i numeri»."
           }
         },
         {
@@ -274,7 +274,7 @@
       <h2 id="step-2">Passo 2: scegli i file</h2>
       <p>Trascina i file XML o .xml.p7m nell'area di caricamento, oppure clicca per sceglierli. I file restano sul tuo computer: li legge il browser e non vengono inviati a Datace.</p>
       <h2 id="step-3">Passo 3: leggi il riepilogo a schermo</h2>
-      <p>Prima di scaricare, la pagina mostra il numero di documenti, l'imponibile, l'IVA in fattura e il totale, calcolati al netto delle note di credito, e il grafico «Imponibile e IVA per aliquota». Sotto compaiono gli avvisi: documenti con reverse charge, in split payment, doppioni non contati, documenti in altra valuta non sommati e documenti di integrazione, autofattura o acconto non sommati. Leggili prima di fidarti del totale.</p>
+      <p>Prima di scaricare, la pagina mostra il numero di documenti, l'imponibile, l'IVA in fattura e il totale, al netto delle note di credito, e il grafico «Imponibile e IVA per aliquota». Sotto compaiono gli avvisi: documenti in reverse charge o in split payment, doppioni, documenti in altra valuta e documenti di altro tipo che non entrano nei totali. Leggili prima di usare i numeri.</p>
       <h2 id="step-4">Passo 4: scarica l'Excel e usa il foglio Riepilogo IVA</h2>
       <p>Premi <strong>Elabora e scarica Excel</strong>. Il foglio <strong>Riepilogo IVA</strong> ha una riga per ogni aliquota di ogni fattura, con le colonne File, Numero fattura, Data, Aliquota IVA %, Imponibile, Imposta, Natura, Esigibilita IVA, Tipo documento e Fornitore. Gli importi sono quelli scritti nel file XML. Per sommare per aliquota, in Excel scegli <strong>Inserisci, Tabella pivot</strong>: metti Tipo documento nei filtri, Aliquota IVA % e Natura nelle righe, Imponibile e Imposta nei valori. I totali di riferimento restano quelli a schermo: la tabella pivot somma gli importi come sono nel file e non garantisce gli stessi totali della pagina.</p>
       <p>Il primo foglio, <strong>Riepilogo Fatture</strong>, ha il banner di Datace nella riga 1. Se ci costruisci una tabella pivot, seleziona prima i dati a partire dalla riga 2, che contiene le intestazioni: altrimenti Excel include anche il banner.</p>
@@ -284,7 +284,7 @@
         <li><strong>Note di credito</strong>: nei totali a schermo sono in meno. Nell'Excel hanno il segno scritto nel file, positivo o negativo a seconda di chi le ha emesse: con il filtro Tipo documento le vedi a parte, ma prima di sommarle guarda il segno di ciascuna.</li>
         <li><strong>Reverse charge</strong>: sulla parte in reverse charge l'IVA scritta nella fattura è 0. La colonna Natura del foglio Riepilogo IVA indica la natura dell'operazione.</li>
         <li><strong>Split payment</strong>: la colonna Esigibilita IVA mostra «Scissione pagamenti (split payment)» e l'IVA non va al fornitore.</li>
-        <li><strong>Cosa non viene sommato nei totali a schermo</strong>: la pagina somma fatture, note di credito, note di debito, parcelle e fatture differite. Non somma integrazioni, autofatture e acconti, né i doppioni e i documenti in altra valuta. Nell'Excel trovi tutti i documenti, con il loro Tipo documento; doppioni e documenti in altra valuta si riconoscono nel foglio Riepilogo Fatture (colonna Divisa, oppure lo stesso numero dello stesso fornitore due volte).</li>
+        <li><strong>Cosa non entra nei totali a schermo</strong>: la pagina somma fatture (TD01), note di credito (TD04), note di debito (TD05), parcelle (TD06) e fatture differite (TD24 e TD25). Restano fuori gli acconti (TD02 e TD03), perché la fattura finale può riportare di nuovo l'intero importo, e tutti gli altri tipi, da TD16 a TD23 e da TD26 a TD29: integrazioni, autofatture e altri casi particolari. Restano fuori anche i doppioni e i documenti in altra valuta. Nell'Excel invece ci sono tutti, ciascuno con il suo Tipo documento: i documenti in altra valuta si riconoscono dalla colonna Divisa del foglio Riepilogo Fatture, i doppioni dallo stesso numero dello stesso fornitore nello stesso anno.</li>
         <li><strong>Cosa non viene letto</strong>: le fatture semplificate e i corrispettivi finiscono tra gli scarti, con il motivo. Ritenute e bollo non vengono lette, quindi non sono nell'Excel.</li>
       </ul>
     </article>
@@ -294,7 +294,7 @@
       <div class="card">
         <h3 class="font-bold mb-4 text-sm" style="color:#0f2040;">Fattura elettronica in Excel supporta</h3>
         <ul class="flex flex-col gap-2 text-sm" style="color:#475569;">
-          <li>✓ Fattura Elettronica XML (FatturaPA 1.2)</li><li>✓ File firmati .xml.p7m (CAdES)</li><li>✓ Tipi documento ordinari (le semplificate TD07-TD09 non sono lette)</li><li>✓ Fino a 50 file per volta</li><li>✓ Lotti multi-fattura nello stesso XML</li><li>✓ Excel con fogli strutturati</li>
+          <li>✓ Fatture XML FatturaPA (FPR12 e FPA12)</li><li>✓ File firmati .xml.p7m (CAdES)</li><li>✓ Lotti con più fatture nello stesso file</li><li>✓ Notifiche e metadati del Sistema di Interscambio</li><li>✓ Fino a 50 file per volta, 100 MB in tutto</li><li>✓ Excel su 5 fogli, oppure ZIP con XML e allegati</li>
         </ul>
         <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="/fattura-elettronica-excel/app/" class="mt-5 flex items-center justify-center gap-2 text-white text-sm font-semibold px-4 py-2.5 rounded-xl" style="background:#1c3461;">Apri Fattura elettronica in Excel →</a>
       </div>
@@ -319,7 +319,7 @@
       <details class="faq-q"><summary>Posso ottenere il registro IVA acquisti da fatture XML con Datace?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Ottieni il riepilogo di imponibile e IVA per aliquota, non il registro: non ci sono protocolli né date di registrazione. La registrazione resta nel tuo gestionale.</p></details>
       <details class="faq-q"><summary>Quante fatture posso elaborare insieme?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto. Un singolo file XML può contenere più fatture (lotti): ognuna è riportata separatamente.</p></details>
       <details class="faq-q"><summary>Le note di credito vengono sottratte?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Sì, nei totali mostrati dalla pagina. Nell'Excel restano con il segno scritto nel file, positivo o negativo: si riconoscono dalla colonna Tipo documento.</p></details>
-      <details class="faq-q"><summary>Perché il totale è diverso da quello del mio gestionale?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Guarda gli avvisi sotto il riepilogo: doppioni, documenti in altra valuta e documenti di integrazione, autofattura o acconto non sono sommati.</p></details>
+      <details class="faq-q"><summary>Perché il totale è diverso da quello del mio gestionale?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Guarda gli avvisi sotto il riepilogo: doppioni, documenti in altra valuta e documenti di altro tipo, come acconti e autofatture, non entrano nei totali. L'elenco dei tipi sommati è in «Come leggere i numeri».</p></details>
       <details class="faq-q"><summary>I miei dati vengono salvati o condivisi?<svg class="chev w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><p>Le fatture vengono lette e convertite dal tuo browser: Datace non le riceve, quindi non le salva e non le condivide. Non esiste un archivio e non c'è registrazione.</p></details>
     </div>
   </div>

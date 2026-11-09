@@ -38,14 +38,14 @@
     "url": "https://datacetools.com/fattura-elettronica-excel/app/",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "All",
-    "description": "Convertitore online delle Fatture Elettroniche italiane in formato XML (FatturaPA) e .p7m in file Excel strutturati. Estrae fornitore, cliente, righe, riepiloghi IVA, nature e scadenze di pagamento.",
+    "description": "Convertitore online delle Fatture Elettroniche italiane in formato XML (FatturaPA) e .p7m in file Excel strutturati. Estrae fornitore, cliente, righe, riepiloghi IVA, nature e data di scadenza.",
     "inLanguage": "it",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
     "featureList": [
       "Supporta fatture XML e file firmati .xml.p7m",
-      "Estrae fornitore, cliente, righe, IVA, pagamenti",
+      "Estrae fornitore, cliente, righe, riepiloghi IVA e scadenza",
       "Esporta su 5 fogli Excel: Riepilogo Fatture, Dettaglio Righe, Riepilogo IVA, Notifiche SdI, Allegati",
-      "Elabora fino a 50 fatture contemporaneamente",
+      "Elabora fino a 50 file per volta",
       "Gestisce i lotti con più fatture nello stesso file",
       "Elaborazione nel browser: il file non viene inviato a Datace"
     ],
@@ -76,7 +76,7 @@
     "tool": { "@type": "HowToTool", "name": "Datace: Fattura Elettronica in Excel", "url": "https://datacetools.com/fattura-elettronica-excel/app/" },
     "step": [
       { "@type": "HowToStep", "position": 1, "name": "Scegli le fatture XML", "text": "Apri lo strumento e trascina uno o più file XML o .p7m delle tue fatture elettroniche nella zona di caricamento. Puoi usare fino a 50 file contemporaneamente." },
-      { "@type": "HowToStep", "position": 2, "name": "Estrazione automatica", "text": "Il motore legge il tracciato FatturaPA e riconosce automaticamente fornitore, cliente, righe di dettaglio, riepiloghi IVA e dati di pagamento." },
+      { "@type": "HowToStep", "position": 2, "name": "Estrazione automatica", "text": "Lo strumento legge il tracciato FatturaPA: fornitore, cliente, righe, riepiloghi IVA e scadenze. Prima di scaricare vedi l'anteprima e un riepilogo con documenti, imponibile, IVA e totale." },
       { "@type": "HowToStep", "position": 3, "name": "Scarica l'Excel", "text": "Clicca su Elabora e scarica Excel. Il file viene generato e scaricato con 5 fogli: Riepilogo Fatture, Dettaglio Righe, Riepilogo IVA, Notifiche SdI e Allegati." }
     ]
   }
@@ -91,9 +91,9 @@
       { "@type": "Question", "name": "Come si converte una fattura elettronica XML in Excel?", "acceptedAnswer": { "@type": "Answer", "text": "Apri lo strumento e scegli il file XML: il tuo browser legge il tracciato FatturaPA ed estrae automaticamente tutti i dati, scaricando un file Excel strutturato su 5 fogli. Senza installazioni." } },
       { "@type": "Question", "name": "Sono supportati i file .p7m firmati digitalmente?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Sono supportate sia le fatture XML semplici sia quelle .xml.p7m firmate digitalmente, come quelle scaricate dallo SdI o dal cassetto fiscale." } },
       { "@type": "Question", "name": "I file delle fatture vengono salvati?", "acceptedAnswer": { "@type": "Answer", "text": "No. Le fatture vengono lette e convertite dal browser, sul tuo computer. Datace non le riceve e quindi non può conservarle: non esiste un archivio e non c'è registrazione." } },
-      { "@type": "Question", "name": "Oltre all'Excel, lo strumento mostra dei grafici?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, in forma semplice. Dopo la lettura vedi documenti, imponibile, IVA e totale, e tre grafici a barre: per fornitore o cliente, per mese e per aliquota IVA. Le note di credito sono sottratte; doppioni e documenti in altra valuta non sono contati e te lo diciamo a schermo. Sono numeri di controllo calcolati nel tuo browser: non sostituiscono la contabilità." } },
+      { "@type": "Question", "name": "Oltre all'Excel, lo strumento mostra dei grafici?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, in forma semplice. Dopo la lettura vedi documenti, imponibile, IVA e totale, e tre grafici a barre: per fornitore o cliente, per mese e per aliquota IVA. Le note di credito sono sottratte. Doppioni, documenti in altra valuta e documenti di altro tipo, come acconti e autofatture, non entrano nei totali, e la pagina te lo dice. Sono numeri di controllo calcolati nel tuo browser: non sostituiscono la contabilità." } },
       { "@type": "Question", "name": "Posso convertire più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, fino a 50 file contemporaneamente. Tutte le fatture vengono unificate in un unico Excel. Sono gestiti anche i file XML che contengono più fatture (lotti): ogni fattura finisce su una riga separata." } },
-      { "@type": "Question", "name": "Quali dati vengono estratti dalla fattura?", "acceptedAnswer": { "@type": "Answer", "text": "Fornitore e cliente con partita IVA e codice fiscale, tipo, numero e data documento, le righe di dettaglio con quantità e prezzi, i riepiloghi IVA per aliquota con natura ed esigibilità, e le scadenze di pagamento." } },
+      { "@type": "Question", "name": "Quali dati vengono estratti dalla fattura?", "acceptedAnswer": { "@type": "Answer", "text": "Fornitore e cliente con partita IVA e codice fiscale, tipo, numero e data del documento, le righe con quantità e prezzi, i riepiloghi IVA per aliquota con natura ed esigibilità, e la data di scadenza più lontana. Modalità e importi delle singole rate non sono nell'Excel." } },
       { "@type": "Question", "name": "Ci sono limiti di dimensione?", "acceptedAnswer": { "@type": "Answer", "text": "Sì: fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto." } },
       { "@type": "Question", "name": "Quali browser sono supportati?", "acceptedAnswer": { "@type": "Answer", "text": "Chrome, Edge, Firefox, Brave e Opera. Safari e i browser di iPhone e iPad non sono ancora supportati." } },
       { "@type": "Question", "name": "Quanto ci mette?", "acceptedAnswer": { "@type": "Answer", "text": "Prima di partire lo strumento ti dice quanto tempo serve. Per la prima apertura il browser scarica circa 15 MB, poi di solito li tiene." } }
@@ -264,7 +264,7 @@
   <div class="max-w-4xl mx-auto fascia grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
     <div><div class="stat-num">Gratuito</div><div class="stat-sub">senza registrazione</div></div>
     <div><div class="stat-num">10 MB</div><div class="stat-sub">per file,<br/>100 MB in tutto</div></div>
-    <div><div class="stat-num">50</div><div class="stat-sub">Fatture elaborabili<br/>in un colpo solo</div></div>
+    <div><div class="stat-num">50</div><div class="stat-sub">File elaborabili<br/>in un colpo solo</div></div>
     <div><div class="stat-num">5</div><div class="stat-sub">Fogli Excel<br/>strutturati</div></div>
   </div>
 </div>
@@ -282,17 +282,17 @@
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">1</span></div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Carica le fatture XML</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Trascina uno o più file XML o <strong style="color:white;">.p7m</strong> firmati. Puoi elaborare fino a <strong style="color:white;">50 fatture insieme</strong>.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Trascina uno o più file XML o <strong style="color:white;">.p7m</strong> firmati. Puoi scegliere fino a <strong style="color:white;">50 file insieme</strong>.</p>
       </div>
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Estrazione automatica</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Il motore legge il tracciato FatturaPA: fornitore, cliente, righe, IVA e pagamenti. <strong style="color:white;">Output strutturato e più facile da controllare.</strong> Prima di scaricare vedi un riepilogo con documenti, imponibile, IVA e totale, e tre grafici: per fornitore o cliente, per mese e per aliquota.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Lo strumento legge il tracciato FatturaPA: fornitore, cliente, righe, riepiloghi IVA e scadenze. Prima di scaricare vedi l'anteprima e un riepilogo con documenti, imponibile, IVA e totale, e tre grafici: per fornitore o cliente, per mese e per aliquota.</p>
       </div>
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scarica l'Excel</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Il file Excel viene generato e scaricato al termine dell'elaborazione.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scarichi l'Excel su cinque fogli, oppure uno ZIP con l'Excel, gli XML e gli allegati.</p>
       </div>
     </div>
   </div>
@@ -313,7 +313,7 @@
           <svg class="w-5 h-5" style="color:#86efac;" fill="currentColor" viewBox="0 0 24 24"><path d="M9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4zm2.5 2.1h-15V5h15v14.1zm0-16.1h-15c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
         </div>
         <h3 style="font-size:15px;font-weight:700;margin-bottom:8px;">Foglio Riepilogo Fatture</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Una riga per fattura: tipo, numero, data, fornitore e cliente con P.IVA/CF, imponibile, IVA, totale documento e scadenza.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Una riga per fattura: tipo, numero, data, fornitore e cliente con partita IVA o codice fiscale, imponibile, IVA, totale e data di scadenza più lontana.</p>
       </div>
       <div class="dark-card">
         <div style="width:40px;height:40px;border-radius:12px;background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
@@ -334,14 +334,14 @@
           <svg class="w-5 h-5" style="color:#5eead4;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         </div>
         <h3 style="font-size:15px;font-weight:700;margin-bottom:8px;">Foglio Notifiche SdI</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Le notifiche del Sistema di Interscambio presenti nei file caricati.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Le ricevute del Sistema di Interscambio presenti tra i file, con esito e fattura a cui si riferiscono.</p>
       </div>
       <div class="dark-card">
         <div style="width:40px;height:40px;border-radius:12px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
           <svg class="w-5 h-5" style="color:#fcd34d;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         </div>
         <h3 style="font-size:15px;font-weight:700;margin-bottom:8px;">Foglio Allegati</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Gli eventuali allegati incorporati nelle fatture.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">L'elenco degli allegati contenuti nelle fatture. I file veri e propri li scarichi con lo ZIP.</p>
       </div>
     </div>
     <div class="grid sm:grid-cols-2 gap-3">
@@ -424,7 +424,7 @@
             <li style="display:flex;gap:10px;margin-bottom:8px;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">→</span><span><strong style="color:white;">Controllo prima della liquidazione IVA</strong>: verificare imponibili e imposte per aliquota su tutte le fatture del periodo.</span></li>
             <li style="display:flex;gap:10px;margin-bottom:8px;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">→</span><span><strong style="color:white;">Riconciliazione contabile</strong>: i dati strutturati sono pronti per essere incrociati con le registrazioni contabili tramite CERCA.VERT o Power Query.</span></li>
             <li style="display:flex;gap:10px;margin-bottom:8px;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">→</span><span><strong style="color:white;">Analisi fornitori e clienti</strong>: raggruppare il fatturato per controparte e individuare i principali rapporti commerciali.</span></li>
-            <li style="display:flex;gap:10px;margin-bottom:8px;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">→</span><span><strong style="color:white;">Controllo scadenze</strong>: ordinare i pagamenti per data di scadenza e gestire l'incassato e lo scaduto.</span></li>
+            <li style="display:flex;gap:10px;margin-bottom:8px;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">→</span><span><strong style="color:white;">Controllo scadenze</strong>: ordinare le fatture per data di scadenza (la più lontana, se i pagamenti sono più di uno).</span></li>
           </ul>
           <p style="margin-top:14px;">Per approfondire campi letti, tipi di documento e problemi comuni delle fatture elettroniche, leggi la <a href="/guida/come-convertire-fattura-elettronica-excel/" style="color:#93c5fd;">guida completa su come convertire le fatture elettroniche XML in Excel</a>.</p>
           <p style="margin-top:14px;">Non hai ancora i file? La guida spiega <a href="/guida/scaricare-fatture-elettroniche-ricevute-zip/" style="color:#93c5fd;">come scaricare in blocco le fatture elettroniche ricevute</a> dal portale dell'Agenzia delle Entrate.</p>
@@ -487,7 +487,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Oltre all'Excel, lo strumento mostra dei grafici?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, in forma semplice. Dopo la lettura vedi documenti, imponibile, IVA e totale, e tre grafici a barre: per fornitore o cliente, per mese e per aliquota IVA. Le note di credito sono sottratte; doppioni e documenti in altra valuta non sono contati e te lo diciamo a schermo. Sono numeri di controllo calcolati nel tuo browser: non sostituiscono la contabilità.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, in forma semplice. Dopo la lettura vedi documenti, imponibile, IVA e totale, e tre grafici a barre: per fornitore o cliente, per mese e per aliquota IVA. Le note di credito sono sottratte. Doppioni, documenti in altra valuta e documenti di altro tipo, come acconti e autofatture, non entrano nei totali, e la pagina te lo dice. Sono numeri di controllo calcolati nel tuo browser: non sostituiscono la contabilità.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
@@ -501,7 +501,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quali dati vengono estratti dalla fattura?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Fornitore e cliente con partita IVA e codice fiscale, tipo, numero e data del documento, le righe di dettaglio con quantità e prezzi, i riepiloghi IVA per aliquota con natura ed esigibilità, e le scadenze di pagamento.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Fornitore e cliente con partita IVA e codice fiscale, tipo, numero e data del documento, le righe con quantità e prezzi, i riepiloghi IVA per aliquota con natura ed esigibilità, e la data di scadenza più lontana. Modalità e importi delle singole rate non sono nell'Excel.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">

@@ -77,7 +77,7 @@
     "tool": { "@type": "HowToTool", "name": "Bonifici massivi XML", "url": "https://datacetools.com/bonifici-massivi-xml/app/" },
     "step": [
       { "@type": "HowToStep", "position": 1, "name": "Scarica e compila il modello", "text": "Vai su datacetools.com/bonifici-massivi-xml/app/ e scarica il modello Excel. Nel foglio Distinta inserisci ragione sociale, IBAN di addebito, CUC, tipologia e data di esecuzione; nel foglio Beneficiari un bonifico per riga con intestatario, IBAN, descrizione e importo." },
-      { "@type": "HowToStep", "position": 2, "name": "Seleziona e controlla", "text": "Apri il modello compilato: lo strumento controlla ogni IBAN e ogni importo e mostra la distinta con il numero di bonifici e il totale. Se ci sono errori li elenca tutti, con la riga del foglio." },
+      { "@type": "HowToStep", "position": 2, "name": "Seleziona e controlla", "text": "Apri il modello compilato: lo strumento controlla ogni IBAN e ogni importo e mostra la distinta con il numero di bonifici e il totale. Se ci sono errori li elenca tutti, con la riga del foglio o il dato da correggere." },
       { "@type": "HowToStep", "position": 3, "name": "Scarica l'XML e importalo in banca", "text": "Premi Genera e verifica XML e poi Scarica XML. Importa il file nell'home banking, nella sezione dei bonifici da file o delle disposizioni XML SEPA, e autorizzalo con la tua firma." }
     ]
   }
@@ -368,7 +368,7 @@
       </div>
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:16px;">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <div><p style="font-size:14px;font-weight:600;">Errori tutti insieme</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Se qualcosa non torna, la pagina li elenca uno per uno, con la riga del foglio</p></div>
+        <div><p style="font-size:14px;font-weight:600;">Errori tutti insieme</p><p style="font-size:12px;color:var(--muted);margin-top:2px;">Se qualcosa non torna, la pagina li elenca uno per uno, con la riga del foglio o il dato da correggere.</p></div>
       </div>
     </div>
   </div>

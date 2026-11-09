@@ -38,7 +38,7 @@
     "operatingSystem": "Web",
     "offers": { "@type": "Offer", "priceCurrency": "EUR" },
     "inLanguage": "it",
-    "featureList": ["FPR12 e FPA12","File .xml.p7m firmati digitalmente CAdES","Lotti multi-fattura","Notifiche SdI: RC, NS, MC, EC, DT","Excel su 5 fogli: Riepilogo, Righe, IVA, Notifiche, Allegati","Elaborazione fino a 50 file","Il file non lascia il tuo computer","Elaborazione nel browser"],
+    "featureList": ["FPR12 e FPA12","File .xml.p7m firmati digitalmente CAdES","Lotti multi-fattura","Notifiche SdI: RC, NS, MC, EC, SE, DT, AT","Excel su 5 fogli: Riepilogo, Righe, IVA, Notifiche, Allegati","Elaborazione fino a 50 file","Il file non lascia il tuo computer","Elaborazione nel browser"],
     "author": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" }
   }
   </script>
@@ -176,7 +176,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
         </svg>
-        Scarica tutto in ZIP: Excel, XML estratti dai .p7m e allegati
+        Scarica tutto in ZIP: Excel, XML e allegati
       </span>
     </button>
 
@@ -232,9 +232,9 @@
             <th class="px-3 py-2 truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">Data</th>
             <th class="px-3 py-2 truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">Fornitore</th>
             <th class="px-3 py-2 truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">Cliente</th>
-            <th class="px-3 py-2 text-right truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">Imponibile €</th>
-            <th class="px-3 py-2 text-right truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">IVA €</th>
-            <th class="px-3 py-2 text-right truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">Totale €</th>
+            <th class="px-3 py-2 text-right truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">Imponibile</th>
+            <th class="px-3 py-2 text-right truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">IVA</th>
+            <th class="px-3 py-2 text-right truncate" style="color:rgba(255,255,255,.4);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;background:rgba(15,32,64,.95);">Totale</th>
           </tr>
         </thead>
         <tbody id="preview-body"></tbody>
@@ -314,7 +314,7 @@
         </div>
         <div>
           <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Scarica</p>
-          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Ricevi un Excel su 5 fogli: Riepilogo, Righe, IVA, Notifiche SdI, Allegati. Oppure uno ZIP con anche gli XML estratti dai .p7m e gli allegati delle fatture</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Ricevi un Excel su 5 fogli: Riepilogo, Righe, IVA, Notifiche SdI, Allegati. Oppure uno ZIP con l'Excel, l'XML di ogni file letto e gli allegati.</p>
         </div>
       </div>
     </div>
@@ -621,8 +621,8 @@ const TESTI = {
   split: n => `${n} in split payment: l'IVA non va al fornitore.`,
   doppioni: n => n === 1 ? '1 doppione non contato.' : `${n} doppioni non contati.`,
   valuta: n => n === 1 ? '1 documento in altra valuta, non sommato.' : `${n} documenti in altra valuta, non sommati.`,
-  nonSommati: n => n === 1 ? '1 documento di integrazione, autofattura o acconto, non sommato.'
-                           : `${n} documenti di integrazione, autofattura o acconto, non sommati.`,
+  nonSommati: n => n === 1 ? '1 documento di altro tipo (per esempio acconto o autofattura), non sommato.'
+                           : `${n} documenti di altro tipo (per esempio acconti o autofatture), non sommati.`,
   hRicevute: "Imponibile per fornitore", hEmesse: "Imponibile per cliente",
   bRicevute: "Fatture ricevute", bEmesse: "Fatture emesse",
   tu: (nome, pct) => `Il soggetto più presente è ${nome} (${pct}% dei documenti).`,
