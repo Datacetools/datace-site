@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Le fatture non escono dal browser: l'unica connessione permessa è quella di Umami
+       (connect-src gateway.umami.is, come Fatture XML in bonifici), che riceve solo gli eventi di
+       safeTrack in pagina.js. L'anteprima è un PDF in un blob: (frame-src e object-src blob:).
+       GitHub Pages non manda header, quindi la CSP sta qui. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://gateway.umami.is; frame-src blob:; object-src blob:; base-uri 'self'; form-action 'none'" />
+  <title>Fattura elettronica in PDF | Datace</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231c3461'/%3E%3Crect x='10' y='11' width='28' height='6' rx='3' fill='%23F59E0B'/%3E%3Crect x='10' y='21' width='20' height='6' rx='3' fill='white'/%3E%3Crect x='10' y='31' width='12' height='6' rx='3' fill='white' fill-opacity='0.35'/%3E%3C/svg%3E" />
+
+  <!-- Tailwind compilato da questa pagina (sorgente: fatturapdf-web/browser/tailwind.css) e i
+       componenti comuni delle app (/comune/app.css). Nessuna richiesta a terzi. -->
+  <link rel="stylesheet" href="tailwind.css" />
+  <link rel="stylesheet" href="/comune/app.css" />
+
+  <style>
+    /* Stampo: la pagina di Fatture XML in bonifici (brief 109). Le regole da qui a .solo-striscia
+       sono le sue, riga per riga: intestazione fissa, barra a sinistra, area di lavoro chiara,
+       zona di scelta al centro che dopo la lettura diventa una striscia in alto. */
+    :root { --nav: 200px; --testa: 61px; }
+    .testa-app { position: fixed; top: 0; left: 0; right: 0; height: var(--testa); z-index: 60; background: var(--navy); border-bottom: 1px solid rgba(255,255,255,.07); }
+    .barra-nav { position: fixed; top: var(--testa); left: 0; bottom: 0; width: var(--nav); z-index: 50; display: flex; flex-direction: column; gap: 28px;
+      padding: 20px 14px; background: var(--navy2); border-right: 1px solid rgba(255,255,255,.07); }
+    .nav-voci { display: flex; flex-direction: column; gap: 4px; }
+    .nav-voce { text-align: left; padding: 10px 12px; border-radius: 12px; border: 1px solid transparent; background: none; color: rgba(255,255,255,.7); font: inherit; font-size: 14px; }
+    .nav-voce[aria-pressed="true"] { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.4); color: var(--gold); }
+    .nav-piede { margin-top: auto; display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
+    .nav-piede a { color: rgba(255,255,255,.4); text-decoration: none; }
+    .nav-piede a:hover { color: white; }
+    .lavoro { margin-left: var(--nav); min-height: 100vh; padding: calc(var(--testa) + 12px) 16px 16px; }
+    #pdf { display: flex; flex-direction: column; gap: 10px; }
+    #pdf:not(.caricato) #carica { max-width: 760px; margin: max(40px, calc(50vh - 260px)) auto 0; width: 100%; }
+    .solo-striscia { display: none; }
+    #pdf.caricato #carica { padding: 8px 12px; display: flex; align-items: center; gap: 14px; background: linear-gradient(180deg, #eef2f9, #e3e9f3);
+      border-color: rgba(15,32,64,.10); box-shadow: 0 8px 24px -12px rgba(15,32,64,.25); }
+    #pdf.caricato .testa-carica, #pdf.caricato .icona-carica, #pdf.caricato #zona p { display: none; }
+    #pdf.caricato #zona { padding: 6px 14px; border-width: 1px; flex-shrink: 0; font-size: 13px; font-weight: 600; color: var(--teal); background: white; border-color: #5b6b88; }
+    #pdf.caricato .solo-striscia { display: inline; }
+    #pdf.caricato #esito { margin: 0 !important; text-align: left !important; color: #475569; flex: 1; }
+    /* Pulsanti: oro come «Genera il file», bianco come i pulsanti del suo riquadro (Bonifici). */
+    .btn-oro, .btn-bianco { font: inherit; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 12px; border: 0; background: var(--gold); color: var(--navy); cursor: pointer; white-space: nowrap; }
+    .btn-bianco { font-weight: 600; padding: 8px 16px; border: 1px solid #5b6b88; background: white; color: #334155; }
+    .btn-oro:disabled, .btn-bianco:disabled { opacity: .4; cursor: default; }
+    /* Etichette come in Bonifici: rosso per ciò che non si legge, ambra per «da guardare». */
+    .chip { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 999px; border: 1px solid; vertical-align: 1px; }
+    .chip-bad  { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
+    .chip-warn { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+    .cifre { font-variant-numeric: tabular-nums; }
+
+    /* Dopo la lettura: elenco delle fatture a sinistra, anteprima del PDF a destra, alti quanto lo schermo. */
+    #lavoro { display: grid; grid-template-columns: minmax(340px, 2fr) 3fr; gap: 10px; height: calc(100vh - var(--testa) - 90px); min-height: 460px; }
+    #lavoro[hidden] { display: none; }
+    #lavoro > .scheda { min-height: 0; display: flex; flex-direction: column; }
+    .scorre { flex: 1; min-height: 0; overflow: auto; border: 1px solid var(--border); }
+    .tab-pag { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 12px; }
+    .tab-pag th { padding: 8px 6px; text-align: left; white-space: nowrap; }
+    .tab-pag td { padding: 0 6px; height: 40px; border-bottom: 1px solid #eef2f6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #1e293b; cursor: pointer; }
+    .tab-pag tr:hover td { background: #f8fafc; }
+    .tab-pag tr.sel td { background: #fffbeb; }
+    .tab-pag tr.errore td { color: var(--muted); cursor: default; }
+    .tab-pag .num { text-align: right; }
+    .tab-pag td.num { color: #0f2040; }
+    .tab-pag td.forn { line-height: 15px; }
+    .tab-pag td.forn div { overflow: hidden; text-overflow: ellipsis; }
+    .tab-pag .piva { display: block; color: var(--muted); font-size: 10px; line-height: 12px; }
+    .barra-pdf { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .barra-pdf .titolo { flex: 1; min-width: 0; font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #avvisi { font-size: 12px; color: #334155; margin-bottom: 10px; max-height: 120px; overflow: auto; }
+    #avvisi[hidden] { display: none; }
+    #avvisi .riq { padding: 10px 12px; border-radius: 12px; background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+    #avvisi .riq + .riq { margin-top: 6px; }
+    #avvisi ul { margin: 4px 0 0; padding-left: 18px; }
+    #anteprima { flex: 1; min-height: 0; width: 100%; border: 1px solid var(--border); border-radius: 12px; background: #f8fafc; }
+    @media (max-width: 900px) {
+      .barra-nav { position: fixed; top: var(--testa); right: 0; bottom: auto; width: auto; flex-direction: row; align-items: center; gap: 16px; padding: 10px 14px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+      .nav-voci { flex-direction: row; } .nav-piede { display: none; }
+      .lavoro { margin-left: 0; padding-top: calc(var(--testa) + 76px); }
+      #lavoro { grid-template-columns: 1fr; height: auto; }
+      #lavoro > .scheda:first-child .scorre { max-height: 50vh; }
+      .tab-pag { min-width: 560px; }   /* come in Bonifici: la tabella scorre di lato, il cedente resta leggibile */
+      #anteprima { flex: none; height: calc(100vh - var(--testa) - 40px); }   /* su telefono: alta quanto lo schermo */
+    }
+  </style>
+  <script src="controllo.js"></script>
+  <script src="/comune/avviso.js" defer></script>
+  <script src="lettore.js" defer></script>
+  <!-- Umami (brief 110): solo eventi dell'elenco chiuso in pagina.js, mai dati dei file -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
+</head>
+
+<body class="font-sans" style="background:#f1f5f9;color:#0f2040;">
+
+<!-- ─── INTESTAZIONE (come Fatture XML in bonifici) ─── -->
+<header class="testa-app">
+  <div class="px-6 h-full flex items-center gap-3">
+    <a href="/" class="flex items-center gap-3 shrink-0">
+      <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.35);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <div style="width:1px;height:32px;background:rgba(255,255,255,.1);" class="mx-2 hidden sm:block"></div>
+    <div class="hidden sm:flex flex-col leading-tight">
+      <span style="color:white;font-weight:700;font-size:15px;">Fattura elettronica in PDF</span>
+      <span style="color:rgba(255,255,255,.45);font-size:11px;">Il file è elaborato dal browser e non viene inviato a Datace.</span>
+    </div>
+    <div class="ml-auto flex items-center gap-3">
+      <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);">
+        <svg class="w-3 h-3" style="color:#86efac;" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+        </svg>
+        <span style="color:#86efac;font-size:11px;font-weight:600;">Resta sul tuo computer</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ─── BARRA A SINISTRA, sotto l'intestazione ─── -->
+<nav class="barra-nav" aria-label="Sezioni">
+  <div class="nav-voci">
+    <button type="button" class="nav-voce" aria-pressed="true">Fatture</button>
+  </div>
+  <!-- Senza piè di pagina i link legali restano qui (come Fatture XML in bonifici). -->
+  <div class="nav-piede">
+    <a href="/privacy/">Privacy</a>
+    <a href="/condizioni/">Condizioni d'uso</a>
+    <a href="/#contatti">Contatti</a>
+    <a href="/">Torna al sito</a>
+  </div>
+</nav>
+
+<!-- ─── SPAZIO DI LAVORO (chiaro) ─── -->
+<main class="lavoro chiaro">
+
+  <p id="safari" role="alert" hidden class="scheda p-6" style="font-size:15px;color:#92400e;">Safari e i browser di iPhone e iPad non sono ancora supportati. Apri la pagina da un computer con Chrome, Edge, Firefox, Brave o Opera.</p>
+  <p id="non-supportato" role="alert" hidden class="scheda p-6" style="font-size:15px;color:#92400e;">Questo browser non è supportato. Apri la pagina con Chrome, Edge, Firefox, Brave o Opera.</p>
+
+  <div id="strumento">
+  <section id="pdf">
+    <section id="carica" class="scheda p-8">
+      <div class="testa-carica flex items-center gap-5 mb-6">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:#fef3c7;border:1px solid #fde68a;">
+          <span style="font-weight:800;font-size:14px;color:#92400e;">1</span>
+        </div>
+        <div>
+          <h2 style="font-size:17px;font-weight:700;margin-bottom:4px;">Scegli le fatture</h2>
+          <p style="font-size:13px;color:var(--muted);">File .xml o .p7m, anche lo ZIP scaricato dal portale · fino a 10 MB per fattura</p>
+        </div>
+      </div>
+      <label id="zona" class="drop-zone p-10 text-center block">
+        <svg class="icona-carica mx-auto w-12 h-12 mb-4" style="color:#cbd5e1;" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+          <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p style="font-weight:600;color:#334155;">Trascina qui le fatture o lo ZIP</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px;">oppure <span style="color:var(--teal);text-decoration:underline;">sceglile dal computer</span></p>
+        <span class="solo-striscia">Scegli altre fatture</span>
+        <input type="file" id="scelta" class="hidden" multiple accept=".xml,.p7m,.zip,.XML,.P7M,.ZIP" />
+      </label>
+      <p id="esito" class="an-note" style="margin-top:12px;text-align:center;" aria-live="polite"></p>
+    </section>
+
+    <section id="lavoro" hidden>
+      <div class="scheda p-3">
+        <div class="scorre rounded-xl">
+          <table class="tab-pag">
+            <colgroup><col><col style="width:110px"><col style="width:84px"><col style="width:96px"></colgroup>
+            <thead><tr><th class="th">Cedente</th><th class="th">Numero</th><th class="th">Data</th><th class="th num">Totale</th></tr></thead>
+            <tbody id="elenco"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="scheda p-3">
+        <div class="barra-pdf">
+          <span class="titolo" id="titolo-pdf"></span>
+          <button type="button" id="scarica-uno" class="btn-oro" disabled>Scarica PDF</button>
+          <button type="button" id="scarica-tutti" class="btn-bianco" disabled>Scarica tutti</button>
+        </div>
+        <div id="avvisi" hidden></div>
+        <iframe id="anteprima" title="Anteprima del PDF"></iframe>
+      </div>
+    </section>
+  </section>
+  </div><!-- /strumento -->
+</main>
+</body>
+</html>
