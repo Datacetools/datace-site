@@ -8,7 +8,7 @@
   </url>
   <url>
     <loc>https://datacetools.com/f24-to-excel/</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -38,13 +38,13 @@
   </url>
   <url>
     <loc>https://datacetools.com/guida/</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://datacetools.com/guida/come-convertire-f24-excel/</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -63,6 +63,12 @@
   <url>
     <loc>https://datacetools.com/guida/come-creare-file-xml-bonifici-excel/</loc>
     <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://datacetools.com/guida/quietanze-f24-excel-estratto-conto/</loc>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
