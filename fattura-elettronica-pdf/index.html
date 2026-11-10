@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Search Console -->
+  <meta name="google-site-verification" content="aBsjbMCgIMxYkbRcWz6SeD5mHXBb-KRGvx3bucboyxE" />
+
+
+  <!-- SEO (brief 111) -->
+  <title>Fattura elettronica in PDF: da XML e P7M, gratis | Datace</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Converti fatture elettroniche XML, P7M o ZIP in PDF leggibili, con anteprima. Più fatture insieme, gratis, senza registrazione: il file resta nel browser." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://datacetools.com/fattura-elettronica-pdf/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://datacetools.com/fattura-elettronica-pdf/" />
+  <meta property="og:title"       content="Fattura elettronica in PDF: da XML e P7M, gratis | Datace" />
+  <meta property="og:description" content="Converti fatture elettroniche XML, P7M o ZIP in PDF leggibili, con anteprima. Più fatture insieme, gratis, senza registrazione: il file resta nel browser." />
+  <meta property="og:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Datace: strumenti gratuiti per aziende e commercialisti" />
+  <meta name="twitter:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta name="twitter:card"       content="summary_large_image" />
+
+  <!-- JSON-LD: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Datace: Fattura elettronica in PDF",
+    "url": "https://datacetools.com/fattura-elettronica-pdf/app/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "description": "Apri e converti fatture XML, P7M o ZIP in PDF leggibili, direttamente nel browser.",
+    "inLanguage": "it",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "publisher": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" }
+  }
+  </script>
+
+  <!-- JSON-LD: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Datace", "item": "https://datacetools.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Fattura elettronica in PDF", "item": "https://datacetools.com/fattura-elettronica-pdf/" }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: HowTo (passi = quelli visibili in «Come funziona») -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Come convertire una fattura elettronica XML o P7M in PDF",
+    "tool": { "@type": "HowToTool", "name": "Datace: Fattura elettronica in PDF", "url": "https://datacetools.com/fattura-elettronica-pdf/app/" },
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Scegli i file", "text": "Scegli o trascina fatture XML, P7M o uno ZIP con più fatture." },
+      { "@type": "HowToStep", "position": 2, "name": "Guarda l'anteprima", "text": "Vedi l'elenco delle fatture lette e l'anteprima del PDF di quella selezionata." },
+      { "@type": "HowToStep", "position": 3, "name": "Scarica", "text": "Scarica il PDF di una fattura, oppure tutte insieme in un unico ZIP." }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage (= le domande visibili) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Come si apre una fattura elettronica XML?", "acceptedAnswer": { "@type": "Answer", "text": "Scegli il file nello strumento: la pagina lo legge e lo mostra come PDF leggibile. Funziona anche con i file P7M e con gli ZIP che contengono più fatture." } },
+      { "@type": "Question", "name": "Che differenza c'è tra XML e P7M?", "acceptedAnswer": { "@type": "Answer", "text": "Il P7M è il file XML dentro una busta di firma digitale. Lo strumento toglie la busta e legge la fattura; il PDF dice se il file è firmato ma non verifica la firma." } },
+      { "@type": "Question", "name": "Posso convertire più fatture insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Sì: scegli più file o uno ZIP. Vedi l'elenco con l'anteprima e scarichi i PDF uno alla volta o tutti insieme in uno ZIP." } },
+      { "@type": "Question", "name": "I miei file vengono inviati a un server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Il file è elaborato dal browser e non viene inviato a Datace." } },
+      { "@type": "Question", "name": "Il PDF sostituisce il file XML?", "acceptedAnswer": { "@type": "Answer", "text": "No. Il PDF è una visualizzazione leggibile del contenuto; il file della fattura resta l'XML. Lo ricorda anche l'Agenzia delle Entrate nella guida «La fattura elettronica e i servizi gratuiti» (dicembre 2025): «il file da inviare al SdI è quello XML»." } },
+      { "@type": "Question", "name": "Cosa non mostra il PDF?", "acceptedAnswer": { "@type": "Answer", "text": "Mostra i dati principali e i codici spiegati. Alcuni dati meno comuni, per esempio quelli del trasporto, non sono nel PDF: la pagina li elenca sotto «Non mostrato nel PDF» e in fondo al PDF, sotto «Nel file ma non in questo PDF», così sai cosa manca. Degli allegati compaiono nome, formato e descrizione, non il contenuto." } },
+      { "@type": "Question", "name": "È gratuito?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, senza registrazione." } }
+    ]
+  }
+  </script>
+
+  <!-- Tailwind compilato (sorgente: _tailwind/sito.css) e Inter servito dal sito:
+       nessuna richiesta a CDN o a Google Fonts. -->
+  <link rel="stylesheet" href="/tailwind.css" />
+  <link rel="stylesheet" href="/comune/vetrina.css" />
+
+  <style>
+    :root { --navy:#060E1F; --navy2:#0A1628; --navy3:#0F2040; --gold:#F59E0B; --gold2:#FBBF24; --teal:#2a9db5; --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12); --muted:rgba(255,255,255,0.62); }
+    * { box-sizing:border-box; }
+    body { background:var(--navy); color:white; }
+    .logo-bar { transform-box:fill-box; transform-origin:left center; }
+    .logo-bar-1 { animation:barStream 2.8s ease-in-out infinite 0s; }
+    .logo-bar-2 { animation:barStream 2.8s ease-in-out infinite .22s; }
+    .logo-bar-3 { animation:barStream 2.8s ease-in-out infinite .44s; }
+    @keyframes barStream { 0%,100%{transform:scaleX(1);opacity:1;} 30%{transform:scaleX(0.32);opacity:0.5;} 60%{transform:scaleX(1);opacity:1;} }
+    .label { display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); }
+    .label::before { content:''; width:20px; height:1px; background:var(--gold); }
+    .grad-text { background:linear-gradient(90deg,#fff 0%,#93c5fd 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .dark-card { background:linear-gradient(135deg,rgba(15,32,64,.8),rgba(6,14,31,.9)); border:1px solid var(--border); border-radius:20px; padding:24px; transition:border-color .3s ease, transform .3s ease; }
+    .dark-card:hover { border-color:rgba(255,255,255,.14); transform:translateY(-3px); }
+    .pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:999px; padding:5px 14px; font-size:12px; font-weight:500; color:#93c5fd; letter-spacing:.04em; }
+    .pill-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:white; color:#0F2040; font-weight:700; font-size:14px; padding:14px 28px; border-radius:12px; transition:transform .2s ease, box-shadow .2s ease; text-decoration:none; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,255,255,.15); }
+    .btn-secondary { display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,.2); color:white; font-weight:600; font-size:14px; padding:14px 28px; border-radius:12px; transition:background .2s ease; text-decoration:none; }
+    .btn-secondary:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.35); }
+    .faq-item summary { list-style:none; }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item[open] summary .faq-icon { transform:rotate(45deg); }
+    .faq-icon { transition:transform 0.2s ease; }
+    .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; align-items:start; }
+    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-bottom:16px; }
+    .footer-link { display:block; font-size:14px; color:rgba(255,255,255,.62); margin-bottom:10px; text-decoration:none; transition:color .2s ease; }
+    .footer-link:hover { color:white; }
+    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
+    @media (max-width:768px) { .footer-grid { grid-template-columns:1fr; gap:32px; } .footer-bottom { flex-direction:column; gap:8px; text-align:center; } }
+
+    @media (prefers-reduced-motion: reduce) { .logo-bar { animation:none; } }
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
+</head>
+
+<body class="font-sans antialiased" style="background:#060E1F;color:white;">
+
+<!-- HEADER -->
+<!-- DATACE HEADER START -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <svg class="w-9 h-9 flex-shrink-0" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" style="color:rgba(255,255,255,.62);">
+      <a href="/#strumenti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Strumenti</a>
+      <a href="/guida/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Guide</a>
+      <a href="/chi-siamo" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Chi sono</a>
+      <a href="/raccontaci/" class="hidden lg:inline" data-umami-event="raccontaci-link" data-umami-event-origine="header" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Raccontaci</a>
+      <a href="/#contatti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Contatti</a>
+    </nav>
+    <a href="/#strumenti" style="background:white;color:#0f2040;font-weight:700;font-size:13px;padding:9px 20px;border-radius:12px;letter-spacing:.01em;transition:all .2s ease;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Inizia ora</a>
+  </div>
+</header>
+<!-- DATACE HEADER END -->
+
+
+<!-- HERO -->
+<section class="px-6 py-24" style="background:var(--navy);position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20%;left:-10%;width:55%;height:80%;background:radial-gradient(ellipse,rgba(29,122,148,.18) 0%,transparent 65%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-10%;right:-5%;width:45%;height:70%;background:radial-gradient(ellipse,rgba(245,158,11,.07) 0%,transparent 60%);pointer-events:none;"></div>
+  <div class="max-w-6xl mx-auto" style="position:relative;z-index:1;">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+      <div class="max-w-2xl">
+        <div class="mb-6"><span class="pill"><span class="pill-dot"></span> Strumento online per commercialisti e aziende</span></div>
+        <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;" class="mb-5">
+          Fattura elettronica <span class="grad-text">in PDF</span>
+        </h1>
+        <p style="font-size:1.05rem;color:var(--muted);line-height:1.8;" class="mb-3 max-w-xl">
+          Apri e converti fatture XML, P7M o ZIP in PDF leggibili, direttamente nel browser.
+        </p>
+        <p style="font-size:.95rem;color:var(--muted);line-height:1.8;" class="mb-8 max-w-xl">
+          Il file è elaborato dal browser e non viene inviato a Datace. Gratuito, senza registrazione.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a data-umami-event="apri-strumento" data-umami-event-tool="fatturapdf" href="/fattura-elettronica-pdf/app/" class="btn-primary">
+            Apri lo strumento
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#come-funziona" class="btn-secondary">Come funziona</a>
+        </div>
+      </div>
+
+      <div class="f24hub-wrap">
+        <svg class="f24hub doc-anim" viewBox="0 0 560 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fattura elettronica XML o P7M trasformata da Datace in PDF" font-family="Inter,system-ui,sans-serif">
+          <!-- la finestra del browser: i documenti non ne escono -->
+          <rect x="16" y="28" width="528" height="264" rx="20" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.1)"/>
+          <path d="M16 66H544" stroke="rgba(255,255,255,.08)"/>
+          <circle cx="40" cy="47" r="4" fill="rgba(255,255,255,.15)"/><circle cx="54" cy="47" r="4" fill="rgba(255,255,255,.15)"/><circle cx="68" cy="47" r="4" fill="rgba(255,255,255,.15)"/>
+          <g transform="translate(0 30)">
+          <g class="doc-in">
+            <g transform="translate(44 96)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">P7M</text></g>
+            <g transform="translate(32 110)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">XML</text></g>
+            <g transform="translate(20 124)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">XML</text></g>
+          </g>
+          <!-- la pagina della fattura che si compone: due colonne in alto, le righe, il totale in basso a destra -->
+          <g class="doc-tab">
+            <rect x="214" y="58" width="144" height="184" rx="12" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)"/>
+            <rect x="228" y="74" width="48" height="6" rx="3" fill="rgba(255,255,255,.3)"/><rect x="296" y="74" width="48" height="6" rx="3" fill="rgba(255,255,255,.3)"/>
+            <rect x="228" y="86" width="36" height="4" rx="2" fill="rgba(255,255,255,.14)"/><rect x="296" y="86" width="36" height="4" rx="2" fill="rgba(255,255,255,.14)"/>
+            <path d="M228 102 H344" stroke="rgba(255,255,255,.1)"/>
+            <g class="doc-r doc-r1"><rect x="228" y="112" width="66" height="5" rx="2.5" fill="rgba(255,255,255,.18)"/><rect class="doc-v doc-v1" x="318" y="112" width="26" height="5" rx="2.5" fill="#2a9db5"/></g>
+            <g class="doc-r doc-r2"><rect x="228" y="128" width="56" height="5" rx="2.5" fill="rgba(255,255,255,.18)"/><rect class="doc-v doc-v2" x="318" y="128" width="26" height="5" rx="2.5" fill="#2a9db5"/></g>
+            <g class="doc-r doc-r3"><rect x="228" y="144" width="70" height="5" rx="2.5" fill="rgba(255,255,255,.18)"/><rect class="doc-v doc-v3" x="318" y="144" width="26" height="5" rx="2.5" fill="#2a9db5"/></g>
+            <path d="M228 160 H344" stroke="rgba(255,255,255,.06)"/>
+            <g class="doc-r doc-r4"><rect x="292" y="196" width="52" height="22" rx="5" fill="none" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 3"/><rect class="doc-v doc-v4" x="298" y="204" width="40" height="6" rx="3" fill="#F59E0B"/></g>
+          </g>
+          <g class="doc-out">
+            <g transform="translate(440 118)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="#F59E0B" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="#F59E0B" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">PDF</text></g>
+            <g class="doc-ok"><circle cx="490" cy="120" r="10" fill="#0f2040" stroke="#86efac" stroke-width="1.5"/><path d="M485 120l3.5 3.5 6.5-7" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+          </g>
+          </g>
+          <!-- il logo Datace sopra la finestra: prende il file, lo trasforma, lo esporta (classi in /comune/vetrina.css) -->
+          <g class="ace"><rect x="256" y="4" width="48" height="48" rx="12" fill="#0f2040" stroke="rgba(245,158,11,.4)" stroke-width="1.2"/><rect class="ace-b ace-b1" x="266" y="15" width="28" height="6" rx="3" fill="#F59E0B"/><rect class="ace-b ace-b2" x="266" y="25" width="20" height="6" rx="3" fill="white"/><rect class="ace-b ace-b3" x="266" y="35" width="12" height="6" rx="3" fill="white" fill-opacity=".35"/></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- COME FUNZIONA -->
+<section id="come-funziona" class="px-6 py-20" style="background:var(--navy);border-top:1px solid var(--border);">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-14">
+      <div class="label mb-4" style="justify-content:center;">Il processo</div>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Come funziona</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="dark-card text-center">
+        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">1</span></div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scegli i file</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scegli o trascina fatture XML, P7M o uno ZIP con più fatture.</p>
+      </div>
+      <div class="dark-card text-center">
+        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Guarda l'anteprima</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Vedi l'elenco delle fatture lette e l'anteprima del PDF di quella selezionata.</p>
+      </div>
+      <div class="dark-card text-center">
+        <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scarica</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scarica il PDF di una fattura, oppure tutte insieme in un unico ZIP.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- COSA MOSTRA IL PDF E LIMITI -->
+<section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-20">
+  <div class="max-w-3xl mx-auto">
+    <div class="label mb-4">Il PDF</div>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin-bottom:20px;">Cosa mostra il PDF</h2>
+    <div style="font-size:14px;line-height:1.8;color:var(--muted);">
+      <p>Cedente e cessionario, numero, data e tipo del documento, righe con gli sconti, riepilogo IVA, totale, pagamenti e dati di trasmissione. I codici (tipo di documento, modalità di pagamento, natura, regime fiscale e altri) sono spiegati con le descrizioni dello schema ufficiale dell'Agenzia delle Entrate. Ciò che il file contiene e il PDF non mostra, per esempio alcuni dati del trasporto, compare nell'avviso «Non mostrato nel PDF» della pagina e in fondo al PDF, sotto «Nel file ma non in questo PDF». Gli allegati sono elencati con nome, formato e descrizione.</p>
+      <p style="margin-top:14px;">Se il file è firmato, il PDF lo segnala ma non verifica la firma.</p>
+    </div>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin:48px 0 20px;">Limiti</h2>
+    <div style="font-size:14px;line-height:1.8;color:var(--muted);">
+      <p>Fino a 10 MB per ogni file XML. In una scelta, fino a 50.000 file contando quelli dentro gli ZIP, e 1 GB in tutto; gli ZIP dentro altri ZIP non vengono letti.</p>
+      <p style="margin-top:14px;">Per aprire una fattura anche con il servizio dell'Agenzia delle Entrate, leggi la guida su <a href="/guida/come-aprire-fattura-elettronica-xml-p7m/" style="color:#93c5fd;">come aprire una fattura elettronica XML o P7M</a>.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--navy);" class="px-6 py-20">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <div class="label mb-4" style="justify-content:center;">FAQ</div>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Domande frequenti</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">Come si apre una fattura elettronica XML?</span>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Scegli il file nello strumento: la pagina lo legge e lo mostra come PDF leggibile. Funziona anche con i file P7M e con gli ZIP che contengono più fatture.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">Che differenza c'è tra XML e P7M?</span>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Il P7M è il file XML dentro una busta di firma digitale. Lo strumento toglie la busta e legge la fattura; il PDF dice se il file è firmato ma non verifica la firma.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">Posso convertire più fatture insieme?</span>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì: scegli più file o uno ZIP. Vedi l'elenco con l'anteprima e scarichi i PDF uno alla volta o tutti insieme in uno ZIP.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">I miei file vengono inviati a un server?</span>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Il file è elaborato dal browser e non viene inviato a Datace.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">Il PDF sostituisce il file XML?</span>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Il PDF è una visualizzazione leggibile del contenuto; il file della fattura resta l'XML. Lo ricorda anche l'Agenzia delle Entrate nella guida «La fattura elettronica e i servizi gratuiti» (dicembre 2025): «il file da inviare al SdI è quello XML».</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">Cosa non mostra il PDF?</span>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Mostra i dati principali e i codici spiegati. Alcuni dati meno comuni, per esempio quelli del trasporto, non sono nel PDF: la pagina li elenca sotto «Non mostrato nel PDF» e in fondo al PDF, sotto «Nel file ma non in questo PDF», così sai cosa manca. Degli allegati compaiono nome, formato e descrizione, non il contenuto.</div>
+      </details>
+      <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
+          <span style="font-weight:600;font-size:14px;padding-right:16px;">È gratuito?</span>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </summary>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, senza registrazione.</div>
+      </details>
+    </div>
+    <div class="text-center" style="margin-top:40px;">
+      <a data-umami-event="apri-strumento" data-umami-event-tool="fatturapdf" href="/fattura-elettronica-pdf/app/" class="btn-primary">
+        Apri lo strumento
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/fattura-elettronica-pdf/" class="footer-link">Fattura elettronica in PDF</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+        <a href="/fatture-xml-bonifici/" class="footer-link">Fatture XML in bonifici</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
+        <a href="/newsletter/" class="footer-link">Newsletter</a>
+        <a href="/privacy" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+
+</body>
+</html>
