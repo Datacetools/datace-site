@@ -137,6 +137,31 @@ def _extract_data_versamento(words):
         return date(aa, mm, gg).strftime('%d/%m/%Y')
     except ValueError:
         return None
+_SEZ_QUIETANZA = {'ERARIO': 'ERARIO', 'REGIONI': 'REGIONI', 'TRIB.LOCALI': 'IMU'}
+_Q_PROTOCOLLO_RE = re.compile('PROTOCOLLO TELEMATICO\\s+(\\d+)\\s+(\\d+)')
+_Q_SALDO_RE = re.compile('Saldo delega\\s*(.*)$', re.MULTILINE)
+_Q_DATA_RE = re.compile('DATA DEL VERSAMENTO\\s+((?:\\d\\s*){8})')
+_Q_ABI_CAB_RE = re.compile('ABI\\s+(\\d{5})\\s+CAB\\s+(\\d{5})')
+
+def _is_quietanza(page_text):
+    return 'QUIETANZA DI VERSAMENTO' in page_text and 'PROTOCOLLO TELEMATICO' in page_text
+
+def _testata_quietanza(page_text):
+    prot = _Q_PROTOCOLLO_RE.search(page_text)
+    abi = _Q_ABI_CAB_RE.search(page_text)
+    data = None
+    m = _Q_DATA_RE.search(page_text)
+    if m:
+        c = re.sub('\\s', '', m.group(1))
+        try:
+            data = date(int(c[4:]), int(c[2:4]), int(c[:2])).strftime('%d/%m/%Y')
+        except ValueError:
+            pass
+    saldo = None
+    m = _Q_SALDO_RE.search(page_text)
+    if m:
+        saldo = _parse_importo(re.sub(',+', ',', re.sub('\\s', '', m.group(1))))
+    return {'Data versamento': data, 'Protocollo telematico': prot.group(1) if prot else None, 'Progressivo': prot.group(2) if prot else None, 'ABI': abi.group(1) if abi else None, 'CAB': abi.group(2) if abi else None, 'saldo': saldo}
 
 def _find_section_boundaries(lines):
     labels = {'SEZIONE ERARIO': 'ERARIO', 'SEZIONE INPS': 'INPS', 'SEZIONE REGIONI': 'REGIONI', 'SEZIONE IMU': 'IMU', 'SEZIONE ALTRI ENTI': 'ALTRI ENTI', 'ALTRI ENTI PREVIDENZIALI': 'ALTRI ENTI', 'SEZIONE ERARIO ED ALTRO': 'ERARIO'}
@@ -232,15 +257,15 @@ def _is_valid_code(code):
         return False
     return True
 
-def parse_pdf(source, progress_cb=None, stats=None) -> list:
+def parse_pdf(source, progress_cb=None, stats=None, nome=None) -> list:
     rows = []
     if isinstance(source, (bytes, bytearray)):
         pdf_source = io.BytesIO(source)
-        filename = 'documento.pdf'
+        filename = nome or 'documento.pdf'
         del source
     elif isinstance(source, io.IOBase):
         pdf_source = source
-        filename = 'documento.pdf'
+        filename = nome or 'documento.pdf'
     else:
         pdf_source = Path(source)
         filename = Path(source).name
@@ -248,11 +273,12 @@ def parse_pdf(source, progress_cb=None, stats=None) -> list:
         total = len(pdf.pages)
         text_pages = 0
         controllate, non_tornano = (0, [])
+        quietanze, pagine_deleghe = ([], 0)
         logger.info('Inizio parsing (%d pagine)', total)
         for page_idx, page in enumerate(pdf.pages, start=1):
             if progress_cb:
                 progress_cb(page_idx, total)
-            page_text, inizio = ('', len(rows))
+            page_text, inizio, testata = ('', len(rows), None)
             try:
                 page_text = page.extract_text() or ''
                 if page_text.strip():
@@ -266,7 +292,11 @@ def parse_pdf(source, progress_cb=None, stats=None) -> list:
                             anno_page = m.group(1)
                             break
                 words_sorted = sorted(page.extract_words(use_text_flow=True, keep_blank_chars=False), key=lambda w: (round(w['top'], 1), w['x0']))
-                data_vers = _extract_data_versamento(words_sorted)
+                if _is_quietanza(page_text):
+                    testata = _testata_quietanza(page_text)
+                    data_vers = testata['Data versamento']
+                else:
+                    data_vers = _extract_data_versamento(words_sorted)
                 bands = _column_bands(words_sorted, page.width, page.height)
                 lines = _group_lines(words_sorted)
                 sec_bounds = _find_section_boundaries(lines)
@@ -275,7 +305,10 @@ def parse_pdf(source, progress_cb=None, stats=None) -> list:
                     if not any((_parse_importo(w['text']) is not None for w in ln)):
                         continue
                     y = ln[0]['top']
-                    sec_ln = _section_at_y(sec_bounds, y, '?')
+                    if testata:
+                        sec_ln = _SEZ_QUIETANZA.get(min(ln, key=lambda w: w['x0'])['text'], '?')
+                    else:
+                        sec_ln = _section_at_y(sec_bounds, y, '?')
                     trib = None
                     causale = _causale_inps(ln) if sec_ln == 'INPS' else None
                     inail = _riga_inail(ln) if sec_ln == 'ALTRI ENTI' else None
@@ -348,7 +381,16 @@ def parse_pdf(source, progress_cb=None, stats=None) -> list:
             except Exception as e:
                 logger.error('Pagina %d - errore inatteso: %s', page_idx, type(e).__name__)
             finally:
-                stampati = _totali_stampati(page_text)
+                if testata:
+                    controllate += 1
+                    t = totali(rows[inizio:])
+                    torna = testata['saldo'] is not None and t['saldo'] == testata['saldo']
+                    if not torna:
+                        non_tornano.append(page_idx)
+                    quietanze.append({'File': filename, **{k: v for k, v in testata.items() if k != 'saldo'}, 'Totale debiti': t['debiti'], 'Totale crediti': t['crediti'], 'Saldo delega': testata['saldo'], 'Controllo': 'OK' if torna else 'Non torna'})
+                elif len(rows) > inizio:
+                    pagine_deleghe += 1
+                stampati = None if testata else _totali_stampati(page_text)
                 if stampati:
                     controllate += 1
                     t = totali(rows[inizio:])
@@ -361,6 +403,8 @@ def parse_pdf(source, progress_cb=None, stats=None) -> list:
         stats['text_pages'] = text_pages
         stats['deleghe_controllate'] = controllate
         stats['pagine_non_tornano'] = non_tornano
+        stats['quietanze'] = quietanze
+        stats['pagine_deleghe'] = pagine_deleghe
     gc.collect()
     return rows
 _FILL_MAP = {k: PatternFill('solid', fgColor=v.lstrip('#')) for k, v in SEZIONE_COLORI.items()}
@@ -410,6 +454,8 @@ def _style_sheet(ws, section_col_idx=None):
                 cell.fill = fill
             cell.border = _THIN
             cell.alignment = Alignment(vertical='center')
+            if cell.data_type == 'f':
+                cell.data_type = 's'
             if isinstance(cell.value, float):
                 cell.number_format = _EURO_FMT
             elif isinstance(cell.value, date):
@@ -437,6 +483,14 @@ def _build_dataframes(rows, credito_negativo=False):
         agg_anno['Credito'] = agg_anno['Credito'].apply(neg)
     return (df, agg, agg_anno)
 
+def _foglio_quietanze(writer, quietanze, credito_negativo):
+    dq = pd.DataFrame(quietanze)
+    dq['Data versamento'] = [pd.to_datetime(v, format='%d/%m/%Y').date() if v else None for v in dq['Data versamento']]
+    if credito_negativo:
+        dq['Totale crediti'] = [-v if v else v for v in dq['Totale crediti']]
+    dq.to_excel(writer, index=False, sheet_name='Quietanze')
+    _style_sheet(writer.book['Quietanze'])
+
 def _write_workbook(writer, df, agg, agg_anno, tot, credito_negativo):
     det_cols = df.columns.tolist()
     sec_idx = det_cols.index('Sezione') if 'Sezione' in det_cols else None
@@ -451,17 +505,21 @@ def _write_workbook(writer, df, agg, agg_anno, tot, credito_negativo):
     _riga_totale(wb['Per Anno'], tot, credito_negativo)
     _firma_datace(wb['Dettaglio'])
 
-def export_excel(rows, out_path, credito_negativo=False):
+def export_excel(rows, out_path, credito_negativo=False, quietanze=None):
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     df, agg, agg_anno = _build_dataframes(rows, credito_negativo)
     with pd.ExcelWriter(out_path, engine='openpyxl') as xw:
         _write_workbook(xw, df, agg, agg_anno, totali(rows), credito_negativo)
+        if quietanze:
+            _foglio_quietanze(xw, quietanze, credito_negativo)
     return out_path
 
-def export_excel_bytes(rows, credito_negativo=False) -> bytes:
+def export_excel_bytes(rows, credito_negativo=False, quietanze=None) -> bytes:
     df, agg, agg_anno = _build_dataframes(rows, credito_negativo)
     buf = io.BytesIO()
     with pd.ExcelWriter(buf, engine='openpyxl') as xw:
         _write_workbook(xw, df, agg, agg_anno, totali(rows), credito_negativo)
+        if quietanze:
+            _foglio_quietanze(xw, quietanze, credito_negativo)
     return buf.getvalue()

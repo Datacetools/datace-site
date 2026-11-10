@@ -3,12 +3,12 @@ import json
 import re
 import urllib.parse
 from f24_core import export_excel_bytes, parse_pdf, periodo_versamenti, totali
-MAX_FILES = 10
+MAX_FILES = 100
 MAX_SIZE_MB = 20
 MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024
 MAX_TOTAL_MB = 100
 MAX_TOTAL_BYTES = MAX_TOTAL_MB * 1024 * 1024
-VERSIONE = '1.03'
+VERSIONE = '1.04'
 XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 class Risposta(Exception):
@@ -47,6 +47,7 @@ def _elabora(nomi, tipi, files, credito_negativo):
         raise _errore(400, 'too_many_files', 'upload_validation', f'Massimo {MAX_FILES} file per volta.')
     all_rows, parse_errors, total_pages, text_pages, pdf_letti = ([], 0, 0, 0, 0)
     impronte, doppioni, controllate, non_tornano = (set(), 0, 0, [])
+    quietanze, pagine_deleghe = ([], 0)
     for posizione, (nome, tipo, raw) in enumerate(zip(nomi, tipi, files)):
         raw = bytes(raw)
         if tipo not in ('application/pdf', 'application/octet-stream'):
@@ -63,7 +64,7 @@ def _elabora(nomi, tipi, files, credito_negativo):
         impronte.add(impronta)
         try:
             stats = {}
-            rows = parse_pdf(raw, stats=stats)
+            rows = parse_pdf(raw, stats=stats, nome=nome)
             total_pages += stats.get('pages', 0)
             text_pages += stats.get('text_pages', 0)
             pdf_letti += bool(rows)
@@ -72,6 +73,8 @@ def _elabora(nomi, tipi, files, credito_negativo):
             if pagine:
                 non_tornano.append({'file': posizione, 'pagine': pagine[:50], 'n': len(pagine)})
             all_rows.extend(rows)
+            quietanze += stats.get('quietanze', [])
+            pagine_deleghe += stats.get('pagine_deleghe', 0)
         except Exception:
             parse_errors += 1
     text_flag = _text_layer_flag(text_pages, total_pages)
@@ -82,7 +85,7 @@ def _elabora(nomi, tipi, files, credito_negativo):
             raise _errore(422, 'unsupported_layout', 'data_parse', 'Impossibile leggere i file: assicurati che siano F24 PDF non cifrati.')
         raise _errore(422, 'parse_no_data', 'data_parse', 'Non abbiamo trovato nessun F24 in questo file. Controlla che sia il PDF del modello F24 e non una scansione o una foto.')
     try:
-        excel = export_excel_bytes(all_rows, credito_negativo=credito_negativo)
+        excel = export_excel_bytes(all_rows, credito_negativo=credito_negativo, quietanze=quietanze)
     except Exception:
         raise _errore(500, 'server_error', 'excel_gen', 'Errore nella generazione del file Excel.')
     if len(files) > 1:
@@ -93,6 +96,8 @@ def _elabora(nomi, tipi, files, credito_negativo):
         fname = f'{safe_name}_f24.xlsx'
     dal, al = periodo_versamenti(all_rows)
     riepilogo = {**totali(all_rows), 'pdf_letti': pdf_letti, 'doppioni': doppioni, 'dal': dal, 'al': al, 'controllate': controllate, 'non_tornano': non_tornano}
+    if quietanze:
+        riepilogo.update(quietanze=len(quietanze), misto=pagine_deleghe > 0)
     return (excel, {'Content-Disposition': f"attachment; filename*=UTF-8''{urllib.parse.quote(fname, safe='._-')}", 'X-Rows-Extracted': str(len(all_rows)), 'X-Files-Processed': str(len(files) - parse_errors), 'X-Files-Failed': str(parse_errors), 'X-Page-Count-Bucket': _page_bucket(total_pages), 'X-Has-Text-Layer': text_flag, 'X-Tool-Version': VERSIONE, 'X-Riepilogo': json.dumps(riepilogo)})
 
 def elabora(nomi, tipi, files, credito_negativo):

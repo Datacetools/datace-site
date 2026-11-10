@@ -151,7 +151,7 @@
     </div>
 
     <h2 style="font-size:17px;font-weight:700;margin-bottom:4px;">Scegli i tuoi F24</h2>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Fino a 10 PDF · Max 20 MB ciascuno · 100 MB in tutto · Vengono elaborati insieme in un unico Excel</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Fino a 100 PDF · Max 20 MB ciascuno · 100 MB in tutto · Vengono elaborati insieme in un unico Excel</p>
 
     <!-- Drop Zone -->
     <div id="drop-zone"
@@ -233,11 +233,12 @@
           <div class="op" aria-hidden="true">−</div>
           <div class="voce"><div class="kpi-t">Crediti compensati</div><div class="kpi-v" id="kpi-crediti"></div></div>
           <div class="op" aria-hidden="true">=</div>
-          <div class="voce voce-saldo"><div class="kpi-t">Saldo da versare</div><div class="kpi-v" id="kpi-saldo"></div><div class="kpi-n hidden" id="kpi-saldo-credito">a credito</div><div class="kpi-n hidden" id="kpi-saldo-controllare" style="color:#fcd34d;">da controllare</div></div>
+          <div class="voce voce-saldo"><div class="kpi-t">Saldo</div><div class="kpi-v" id="kpi-saldo"></div><div class="kpi-n hidden" id="kpi-saldo-credito">a credito</div><div class="kpi-n hidden" id="kpi-saldo-controllare" style="color:#fcd34d;">da controllare</div></div>
         </div>
         <p id="avviso-totali" class="hidden mt-3 text-sm rounded-xl px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);"></p>
         <p id="kpi-base" class="kpi-n" style="margin-top:8px;"></p>
         <p id="avviso-doppioni" class="hidden mt-3 text-sm rounded-xl px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">Hai scelto due volte lo stesso file: i totali lo contano due volte.</p>
+        <p id="avviso-misto" class="hidden mt-3 text-sm rounded-xl px-4 py-3" style="color:#fcd34d;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">Hai caricato sia deleghe F24 sia quietanze: se si riferiscono agli stessi pagamenti, nei totali sono contati due volte.</p>
       </div>
     </div>
   </section>
@@ -393,7 +394,7 @@ const SECTION_COLORS = {
    Inviamo SOLO parametri tecnici anonimi. Mai filename, err.detail, message,
    testo PDF, importi, codici tributo o dati liberi del documento. */
 const TOOL = "f24";
-const TOOL_VERSION = "1.03"; // = VERSIONE di invio.py (f24-splitter-web/browser) e la pagina Aggiornamenti
+const TOOL_VERSION = "1.04"; // = VERSIONE di invio.py (f24-splitter-web/browser) e la pagina Aggiornamenti
 const ALLOWED_STAGES = ["upload_validation","pdf_read","text_extract","data_parse","excel_gen","download","unknown"];
 const ALLOWED_ERROR_CODES = ["too_many_files","file_too_large","empty_or_corrupt","not_a_pdf","no_text_layer","unsupported_layout","parse_no_data","server_error","network_error","unknown"];
 const ALLOWED_PARAMS = ["tool","stage","error_code","file_type","file_count","file_size_bucket","page_count_bucket","has_text_layer","processing_time_bucket","tool_version"];
@@ -455,10 +456,10 @@ async function aggiornaAttesa() {
   el.classList.add('hidden');
   if (selectedFiles.length === 0 || troppiInTutto()) return;   // oltre 100 MB il motore li rifiuta: niente conteggio
   const m = await ilMotore();
-  const n = await m.pagine(selectedFiles);
+  const { pagine: n, quietanze: q } = await m.pagine(selectedFiles);
   if (giro !== _giroAttesa || !n) return;
   _pagine = n;
-  _secondi = arrotonda(m.stima(n));
+  _secondi = arrotonda(m.stima(n, q));
   el.textContent = `Servono circa ${_secondi} secondi per ${n} ${n === 1 ? 'pagina' : 'pagine'}. ` +
                    'Puoi continuare a usare altre schede, ma non chiudere questa.';
   el.classList.remove('hidden');
@@ -474,6 +475,7 @@ function handleDrop(e) {
 const nonPdf = f => !['application/pdf', 'application/octet-stream', ''].includes(f.type) &&
                     !f.name.toLowerCase().endsWith('.pdf');
 
+const MAX_FILES = 100;                        // = MAX_FILES di invio.py (lo controlla test/riferimento.py)
 const MAX_FILE_BYTES = 20 * 1024 * 1024;
 const MAX_TOTAL_BYTES = 100 * 1024 * 1024;   // lo stesso tetto del motore (invio.py)
 const troppiInTutto = () => selectedFiles.reduce((s, f) => s + f.size, 0) > MAX_TOTAL_BYTES;
@@ -505,9 +507,9 @@ function addFiles(newFiles) {
   if (oversized.length > 0) {
     showError(`File troppo grandi (max 20 MB): ${oversized.join(', ')}`, 'File troppo grande');
   }
-  if (selectedFiles.length > 10) {
-    selectedFiles = selectedFiles.slice(0, 10);
-    showError('Massimo 10 file. Gli ultimi sono stati ignorati.', 'Troppi file');
+  if (selectedFiles.length > MAX_FILES) {
+    selectedFiles = selectedFiles.slice(0, MAX_FILES);
+    showError(`Massimo ${MAX_FILES} file. Gli ultimi sono stati ignorati.`, 'Troppi file');
   }
   // Subito alla scelta (brief 048, Davide): il motore li rifiuterebbe comunque, e contarne
   // le pagine con file enormi richiedeva fino a 13 s.
@@ -752,13 +754,14 @@ function showRiepilogo(r) {
       return `${nome} ${x.n === 1 ? 'pagina' : 'pagine'} ${x.pagine.join(', ')}${altre}`;
     }).join('; ');
     document.getElementById('avviso-totali').textContent =
-      `Su ${n} ${n === 1 ? 'delega' : 'deleghe'} i totali letti non tornano con quelli stampati sul modulo: ${dove}. ` +
+      `Su ${n} F24 i totali letti non tornano con quelli stampati: ${dove}. ` +
       'I numeri qui sopra potrebbero non essere esatti: controlla quelle pagine.';
     safeTrack("totals_mismatch", { tool: TOOL });
   }
   document.getElementById('avviso-totali').classList.toggle('hidden', !n);
   document.getElementById('kpi-saldo-controllare').classList.toggle('hidden', !n);
   document.getElementById('avviso-doppioni').classList.toggle('hidden', !r.doppioni);
+  document.getElementById('avviso-misto').classList.toggle('hidden', !r.misto);   // brief 101
   document.getElementById('riepilogo').classList.remove('hidden');
   safeTrack("summary_shown", { tool: TOOL });
 }

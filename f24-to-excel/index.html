@@ -44,7 +44,7 @@
       "Legge i PDF dell'F24 Ordinario",
       "Estrae codici tributo, importi, sezione, banca",
       "Esporta su 3 fogli Excel: Dettaglio, Riepilogo, Per Anno",
-      "Elabora fino a 10 PDF contemporaneamente",
+      "Elabora fino a 100 PDF contemporaneamente",
       "Il file resta sul tuo computer"
     ],
     "publisher": { "@type": "Organization", "name": "Datace", "url": "https://datacetools.com" }
@@ -72,9 +72,9 @@
     "description": "Procedura per estrarre i dati da uno o più moduli F24 PDF e scaricare un file Excel strutturato con codici tributo e importi.",
     "tool": { "@type": "HowToTool", "name": "Datace: F24 PDF in Excel", "url": "https://datacetools.com/f24-to-excel/app/" },
     "step": [
-      { "@type": "HowToStep", "position": 1, "name": "Scegli i PDF F24", "text": "Trascina uno o più PDF del modello F24 Ordinario, fino a 10 per volta." },
+      { "@type": "HowToStep", "position": 1, "name": "Scegli i PDF F24", "text": "Trascina uno o più PDF del modello F24 Ordinario, fino a 100 per volta." },
       { "@type": "HowToStep", "position": 2, "name": "Estrazione automatica", "text": "Lo strumento legge codici tributo, importi a debito e a credito, sezione, anno e banca, e confronta i totali con quelli stampati sulla delega." },
-      { "@type": "HowToStep", "position": 3, "name": "Scarica l'Excel", "text": "Scarichi l'Excel e a schermo vedi debiti, crediti compensati e saldo da versare." }
+      { "@type": "HowToStep", "position": 3, "name": "Scarica l'Excel", "text": "Scarichi l'Excel e a schermo vedi debiti, crediti compensati e saldo." }
     ]
   }
   </script>
@@ -113,7 +113,7 @@
       {
         "@type": "Question",
         "name": "Posso convertire più F24 insieme?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sì, fino a 10 PDF alla volta. I dati riconosciuti vengono unificati in un unico Excel con tre fogli: Dettaglio, Riepilogo e Per Anno." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Sì, fino a 100 PDF alla volta. I dati riconosciuti vengono unificati in un unico Excel con tre fogli: Dettaglio, Riepilogo e Per Anno. Se ci sono quietanze di versamento si aggiunge il foglio Quietanze." }
       },
       {
         "@type": "Question",
@@ -123,7 +123,7 @@
       {
         "@type": "Question",
         "name": "Ci sono limiti di dimensione?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sì: fino a 10 PDF per volta, ciascuno fino a 20 MB e 100 MB in tutto." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Sì: fino a 100 PDF per volta, ciascuno fino a 20 MB e 100 MB in tutto." }
       }
     ]
   }
@@ -311,7 +311,7 @@
 <div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
   <div class="max-w-4xl mx-auto fascia grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
     <div><div class="stat-num">Gratuito</div><div class="stat-sub">senza registrazione</div></div>
-    <div><div class="stat-num">10 PDF</div><div class="stat-sub">per volta</div></div>
+    <div><div class="stat-num">100 PDF</div><div class="stat-sub">per volta</div></div>
     <div><div class="stat-num">4.000+</div><div class="stat-sub">Codici tributo<br/>riconosciuti</div></div>
     <div><div class="stat-num">20 MB</div><div class="stat-sub">per ogni PDF</div></div>
   </div>
@@ -330,7 +330,7 @@
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">1</span></div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scegli i PDF F24</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Trascina uno o più PDF del modello F24 Ordinario, fino a 10 per volta.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Trascina uno o più PDF del modello F24 Ordinario, fino a 100 per volta.</p>
       </div>
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
@@ -340,7 +340,7 @@
       <div class="dark-card text-center">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scarica l'Excel</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scarichi l'Excel e a schermo vedi debiti, crediti compensati e saldo da versare.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scarichi l'Excel e a schermo vedi debiti, crediti compensati e saldo.</p>
       </div>
     </div>
   </div>
@@ -378,6 +378,7 @@
         <p style="font-size:13px;color:var(--muted);line-height:1.6;">Totali per anno di riferimento, banca e sezione: utili per riconciliazioni e confronti tra anni.</p>
       </div>
     </div>
+    <p class="mb-8" style="font-size:13px;color:var(--muted);line-height:1.6;">Legge anche le quietanze di versamento, insieme alle deleghe o da sole. In quel caso l'Excel ha un quarto foglio, Quietanze, con una riga per ogni quietanza: data del versamento, protocollo telematico, ABI e CAB della banca e saldo, per ritrovare il pagamento nell'estratto conto.</p>
     <div class="grid sm:grid-cols-2 gap-3">
       <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:16px;">
         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -525,7 +526,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Posso convertire più F24 insieme?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, fino a 10 PDF alla volta. I dati riconosciuti vengono unificati in un unico Excel con tre fogli: Dettaglio, Riepilogo e Per Anno.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, fino a 100 PDF alla volta. I dati riconosciuti vengono unificati in un unico Excel con tre fogli: Dettaglio, Riepilogo e Per Anno. Se ci sono quietanze di versamento si aggiunge il foglio Quietanze.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
@@ -539,7 +540,7 @@
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Ci sono limiti di dimensione?</span>
           <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
-        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì: fino a 10 PDF per volta, ciascuno fino a 20 MB e 100 MB in tutto.</div>
+        <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì: fino a 100 PDF per volta, ciascuno fino a 20 MB e 100 MB in tutto.</div>
       </details>
     </div>
     <div class="text-center" style="margin-top:40px;">
