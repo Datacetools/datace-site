@@ -35,7 +35,7 @@ APP = {
     "bonifici-massivi-xml/app/index.html": ("Bonifici massivi XML", "Da Excel a XML SEPA (CBI) · pronto per l'home banking"),
 }
 # Voce del menu della sezione in cui si è: bianca e in grassetto, senza effetto al passaggio.
-ATTIVA = {"guida": ("/guida/", "Guide"), "chi-siamo": ("/chi-siamo", "Chi sono")}
+ATTIVA = {"guida": ("/guida/", "Guide"), "chi-siamo": ("/chi-siamo/", "Chi sono")}
 VOCE = ('<a href="{href}" style="transition:color .2s" onmouseover="this.style.color=\'white\'" '
         'onmouseout="this.style.color=\'rgba(255,255,255,.62)\'">{testo}</a>')
 VOCE_ATTIVA = '<a href="{href}" style="color:white;font-weight:600;">{testo}</a>'
