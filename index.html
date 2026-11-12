@@ -299,6 +299,15 @@
       transition: color .2s ease, gap .2s ease;
     }
     .tool-card:hover .t-cta { color:white; gap:10px; }
+    /* Le tre guide sotto gli strumenti: stessa card, più piccola (brief 122) */
+    .guide-testa { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-top:44px; margin-bottom:14px; }
+    .guide-righe { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .tool-card.compatta { flex-direction:row; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; }
+    .tool-card.compatta .t-name { font-size:14px; line-height:1.4; }
+    .tool-card.compatta .t-name { flex:1; min-width:0; }
+    .tool-card.compatta .g-ico { width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:rgba(28,52,97,.5); border:1px solid rgba(255,255,255,.08); }
+    .tool-card.compatta .t-cta { margin-top:0; flex-shrink:0; }
+    .tool-card.compatta:hover { transform:translateY(-3px); }
     .tool-card .t-badge {
       font-size:10px; font-weight:700; letter-spacing:.05em;
       padding:3px 9px; border-radius:999px;
@@ -358,6 +367,8 @@
       .stats-section [style*="border-left"] { border-left: none !important; border-right: none !important; border-top: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); padding: 24px 0; }
       .pillar { padding: 24px; }
       .tool-card { padding: 22px; }
+      .tool-card.compatta { padding:14px 16px; }
+      .guide-righe { grid-template-columns:1fr; }
     }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
@@ -516,6 +527,12 @@
         <div><p class="t-name">Fatture XML in bonifici</p><p class="t-desc">Dallo ZIP delle fatture ricevute a uno scadenzario fornitori e al file dei bonifici per la banca.</p></div>
         <div class="t-cta">Apri strumento <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
       </a>
+    </div>
+    <div class="guide-testa"><div class="label">Le guide</div><a href="/guida/" style="font-size:13px;font-weight:600;color:#93c5fd;">Tutte le guide</a></div>
+    <div class="guide-righe">
+      <a href="/errori-fattura-elettronica/" class="tool-card compatta"><span class="g-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p class="t-name">Errori di scarto della fattura elettronica</p><span class="t-cta"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span></a>
+      <a href="/guida/codice-cuc-cbi-dove-trovarlo/" class="tool-card compatta"><span class="g-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p class="t-name">Codice CUC: cos'è e dove trovarlo</p><span class="t-cta"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span></a>
+      <a href="/guida/scaricare-fatture-elettroniche-ricevute-zip/" class="tool-card compatta"><span class="g-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p class="t-name">Come scaricare in blocco le fatture elettroniche ricevute</p><span class="t-cta"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span></a>
     </div>
   </div>
 </section>
