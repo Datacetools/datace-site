@@ -522,6 +522,7 @@
 <script src="controllo.js"></script>
 <script src="/comune/avviso.js"></script>
 <script src="/comune/vista.js"></script>
+<script src="/comune/errori-bonifici.js"></script>
 <script type="module" src="motore.min.js"></script>
 
 <!-- ─── JAVASCRIPT ────────────────────────────────────────────────────────── -->
@@ -532,7 +533,7 @@
 const TOOL = "bonifici";
 const ALLOWED_PARAMS = ["tool","stage","error_code","file_type","file_count","file_size_bucket","processing_time_bucket"];
 const ALLOWED_STAGES = ["upload_validation","unknown"];
-const ALLOWED_ERROR_CODES = ["file_too_large","invalid_file","template_not_recognized","data_to_fix","rate_limited","server_error","network_error","unknown"];
+const ALLOWED_ERROR_CODES = ["file_too_large","invalid_file","template_not_recognized","data_to_fix","rate_limited","server_error","network_error","unknown", ...window.ERRORI_BONIFICI.map(c => c[1])];
 function safeTrack(event, params) {
   if (!window.umami || typeof window.umami.track !== "function") return;  // funziona anche senza Umami
   const clean = {};
@@ -555,12 +556,15 @@ function timeBucket(ms) {
   if (ms < 30000) return "5-30s";
   return "30s+";
 }
-/* Un file rifiutato: il server dice se non è il modello o se sono i dati da correggere. */
+/* Un file rifiutato: il motore dice se non è il modello o se sono i dati da correggere;
+   il primo errore dice quale controllo (/comune/errori-bonifici.js, brief 123). */
 async function codiceErrore(res) {
   try {
-    const c = (await res.clone().json()).codice;
-    if (c === 'modello') return 'template_not_recognized';
-    if (c === 'dati') return 'data_to_fix';
+    const j = await res.clone().json();
+    if (j.codice === 'modello' || j.codice === 'dati') {
+      const primo = String((j.errori && j.errori[0]) || j.detail || "");
+      return window.codiceErroreBonifici(primo) || (j.codice === 'modello' ? 'template_not_recognized' : 'data_to_fix');
+    }
   } catch (_) {}
   return errorCodeFromStatus(res.status);
 }
@@ -622,15 +626,15 @@ function handleDrop(e) {
   e.preventDefault();
   document.getElementById('drop-zone').classList.remove('drag-over');
   const f = Array.from(e.dataTransfer.files).find(isXlsx);
-  if (!f) { showError('Nessun file Excel trovato. Trascina qui il modello compilato (.xlsx).', [], 'File non valido'); return; }
+  if (!f) { safeTrack("processing_error", { tool: TOOL, stage: "upload_validation", error_code: "not_xlsx" }); showError('Nessun file Excel trovato. Trascina qui il modello compilato (.xlsx).', [], 'File non valido'); return; }
   setFile(f);
 }
 
 function setFile(f) {
   stopProgress(); clearStatus();
   document.getElementById('file-input').value = '';   // riscegliere lo stesso file deve funzionare
-  if (!isXlsx(f)) { showError('Il file deve essere in formato Excel (.xlsx). Usa il modello scaricato da questa pagina.', [], 'File non valido'); return; }
-  if (f.size > MAX_FILE_BYTES) { mostraInfo('File troppo grande', MSG_OLTRE_5MB); return; }
+  if (!isXlsx(f)) { safeTrack("processing_error", { tool: TOOL, stage: "upload_validation", error_code: "not_xlsx" }); showError('Il file deve essere in formato Excel (.xlsx). Usa il modello scaricato da questa pagina.', [], 'File non valido'); return; }
+  if (f.size > MAX_FILE_BYTES) { safeTrack("processing_error", { tool: TOOL, stage: "upload_validation", error_code: "file_too_large" }); mostraInfo('File troppo grande', MSG_OLTRE_5MB); return; }
   selectedFile = f; fileValido = false; xmlPronto = null; esito = esitoVuoto();
   renderFile(); updateButton();
   safeTrack("file_selected", { tool: TOOL, file_type: "xlsx", file_count: [f].length, file_size_bucket: sizeBucket([f].reduce((s, f) => s + (f.size || 0), 0)) });
@@ -710,7 +714,7 @@ async function loadPreview() {
     fileValido = true; updateButton();
     renderPreview(data);
   } catch (err) {
-    if (seq === _previewSeq) showError('Il file non può essere letto. Usa il modello scaricato da questa pagina.', [], 'File non valido');
+    if (seq === _previewSeq) { safeTrack("processing_error", { tool: TOOL, stage: "upload_validation", error_code: "unknown" }); showError('Il file non può essere letto. Usa il modello scaricato da questa pagina.', [], 'File non valido'); }
     console.error(err);
   }
 }

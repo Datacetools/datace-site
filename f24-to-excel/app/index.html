@@ -398,7 +398,7 @@ const SECTION_COLORS = {
 const TOOL = "f24";
 const TOOL_VERSION = "1.04"; // = VERSIONE di invio.py (f24-splitter-web/browser) e la pagina Aggiornamenti
 const ALLOWED_STAGES = ["upload_validation","pdf_read","text_extract","data_parse","excel_gen","download","unknown"];
-const ALLOWED_ERROR_CODES = ["too_many_files","file_too_large","empty_or_corrupt","not_a_pdf","no_text_layer","unsupported_layout","parse_no_data","server_error","network_error","unknown"];
+const ALLOWED_ERROR_CODES = ["too_many_files","file_too_large","empty_or_corrupt","not_a_pdf","no_text_layer","unsupported_layout","parse_no_data","selection_too_large","server_error","network_error","unknown"];
 const ALLOWED_PARAMS = ["tool","stage","error_code","file_type","file_count","file_size_bucket","page_count_bucket","has_text_layer","processing_time_bucket","tool_version"];
 
 function safeTrack(event, params) {
@@ -501,21 +501,26 @@ function addFiles(newFiles) {
       selectedFiles.push(f);
     }
   });
+  const codici = [];  // errori della scelta, nell'ordine in cui si vedono
   if (scartati.length > 0) {
+    codici.push('not_a_pdf');
     showError(scartati.length === 1
       ? `Questo file non è un PDF: ${scartati[0]}. Scegli il PDF del modello F24.`
       : `Questi file non sono PDF: ${scartati.join(', ')}. Scegli i PDF del modello F24.`, 'File non valido');
   }
   if (oversized.length > 0) {
+    codici.push('file_too_large');
     showError(`File troppo grandi (max 20 MB): ${oversized.join(', ')}`, 'File troppo grande');
   }
   if (selectedFiles.length > MAX_FILES) {
     selectedFiles = selectedFiles.slice(0, MAX_FILES);
+    codici.push('too_many_files');
     showError(`Massimo ${MAX_FILES} file. Gli ultimi sono stati ignorati.`, 'Troppi file');
   }
   // Subito alla scelta (brief 048, Davide): il motore li rifiuterebbe comunque, e contarne
   // le pagine con file enormi richiedeva fino a 13 s.
-  if (troppiInTutto()) showError('Troppi dati insieme (massimo 100 MB): elabora i file in più volte.', 'Selezione troppo grande');
+  if (troppiInTutto()) { codici.push('selection_too_large'); showError('Troppi dati insieme (massimo 100 MB): elabora i file in più volte.', 'Selezione troppo grande'); }
+  if (codici.length) safeTrack("processing_error", { tool: TOOL, stage: "upload_validation", error_code: codici[0] });  // il primo, brief 124
   renderFileList();
   updateButton();
   aggiornaAttesa();

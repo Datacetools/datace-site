@@ -433,7 +433,7 @@
 const TOOL = "fattura";
 const ALLOWED_PARAMS = ["tool","stage","error_code","file_type","file_count","file_size_bucket","processing_time_bucket"];
 const ALLOWED_STAGES = ["upload_validation","unknown"];
-const ALLOWED_ERROR_CODES = ["file_too_large","invalid_file","server_error","network_error","unknown"];
+const ALLOWED_ERROR_CODES = ["file_too_large","invalid_file","not_xml","too_many_files","selection_too_large","no_invoices","server_error","network_error","unknown"];
 function safeTrack(event, params) {
   if (!window.umami || typeof window.umami.track !== "function") return;  // funziona anche senza Umami
   const clean = {};
@@ -459,7 +459,8 @@ function timeBucket(ms) {
 function errorCodeFromStatus(s) {
   if (s === 413) return "file_too_large";
   if (s >= 500)  return "server_error";
-  if (s === 400 || s === 422) return "invalid_file";
+  if (s === 400) return "too_many_files";  // invio.py: troppi file (brief 124)
+  if (s === 422) return "no_invoices";     // invio.py: nessuna fattura riconoscibile
   return "unknown";
 }
 let _t0 = 0;
@@ -522,18 +523,22 @@ function addFiles(newFiles) {
   const oversized = [];
   // Come F24: i file che non sono XML si scartano e si nominano, gli altri si elaborano.
   const scartati = newFiles.filter(f => !isXml(f)).map(f => f.name);
-  if (scartati.length > 0) showError(scartati.length === 1
+  const codici = [];  // errori della scelta, nell'ordine in cui si vedono
+  if (scartati.length > 0) { codici.push('not_xml'); showError(scartati.length === 1
     ? `Questo file non è una fattura XML: ${scartati[0]}. Scegli i file .xml o .p7m.`
-    : `Questi file non sono fatture XML: ${scartati.join(', ')}. Scegli i file .xml o .p7m.`, 'File non valido');
+    : `Questi file non sono fatture XML: ${scartati.join(', ')}. Scegli i file .xml o .p7m.`, 'File non valido'); }
   newFiles.filter(isXml).forEach(f => {
     if (f.size > MAX_FILE_BYTES) { oversized.push(f.name); return; }
     if (!selectedFiles.find(x => x.name === f.name && x.size === f.size)) selectedFiles.push(f);
   });
-  if (oversized.length > 0) showError(`File troppo grandi (max 10 MB), non aggiunti: ${oversized.join(', ')}.`, 'File troppo grande');
+  if (oversized.length > 0) { codici.push('file_too_large'); showError(`File troppo grandi (max 10 MB), non aggiunti: ${oversized.join(', ')}.`, 'File troppo grande'); }
   if (selectedFiles.length > MAX_FILES) {
     selectedFiles = selectedFiles.slice(0, MAX_FILES);
+    codici.push('too_many_files');
     showError(`Massimo ${MAX_FILES} file. Gli ultimi sono stati ignorati.`, 'Troppi file');
   }
+  if (selectedFiles.reduce((s, f) => s + f.size, 0) > MAX_TOTAL_BYTES) codici.push('selection_too_large');  // il pop-up lo apre loadPreview
+  if (codici.length) safeTrack("processing_error", { tool: TOOL, stage: "upload_validation", error_code: codici[0] });  // il primo, brief 124
   renderFileList(); updateButton();
   if (selectedFiles.length > 0) safeTrack("file_selected", { tool: TOOL, file_type: "xml", file_count: selectedFiles.length, file_size_bucket: sizeBucket(selectedFiles.reduce((s, f) => s + (f.size || 0), 0)) });
   if (selectedFiles.length > 0) loadPreview();
