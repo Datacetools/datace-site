@@ -60,7 +60,7 @@
     ok.focus();
   }
 
-  function chiudi() { if (box) box.style.display = 'none'; }
+  function chiudi() { if (!box) return; const era = box.style.display === 'flex'; box.style.display = 'none'; if (era) document.dispatchEvent(new Event('avviso-chiuso')); } // vista.js aspetta questo
 
   window.avviso = avviso;
   window.chiudiAvviso = chiudi;
