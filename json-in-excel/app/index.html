@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Il JSON non esce dal browser: nessuna richiesta verso altri indirizzi oltre alle statistiche (Umami, solo
+       gli eventi dell'elenco chiuso di safeTrack in pagina-json.js) e al modulo di feedback (Formspree, solo il
+       testo scritto lì). GitHub Pages non manda header: la CSP sta qui. Come F24. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://gateway.umami.is https://formspree.io; base-uri 'self'; form-action https://formspree.io" />
+  <title>JSON in Excel | Datace</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231c3461'/%3E%3Crect x='10' y='11' width='28' height='6' rx='3' fill='%23F59E0B'/%3E%3Crect x='10' y='21' width='20' height='6' rx='3' fill='white'/%3E%3Crect x='10' y='31' width='12' height='6' rx='3' fill='white' fill-opacity='0.35'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="tailwind.css" />
+  <link rel="stylesheet" href="/comune/app.css" />
+  <style>
+    /* Colori, card, zona di trascinamento, testata della tabella, footer: /comune/app.css. Qui solo
+       l'area di lavoro a due metà (brief 126, schema di tutta la suite dei convertitori). */
+    .campo { font: inherit; font-size: 13px; color: white; background: rgba(255,255,255,.04); border: 1px solid var(--border2); border-radius: 12px; padding: 8px 12px; }
+    .campo:focus { outline: 2px solid var(--teal); outline-offset: 1px; }
+    select.campo option { background: var(--navy3); }
+    select.campo:disabled { opacity: .4; }
+    textarea.campo { width: 100%; min-height: 84px; resize: vertical; font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
+    .etichetta { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; display: block; margin-bottom: 4px; }
+    /* Stesso pulsante oro dei contatti delle altre app («Raccontaci il tuo caso»): 14 px, peso 600, raggio 12, nessuna ombra. */
+    .btn-oro { font: inherit; font-size: 14px; font-weight: 600; padding: 12px 20px; border-radius: 12px; border: 1px solid #F59E0B; background: #F59E0B; color: #0f2040; white-space: nowrap; cursor: pointer; transition: opacity .2s; }
+    .btn-oro:hover { opacity: .9; }
+    .btn-oro:disabled { opacity: .5; cursor: default; }
+    /* Le due metà escono dalla colonna di 896 px: al massimo 1152, centrate, 16 px di margine ai lati. */
+    #meta { position: relative; left: 50%; transform: translateX(-50%); width: min(1152px, calc(100vw - 32px)); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    #meta > .dark-card { min-width: 0; display: flex; flex-direction: column; }
+    .finestra { height: 520px; overflow: auto; border: 1px solid var(--border); border-radius: 12px; background: rgba(4,8,15,.5); }
+    #entra { margin: 0; padding: 10px 12px; font-family: ui-monospace, Consolas, monospace; font-size: 12px; line-height: 20px; color: rgba(255,255,255,.8); white-space: pre; tab-size: 4; }
+    #entra .k { color: var(--gold); }
+    #esce { border-collapse: collapse; font-size: 12px; }
+    #esce th, #esce td { border: 1px solid rgba(255,255,255,.06); padding: 0 8px; height: 22px; white-space: nowrap; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+    #esce thead th { position: sticky; top: 0; z-index: 2; background: var(--navy3); color: rgba(255,255,255,.4); font-weight: 600; font-size: 10px; }
+    #esce tbody th { position: sticky; left: 0; z-index: 1; background: var(--navy3); color: rgba(255,255,255,.4); font-weight: 600; font-size: 10px; text-align: right; }
+    #esce tr.testa td { font-weight: 700; color: white; }
+    #esce td { color: rgba(255,255,255,.8); }
+    #esce td.n { text-align: right; font-variant-numeric: tabular-nums; color: #93c5fd; }
+    #esce td.d { text-align: right; color: #86efac; }
+    .legenda { font-size: 11px; color: var(--muted); margin-top: 8px; }
+    .legenda b { font-weight: 600; }
+    /* Dopo la lettura la zona di scelta si stringe: le due metà salgono nello schermo. */
+    .caricato #zona { padding: 12px; } .caricato #zona svg { display: none; }
+    .caricato #incolla { min-height: 40px; height: 40px; }
+    /* Al posto dei gestori onfocus/onmouseover delle altre app: questa CSP non ha unsafe-inline. */
+    [data-fb]:focus { outline: none; border-color: rgba(29,122,148,.6) !important; }
+    [data-hv] { transition: opacity .2s; }
+    [data-hv]:hover { opacity: .9; }
+    [data-hv-chiaro]:hover { background: rgba(255,255,255,.1) !important; border-color: rgba(255,255,255,.2) !important; }
+    @media (max-width: 900px) { #meta { grid-template-columns: 1fr; } .finestra { height: 360px; } }
+  </style>
+  <script src="controllo.js"></script>
+  <script src="/comune/avviso.js" defer></script>
+  <script src="app.js" defer></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
+</head>
+
+<body class="min-h-screen font-sans" style="background:#060E1F;color:white;">
+
+<!-- DATACE HEADER APP START -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-4xl mx-auto px-6 py-3 flex items-center gap-3">
+
+    <!-- Logo Datace -->
+    <a href="/" class="flex items-center gap-3 shrink-0">
+      <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+
+    <!-- Separatore + tool name -->
+    <div style="width:1px;height:32px;background:rgba(255,255,255,.1);" class="mx-2 hidden sm:block"></div>
+    <div class="hidden sm:flex flex-col leading-tight">
+      <span style="color:white;font-weight:700;font-size:15px;">JSON in Excel</span>
+      <span style="color:var(--muted);font-size:11px;">Trasforma un JSON in una tabella Excel</span>
+    </div>
+
+    <!-- Privacy badge -->
+    <div class="ml-auto hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);">
+      <svg class="w-3 h-3" style="color:#86efac;" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+      </svg>
+      <span style="color:#86efac;font-size:11px;font-weight:600;">Resta sul tuo computer</span>
+    </div>
+  </div>
+</header>
+<!-- DATACE HEADER APP END -->
+
+<main class="max-w-4xl mx-auto px-4 py-10 space-y-6">
+
+  <p id="safari" role="alert" hidden class="dark-card p-6" style="font-size:15px;color:#fcd34d;">Safari e i browser di iPhone e iPad non sono ancora supportati. Apri la pagina da un computer con Chrome, Edge, Firefox, Brave o Opera.</p>
+  <p id="non-supportato" role="alert" hidden class="dark-card p-6" style="font-size:15px;color:#fcd34d;">Questo browser non è supportato. Apri la pagina con Chrome, Edge, Firefox, Brave o Opera.</p>
+
+  <div id="strumento" class="space-y-6">
+  <section class="dark-card p-8">
+    <h2 style="font-size:17px;font-weight:700;margin-bottom:4px;">Scegli il tuo JSON</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Un file .json o .jsonl · fino a 50 MB · righe e colonne trovate da sole</p>
+    <label id="zona" class="drop-zone p-10 text-center block">
+      <svg class="mx-auto w-12 h-12 mb-4" style="color:rgba(255,255,255,.2);" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p style="font-weight:600;color:rgba(255,255,255,.7);">Trascina qui il file JSON o incolla il testo</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:4px;">oppure <span style="color:var(--teal);text-decoration:underline;">sceglilo dal computer</span></p>
+      <input type="file" id="scelta" class="hidden" accept=".json,.jsonl,.txt,application/json,text/plain" />
+    </label>
+    <textarea id="incolla" class="campo mt-4" spellcheck="false" placeholder="...oppure incolla qui il testo" aria-label="Incolla il testo del JSON"></textarea>
+    <p id="esito" class="an-note" aria-live="polite"></p>
+  </section>
+
+  <section id="lavoro" hidden class="space-y-4">
+    <div class="dark-card p-5 flex flex-wrap items-end gap-4">
+      <div id="scelta-righe" hidden>
+        <label class="etichetta" for="righe">Righe da</label>
+        <select id="righe" class="campo"></select>
+      </div>
+      <p id="rilevato" class="flex-1" style="min-width:240px;font-size:13px;color:rgba(255,255,255,.7);padding-bottom:8px;"></p>
+      <button type="button" id="scarica" class="btn-oro">Scarica Excel</button>
+      <div id="successo" hidden class="animate-bounce-in flex items-center gap-2 text-sm rounded-xl px-4 py-3" style="flex:1 1 100%;flex-wrap:wrap;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#86efac;">
+        <svg class="w-5 h-5 shrink-0" style="color:#86efac;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span>Excel scaricato con successo!</span>
+        <span style="flex-basis:100%;padding-left:28px;font-size:12px;color:rgba(255,255,255,.62);">Ti serve spesso? Premi Ctrl+D per salvare la pagina. Per le novità c'è la <a href="/newsletter/" target="_blank" rel="noopener" data-umami-event="newsletter-link" data-umami-event-origine="dopo-download" style="text-decoration:underline;">newsletter</a>.</span>
+        <a href="/raccontaci/" target="_blank" rel="noopener" data-umami-event="raccontaci-link" data-umami-event-origine="dopo-download" style="flex-basis:100%;padding-left:28px;font-size:12px;color:rgba(255,255,255,.62);text-decoration:underline;">Se ti va, raccontaci come lavori</a>
+      </div>
+    </div>
+    <div id="meta">
+      <div class="dark-card p-4">
+        <h2 style="font-size:15px;font-weight:700;margin-bottom:10px;">Quello che entra</h2>
+        <div class="finestra scorre"><pre id="entra"></pre></div>
+        <p class="legenda" id="nota-entra"></p>
+      </div>
+      <div class="dark-card p-4">
+        <h2 style="font-size:15px;font-weight:700;margin-bottom:10px;">Quello che esce</h2>
+        <div class="finestra scorre"><table id="esce"></table></div>
+        <p class="legenda"><b style="color:#93c5fd;">Numeri</b> · <b style="color:#86efac;">Date</b> · il resto è testo, come nel file</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COME FUNZIONA -->
+  <section class="dark-card p-6">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:20px;">Come funziona</h2>
+    <div class="grid sm:grid-cols-3 gap-5">
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+          <span style="font-weight:800;font-size:14px;color:var(--gold);">1</span>
+        </div>
+        <div>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Scegli</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Trascina un file JSON o incolla il testo</p>
+        </div>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+          <span style="font-weight:800;font-size:14px;color:var(--gold);">2</span>
+        </div>
+        <div>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Controlla</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Righe e colonne sono trovate da sole: se il file ha più elenchi scegli da quale partire</p>
+        </div>
+      </div>
+      <div class="flex gap-3 items-start">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(29,122,148,.2);border:1px solid rgba(29,122,148,.3);">
+          <span style="font-weight:800;font-size:14px;color:#2a9db5;">3</span>
+        </div>
+        <div>
+          <p style="font-weight:600;font-size:14px;margin-bottom:4px;">Scarica</p>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Ricevi un Excel con una riga per ogni elemento</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <!-- FEEDBACK -->
+  <section class="dark-card p-6 text-center">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">Lascia un feedback</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:32px;">Hai usato JSON in Excel? Dicci cosa ne pensi, ci aiuta a migliorare.</p>
+    <form action="https://formspree.io/f/mreddazr" method="POST" class="space-y-3 text-left">
+      <input type="hidden" name="tool" value="JSON in Excel" />
+      <input type="text" name="name" placeholder="Nome (opzionale)" data-fb
+             class="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+             style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:white;"
+             />
+      <textarea name="message" data-fb rows="3" placeholder="Il tuo feedback..." required
+                class="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none resize-none"
+                style="background:rgba(255,255,255,.06);border:1px solid var(--border);color:white;"
+               ></textarea>
+      <button type="submit"
+              class="w-full py-2.5 px-6 rounded-xl font-bold text-sm transition-all duration-200"
+              style="background:white;color:#0f2040;" data-hv
+             >
+        Invia feedback
+      </button>
+    </form>
+  </section>
+
+  <!-- CONTATTI -->
+  <section class="dark-card p-6 text-center">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">Il tuo caso è diverso?</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Per segnalazioni, supporto o per raccontarci il tuo caso:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+      <a href="https://www.linkedin.com/in/davide-sgroia/" aria-label="Profilo LinkedIn di Davide S." target="_blank" rel="noopener" data-hv-chiaro data-umami-event="contatto-linkedin" data-umami-event-pagina="tool-json-excel" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-hv data-umami-event="contatto-email" data-umami-event-pagina="tool-json-excel" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Raccontaci il tuo caso
+      </a>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,.4);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="tool-json-excel" style="color:#F59E0B;">info@datacetools.com</a></p>
+  </section>
+
+</main>
+
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/fattura-elettronica-pdf/" class="footer-link">Fattura elettronica in PDF</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+        <a href="/fatture-xml-bonifici/" class="footer-link">Fatture XML in bonifici</a>
+        <a href="/convertitori-in-excel/" class="footer-link">Convertitori in Excel</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo/" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
+        <a href="/newsletter/" class="footer-link">Newsletter</a>
+        <a href="/privacy/" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+</body>
+</html>

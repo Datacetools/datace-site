@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO (brief 131): online con CSV e JSON in Excel; si nominano solo gli strumenti che esistono. -->
+  <title>Convertitori in Excel: CSV e JSON, gratis | Datace</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Trasforma file CSV e JSON in Excel ordinati. Gratis, senza registrazione: il file è elaborato dal browser e non viene inviato a Datace." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://datacetools.com/convertitori-in-excel/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:locale"      content="it_IT" />
+  <meta property="og:url"         content="https://datacetools.com/convertitori-in-excel/" />
+  <meta property="og:title"       content="Convertitori in Excel: CSV e JSON, gratis | Datace" />
+  <meta property="og:description" content="Trasforma file CSV e JSON in Excel ordinati. Gratis, senza registrazione: il file è elaborato dal browser e non viene inviato a Datace." />
+  <meta property="og:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta name="twitter:card"       content="summary_large_image" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Datace",
+      "item": "https://datacetools.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Convertitori in Excel",
+      "item": "https://datacetools.com/convertitori-in-excel/"
+    }
+  ]
+}
+  </script>
+
+  <link rel="stylesheet" href="/tailwind.css" />
+  <link rel="stylesheet" href="/comune/vetrina.css" />
+
+  <style>
+    :root {
+      --navy:    #060E1F;
+      --navy2:   #0A1628;
+      --navy3:   #0F2040;
+      --gold:    #F59E0B;
+      --gold2:   #FBBF24;
+      --teal:    #2a9db5;
+      --border:  rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+      --muted:rgba(255,255,255,0.62);
+    }
+
+    * { box-sizing: border-box; }
+
+    body { background: var(--navy); color: white; }
+
+    /* ── Hero depth ── */
+    .hero-glow-teal {
+      position:absolute; top:-30%; left:-15%;
+      width:60%; height:90%;
+      background: radial-gradient(ellipse at center, rgba(29,122,148,.16) 0%, transparent 65%);
+      pointer-events:none; z-index:0;
+    }
+    .hero-glow-gold {
+      position:absolute; top:10%; right:-10%;
+      width:50%; height:75%;
+      background: radial-gradient(ellipse at center, rgba(245,158,11,.06) 0%, transparent 60%);
+      pointer-events:none; z-index:0;
+    }
+    .hero-grid {
+      position:absolute; inset:0;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+      pointer-events:none; z-index:0;
+    }
+    .hero > .max-w-6xl { position:relative; z-index:1; }
+
+    /* ── Footer ── */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .footer-col-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.55); margin-bottom: 16px;
+    }
+    .footer-link {
+      display: block; font-size: 14px;
+      color: rgba(255,255,255,.62);
+      margin-bottom: 10px; text-decoration: none;
+      transition: color .2s ease;
+    }
+    .footer-link:hover { color: white; }
+    .footer-bottom {
+      margin-top: 48px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      font-size: 13px; color: rgba(255,255,255,.2);
+    }
+
+    /* ── Logo bars ── */
+    .logo-bar { transform-box: fill-box; transform-origin: left center; }
+    .logo-bar-1 { animation: barStream 2.8s ease-in-out infinite 0s; }
+    .logo-bar-2 { animation: barStream 2.8s ease-in-out infinite .22s; }
+    .logo-bar-3 { animation: barStream 2.8s ease-in-out infinite .44s; }
+    @keyframes barStream {
+      0%,100% { transform:scaleX(1);    opacity:1;   }
+      30%     { transform:scaleX(0.32); opacity:0.5; }
+      60%     { transform:scaleX(1);    opacity:1;   }
+    }
+
+    /* ── Scroll entrance (visibile di default, animata solo se JS attivo) ── */
+    .fade-up { transition:opacity .6s ease, transform .6s ease; }
+    .js .fade-up { opacity:0; transform:translateY(32px); }
+    .js .fade-up.in-view { opacity:1; transform:translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .js .fade-up { opacity:1; transform:none; transition:none; }
+      .logo-bar { animation:none; }
+    }
+    .d1{transition-delay:.05s} .d2{transition-delay:.15s}
+    .d3{transition-delay:.25s} .d4{transition-delay:.35s} .d5{transition-delay:.45s}
+
+    /* ── Section label ── */
+    .label {
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:11px; font-weight:600; letter-spacing:.15em;
+      text-transform:uppercase; color:var(--gold);
+    }
+    .label::before { content:''; width:20px; height:1px; background:var(--gold); }
+
+    /* ── Gradient text ── */
+    .grad-text {
+      background: linear-gradient(90deg,#fff 0%,#93c5fd 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .grad-gold {
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--navy);
+      position:relative; overflow:hidden;
+      min-height: 92vh;
+      display:flex; align-items:center;
+    }
+    .hero::before {
+      content:'';
+      position:absolute; top:-20%; left:-10%;
+      width:55%; height:80%;
+      background: radial-gradient(ellipse, rgba(29,122,148,.18) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    .hero::after {
+      content:'';
+      position:absolute; bottom:-10%; right:-5%;
+      width:45%; height:70%;
+      background: radial-gradient(ellipse, rgba(245,158,11,.07) 0%, transparent 60%);
+      pointer-events:none;
+    }
+
+    /* ── Pill ── */
+    .pill {
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+      border-radius:999px; padding:5px 14px;
+      font-size:12px; font-weight:500; color:#93c5fd; letter-spacing:.04em;
+    }
+    .pill-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+
+    /* ── CTA buttons ── */
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:8px;
+      background:white; color:#0F2040;
+      font-weight:700; font-size:14px; letter-spacing:.01em;
+      padding:14px 28px; border-radius:12px;
+      box-shadow:0 0 0 0 rgba(255,255,255,.2);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,255,255,.15); }
+    .btn-secondary {
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(255,255,255,.2); color:white;
+      font-weight:600; font-size:14px;
+      padding:14px 28px; border-radius:12px;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .btn-secondary:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.35); }
+
+    /* ── Stats ── */
+    .stats-section {
+      background:rgba(255,255,255,.025);
+      border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+    }
+    .kpi-block { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; }
+    .kpi-block .stat-num { min-height:3rem; display:flex; align-items:center; justify-content:center; }
+    .kpi-block .kpi-desc { font-size:13px;color:rgba(255,255,255,.62);margin-top:6px; }
+
+    .stat-num {
+      font-size:3rem; font-weight:800; line-height:1;
+      background:linear-gradient(135deg,#fff,#93c5fd);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    /* ── Tool cards premium ── */
+    .tool-card {
+      background: linear-gradient(135deg, rgba(15,32,64,.8), rgba(6,14,31,.9));
+      border:1px solid var(--border);
+      border-radius:20px; padding:28px;
+      display:flex; flex-direction:column; gap:20px;
+      position:relative; overflow:hidden;
+      transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+      text-decoration:none; color:white;
+    }
+    .tool-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg,transparent,rgba(245,158,11,.4),transparent);
+      opacity:0; transition:opacity .3s ease;
+    }
+    .tool-card:hover {
+      border-color:rgba(255,255,255,.14);
+      transform:translateY(-5px);
+      box-shadow:0 24px 60px rgba(0,0,0,.5);
+    }
+    .tool-card:hover::before { opacity:1; }
+    .tool-card .t-icon {
+      width:48px; height:48px; border-radius:16px;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(28,52,97,.6); border:1px solid rgba(255,255,255,.08);
+      transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+      flex-shrink:0;
+    }
+    .tool-card:hover .t-icon { transform:scale(1.15) translateY(-2px); }
+    .tool-card .t-name { font-size:16px; font-weight:700; color:white; margin:0; }
+    .tool-card .t-desc { font-size:13px; color:var(--muted); line-height:1.6; margin:0; }
+    .tool-card .t-cta {
+      display:flex; align-items:center; gap:6px;
+      font-size:13px; font-weight:600; color:rgba(255,255,255,.62);
+      margin-top:auto;
+      transition: color .2s ease, gap .2s ease;
+    }
+    .tool-card:hover .t-cta { color:white; gap:10px; }
+    /* Le tre guide sotto gli strumenti: stessa card, più piccola (brief 122) */
+    .guide-testa { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-top:44px; margin-bottom:14px; }
+    .guide-righe { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .tool-card.compatta { flex-direction:row; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; }
+    .tool-card.compatta .t-name { font-size:14px; line-height:1.4; }
+    .tool-card.compatta .t-name { flex:1; min-width:0; }
+    .tool-card.compatta .g-ico { width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:rgba(28,52,97,.5); border:1px solid rgba(255,255,255,.08); }
+    .tool-card.compatta .t-cta { margin-top:0; flex-shrink:0; }
+    .tool-card.compatta:hover { transform:translateY(-3px); }
+    .tool-card .t-badge {
+      font-size:10px; font-weight:700; letter-spacing:.05em;
+      padding:3px 9px; border-radius:999px;
+    }
+    .badge-green { background:rgba(34,197,94,.12); color:#86efac; border:1px solid rgba(34,197,94,.2); }
+    .badge-blue  { background:rgba(96,165,250,.12); color:#93c5fd; border:1px solid rgba(96,165,250,.2); }
+    .badge-beta  { background:rgba(245,158,11,.12); color:#fcd34d; border:1px solid rgba(245,158,11,.3); } /* ambra del sito, testo 11,3:1 (brief 069) */
+    .badge-dashed { background:transparent; border:1px dashed rgba(255,255,255,.1); color:rgba(255,255,255,.55); }
+
+    /* Coming soon card */
+    .card-soon {
+      background:transparent;
+      border:1px dashed rgba(255,255,255,.07);
+      border-radius:20px; padding:28px;
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:center; text-align:center; gap:12px;
+      min-height:200px;
+    }
+
+    /* ── Pillars ── */
+    .pillar {
+      border:1px solid var(--border);
+      border-radius:20px; padding:32px;
+      background:rgba(255,255,255,.02);
+      transition: border-color .25s ease;
+    }
+    .pillar:hover { border-color:rgba(255,255,255,.12); }
+    .pillar-icon {
+      width:52px; height:52px; border-radius:16px;
+      background:rgba(28,52,97,.5); border:1px solid rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:20px;
+    }
+    .pillar h3 { font-size:18px; font-weight:700; margin:0 0 10px; }
+    .pillar p  { font-size:14px; color:var(--muted); line-height:1.7; margin:0; }
+
+    /* ── Divider ── */
+    .divider { border:none; border-top:1px solid var(--border); margin:0; }
+
+    /* ── Contact ── */
+    .contact-section { background:rgba(255,255,255,.02); border-top:1px solid var(--border); }
+    .contact-email {
+      display:inline-flex; align-items:center; gap:10px;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+      border-radius:16px; padding:14px 24px;
+      color:white; font-weight:600; font-size:15px;
+      transition: background .2s, border-color .2s;
+    }
+    .contact-email:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.2); }
+
+    /* ── Mobile (in fondo: deve vincere sulle regole componente sopra) ── */
+    @media (max-width: 768px) {
+      .hero { min-height: auto; padding-top: 60px; padding-bottom: 60px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+      .stats-section .grid { grid-template-columns: 1fr; gap: 24px; }
+      .stats-section [style*="border-left"] { border-left: none !important; border-right: none !important; border-top: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); padding: 24px 0; }
+      .pillar { padding: 24px; }
+      .tool-card { padding: 22px; }
+      .tool-card.compatta { padding:14px 16px; }
+      .guide-righe { grid-template-columns:1fr; }
+    }
+  
+    /* Cambio lingua e striscia della lingua (brief 128) */
+    #lingua-x { background:none; border:0; color:white; font-size:18px; line-height:1; cursor:pointer; margin-left:10px; }
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body class="font-sans antialiased" style="background:#060E1F;color:white;">
+
+<!-- Striscia della lingua: solo se la lingua del browser non è quella della pagina; nessun reindirizzamento -->
+<div id="lingua" hidden style="background:rgba(29,122,148,.2);border-bottom:1px solid var(--border);font-size:13px;padding:8px 16px;text-align:center;">
+  <span lang="en">This page is also available in English.</span> <a href="/en/excel-converters/" hreflang="en" lang="en" style="color:#93c5fd;text-decoration:underline;">Open</a>
+  <button type="button" id="lingua-x" lang="en" aria-label="Close">&times;</button>
+</div>
+<script>
+(function () {
+  try {
+    var browserIt = (navigator.language || "").toLowerCase().indexOf("it") === 0;
+    if (browserIt === (document.documentElement.lang === "it")) return;
+    try { if (localStorage.getItem("lingua-striscia-chiusa")) return; } catch (e) {}
+    var s = document.getElementById("lingua"); s.hidden = false;
+    document.getElementById("lingua-x").onclick = function () { s.hidden = true; try { localStorage.setItem("lingua-striscia-chiusa", "1"); } catch (e) {} };
+  } catch (e) {}
+})();
+</script>
+
+<!-- HEADER -->
+<!-- DATACE HEADER START -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <svg class="w-9 h-9 flex-shrink-0" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" style="color:rgba(255,255,255,.62);">
+      <a href="/#strumenti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Strumenti</a>
+      <a href="/convertitori-in-excel/" class="hidden lg:inline" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Convertitori</a>
+      <a href="/guida/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Guide</a>
+      <a href="/chi-siamo/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Chi sono</a>
+      <a href="/raccontaci/" class="hidden lg:inline" data-umami-event="raccontaci-link" data-umami-event-origine="header" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Raccontaci</a>
+      <a href="/#contatti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Contatti</a>
+    </nav>
+    <a href="/#strumenti" style="background:white;color:#0f2040;font-weight:700;font-size:13px;padding:9px 20px;border-radius:12px;letter-spacing:.01em;transition:all .2s ease;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Inizia ora</a>
+  </div>
+</header>
+<!-- DATACE HEADER END -->
+<!-- HERO -->
+<section class="hero px-6">
+  <div class="hero-glow-teal"></div>
+  <div class="hero-glow-gold"></div>
+  <div class="hero-grid"></div>
+  <div class="max-w-6xl mx-auto w-full py-24">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <div class="mb-7"><span class="pill"><span class="pill-dot"></span> Strumenti online gratuiti</span></div>
+
+        <h1 style="font-size:clamp(2.4rem,5vw,4rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;" class="mb-6">Convertitori<br><span class="grad-text">in Excel</span></h1>
+
+        <p style="font-size:1.05rem;color:rgba(255,255,255,.62);line-height:1.8;" class="mb-8 max-w-lg">Precisi, trasparenti, e i tuoi file restano sul tuo computer.</p>
+
+        <div class="flex flex-wrap gap-3 mb-10">
+          <a href="#convertitori" class="btn-primary">Scegli il convertitore <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+          <a href="#come-funziona" class="btn-secondary">Come funziona</a>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:16px 28px;">
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55);">
+            <svg width="13" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Nessuna installazione
+          </span>
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55);">
+            <svg width="13" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            I tuoi file restano sul tuo computer
+          </span>
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55);">
+            <svg width="13" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Gratuito, senza registrazione
+          </span>
+        </div>
+      </div>
+      <div class="f24hub-wrap">
+        <svg class="f24hub doc-anim" viewBox="0 0 560 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="File CSV o JSON trasformato da Datace in un file Excel" font-family="Inter,system-ui,sans-serif">
+          <!-- la finestra del browser: i documenti non ne escono -->
+          <rect x="16" y="28" width="528" height="264" rx="20" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.1)"/>
+          <path d="M16 66H544" stroke="rgba(255,255,255,.08)"/>
+          <circle cx="40" cy="47" r="4" fill="rgba(255,255,255,.15)"/><circle cx="54" cy="47" r="4" fill="rgba(255,255,255,.15)"/><circle cx="68" cy="47" r="4" fill="rgba(255,255,255,.15)"/>
+          <g transform="translate(0 30)">
+          <g class="doc-in">
+            <g transform="translate(32 110)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">JSON</text></g>
+            <g transform="translate(20 124)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="rgba(42,157,181,.7)" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">CSV</text></g>
+          </g>
+          <!-- la tabella che si compone: le righe e un totale in basso a destra -->
+          <g class="doc-tab">
+            <rect x="214" y="58" width="144" height="184" rx="12" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)"/>
+            <rect x="228" y="74" width="48" height="6" rx="3" fill="rgba(255,255,255,.3)"/><rect x="296" y="74" width="48" height="6" rx="3" fill="rgba(255,255,255,.3)"/>
+            <rect x="228" y="86" width="36" height="4" rx="2" fill="rgba(255,255,255,.14)"/><rect x="296" y="86" width="36" height="4" rx="2" fill="rgba(255,255,255,.14)"/>
+            <path d="M228 102 H344" stroke="rgba(255,255,255,.1)"/>
+            <g class="doc-r doc-r1"><rect x="228" y="112" width="66" height="5" rx="2.5" fill="rgba(255,255,255,.18)"/><rect class="doc-v doc-v1" x="318" y="112" width="26" height="5" rx="2.5" fill="#2a9db5"/></g>
+            <g class="doc-r doc-r2"><rect x="228" y="128" width="56" height="5" rx="2.5" fill="rgba(255,255,255,.18)"/><rect class="doc-v doc-v2" x="318" y="128" width="26" height="5" rx="2.5" fill="#2a9db5"/></g>
+            <g class="doc-r doc-r3"><rect x="228" y="144" width="70" height="5" rx="2.5" fill="rgba(255,255,255,.18)"/><rect class="doc-v doc-v3" x="318" y="144" width="26" height="5" rx="2.5" fill="#2a9db5"/></g>
+            <path d="M228 160 H344" stroke="rgba(255,255,255,.06)"/>
+            <g class="doc-r doc-r4"><rect x="292" y="196" width="52" height="22" rx="5" fill="none" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 3"/><rect class="doc-v doc-v4" x="298" y="204" width="40" height="6" rx="3" fill="#F59E0B"/></g>
+          </g>
+          <g class="doc-out">
+            <g transform="translate(440 118)"><path d="M0 8a8 8 0 018-8h26l14 14v42a8 8 0 01-8 8H8a8 8 0 01-8-8z" fill="#0f2040" stroke="#F59E0B" stroke-width="1.5"/><path d="M34 0v10a4 4 0 004 4h10" fill="none" stroke="#F59E0B" stroke-width="1.5"/><text x="24" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="rgba(255,255,255,.85)">XLSX</text></g>
+            <g class="doc-ok"><circle cx="490" cy="120" r="10" fill="#0f2040" stroke="#86efac" stroke-width="1.5"/><path d="M485 120l3.5 3.5 6.5-7" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+          </g>
+          </g>
+          <!-- il logo Datace sopra la finestra: prende il file, lo trasforma, lo esporta (classi in /comune/vetrina.css) -->
+          <g class="ace"><rect x="256" y="4" width="48" height="48" rx="12" fill="#0f2040" stroke="rgba(245,158,11,.4)" stroke-width="1.2"/><rect class="ace-b ace-b1" x="266" y="15" width="28" height="6" rx="3" fill="#F59E0B"/><rect class="ace-b ace-b2" x="266" y="25" width="20" height="6" rx="3" fill="white"/><rect class="ace-b ace-b3" x="266" y="35" width="12" height="6" rx="3" fill="white" fill-opacity=".35"/></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- I CONVERTITORI -->
+<section id="convertitori" class="px-6 py-24" style="background:var(--navy);">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-14"><div class="label mb-4">I convertitori</div><h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;" class="max-w-xl">Un formato. Un Excel ordinato.</h2></div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="/csv-in-excel/" class="tool-card fade-up d1">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;"><div class="t-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="rgba(29,122,148,.2)" stroke="#1d7a94" stroke-width="1.8"/><path d="M3 9h18" stroke="#1d7a94" stroke-width="1.8"/><path d="M6 13h2.5M11 13h2.5M16 13h2M6 16.5h2.5M11 16.5h2.5M16 16.5h2" stroke="#2a9db5" stroke-width="1.8" stroke-linecap="round"/><path d="M9.8 13v.6l-.5.8M14.8 13v.6l-.5.8M9.8 16.5v.6l-.5.8M14.8 16.5v.6l-.5.8" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div><p class="t-name">CSV in Excel</p><p class="t-desc">Accenti, colonne e zeri iniziali al loro posto.</p></div>
+        <div class="t-cta"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
+      </a>
+      <a href="/json-in-excel/" class="tool-card fade-up d2">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;"><div class="t-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M9 4C7 4 6.5 5 6.5 6.5v3C6.5 11 6 12 4.5 12c1.5 0 2 1 2 2.5v3C6.5 19 7 20 9 20" stroke="#1d7a94" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 4c2 0 2.5 1 2.5 2.5v3c0 1.5.5 2.5 2 2.5-1.5 0-2 1-2 2.5v3c0 1.5-.5 2.5-2.5 2.5" stroke="#1d7a94" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h.01M12 12h.01M14 12h.01" stroke="#2a9db5" stroke-width="2.4" stroke-linecap="round"/></svg></div></div>
+        <div><p class="t-name">JSON in Excel</p><p class="t-desc">Una riga per ogni elemento.</p></div>
+        <div class="t-cta"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- COME FUNZIONA -->
+<section id="come-funziona" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-24">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-14"><div class="label mb-4">Il processo</div><h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.02em;" class="max-w-xl">Dal file all'Excel in tre passi.</h2></div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="fade-up d1 text-center"><div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div><div style="font-size:11px;font-weight:700;letter-spacing:.15em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:10px;">01</div><h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Scegli</h3><p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;">Trascina il file o incolla il testo</p></div>
+      <div class="fade-up d2 text-center"><div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div style="font-size:11px;font-weight:700;letter-spacing:.15em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:10px;">02</div><h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Controlla</h3><p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;">Vedi l'anteprima e, se serve, cambi le impostazioni</p></div>
+      <div class="fade-up d3 text-center"><div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><div style="font-size:11px;font-weight:700;letter-spacing:.15em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:10px;">03</div><h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Scarica</h3><p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;">Ricevi un Excel pronto da aprire</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section id="perche" class="px-6 py-24" style="background:var(--navy);">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-14"><div class="label mb-4">Perch&eacute; Datace</div><h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.02em;" class="max-w-lg">Pensato per aprire i file senza sorprese.</h2></div>
+    <div class="grid sm:grid-cols-3 gap-5">
+      <div class="pillar fade-up d1"><div class="pillar-icon"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div><h3>Semplice</h3><p>Pochi passaggi dal file all'Excel, con l'anteprima prima di scaricare.</p></div>
+      <div class="pillar fade-up d2"><div class="pillar-icon"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div><h3>Resta sul tuo computer</h3><p>I file sono elaborati dal browser e non vengono inviati a Datace.</p></div>
+      <div class="pillar fade-up d3"><div class="pillar-icon"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div><h3>Gratuito</h3><p>Senza registrazione.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- IN BREVE -->
+<section id="in-breve" class="px-6 py-20" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);">
+  <div class="max-w-3xl mx-auto">
+    <div class="label mb-4">In breve</div>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin-bottom:20px;">Cos'è Convertitori in Excel</h2>
+    <div style="font-size:14px;line-height:1.8;color:var(--muted);">
+      <p>Convertitori in Excel è la parte di Datace che trasforma file CSV e JSON in Excel. Si usa online, senza installare nulla e senza registrazione. Ideato e sviluppato da Davide S., Business Analyst. <a href="/chi-siamo/" style="color:#F59E0B;text-decoration:underline;">Chi sono</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATTI -->
+<section id="contatti" class="contact-section px-6 py-20">
+  <div class="max-w-xl mx-auto">
+    <div class="label mb-4">Contatti</div>
+    <h2 style="font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;">Hai un caso diverso?</h2>
+    <p style="font-size:15px;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:32px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Raccontaci il tuo caso:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <a href="https://www.linkedin.com/in/davide-sgroia/" aria-label="Profilo LinkedIn di Davide S." target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="convertitori" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;" onmouseover="this.style.background='rgba(255,255,255,.1)';this.style.borderColor='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="convertitori" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Scrivici il tuo caso
+      </a>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,.62);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="convertitori" style="color:#F59E0B;">info@datacetools.com</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/fattura-elettronica-pdf/" class="footer-link">Fattura elettronica in PDF</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+        <a href="/fatture-xml-bonifici/" class="footer-link">Fatture XML in bonifici</a>
+        <a href="/convertitori-in-excel/" class="footer-link">Convertitori in Excel</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo/" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
+        <a href="/newsletter/" class="footer-link">Newsletter</a>
+        <a href="/privacy/" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+        <a href="/en/excel-converters/" class="footer-link" hreflang="en" lang="en">English</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

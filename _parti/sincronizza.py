@@ -14,6 +14,8 @@ Le parti (brief 075 per le intestazioni):
 - header.html      fra <!-- DATACE HEADER START --> e <!-- DATACE HEADER END -->
                    (sito: home, vetrine, guide, pagine di testo); la voce del
                    menu della sezione in cui si è (Guide, Chi sono) resta bianca
+- header-sito-en.html, footer-en.html  fra <!-- DATACE HEADER EN START --> ... e <!-- DATACE FOOTER EN START --> ...:
+                   solo la pagina inglese dei convertitori (en/excel-converters/), stessa struttura con le voci tradotte
 - header-app.html  fra <!-- DATACE HEADER APP START --> e <!-- DATACE HEADER APP END -->
                    (F24, Fattura, Bonifici); nome e sottotitolo dello strumento
                    stanno in APP qui sotto. Fatture XML in bonifici ha la sua
@@ -33,6 +35,8 @@ APP = {
     "f24-to-excel/app/index.html": ("F24 in Excel", "Estrai Debiti e Crediti dai tuoi F24"),
     "fattura-elettronica-excel/app/index.html": ("Fattura in Excel", "FPR12, FPA12, .p7m, notifiche SdI · Excel su 5 fogli"),
     "bonifici-massivi-xml/app/index.html": ("Bonifici massivi XML", "Da Excel a XML SEPA (CBI) · pronto per l'home banking"),
+    "csv-in-excel/app/index.html": ("CSV in Excel", "Apri un CSV in Excel senza guai"),
+    "json-in-excel/app/index.html": ("JSON in Excel", "Trasforma un JSON in una tabella Excel"),
 }
 # Voce del menu della sezione in cui si è: bianca e in grassetto, senza effetto al passaggio.
 ATTIVA = {"guida": ("/guida/", "Guide"), "errori-fattura-elettronica": ("/guida/", "Guide"), "chi-siamo": ("/chi-siamo/", "Chi sono")}
@@ -65,10 +69,24 @@ def header_app(rel, testo):
     return testo.replace("{{nome}}", nome).replace("{{sotto}}", sotto)
 
 
+def footer_sito(rel, testo):
+    # Solo la pagina italiana dei convertitori ha il link alla versione inglese, in fondo a «Risorse»
+    # (brief 129); il footer comune a tutto il sito non cambia.
+    if rel == "convertitori-in-excel/index.html":
+        fine = '<a href="/#contatti" class="footer-link">Contatti</a>'
+        if fine not in testo:
+            raise SystemExit("footer.html: manca la voce «Contatti»")
+        testo = testo.replace(fine, fine + '\n        <a href="/en/excel-converters/" class="footer-link" hreflang="en" lang="en">English</a>')
+    return testo
+
+
 PARTI = [
-    ("FOOTER", parte("footer.html"), lambda rel, t: t),
+    ("FOOTER", parte("footer.html"), footer_sito),
     ("HEADER", parte("header.html"), header_sito),
     ("HEADER APP", parte("header-app.html"), header_app),
+    # Pagina inglese dei convertitori: stessa intestazione e stesso piè, con le sole voci tradotte
+    ("HEADER EN", parte("header-sito-en.html"), lambda rel, t: t),
+    ("FOOTER EN", parte("footer-en.html"), lambda rel, t: t),
 ]
 
 

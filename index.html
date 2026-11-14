@@ -363,8 +363,9 @@
       .hero { min-height: auto; padding-top: 60px; padding-bottom: 60px; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-      .stats-section .grid { grid-template-columns: 1fr; gap: 24px; }
-      .stats-section [style*="border-left"] { border-left: none !important; border-right: none !important; border-top: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); padding: 24px 0; }
+      .stats-section .grid { gap: 0; } /* tre celle in riga anche a 390 px */
+      .stats-section .stat-num { font-size: 1.5rem !important; min-height: 2rem; }
+      .stats-section .kpi-desc { font-size: 12px; text-align: center; }
       .pillar { padding: 24px; }
       .tool-card { padding: 22px; }
       .tool-card.compatta { padding:14px 16px; }
@@ -399,6 +400,7 @@
     </a>
     <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" style="color:rgba(255,255,255,.62);">
       <a href="/#strumenti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Strumenti</a>
+      <a href="/convertitori-in-excel/" class="hidden lg:inline" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Convertitori</a>
       <a href="/guida/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Guide</a>
       <a href="/chi-siamo/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Chi sono</a>
       <a href="/raccontaci/" class="hidden lg:inline" data-umami-event="raccontaci-link" data-umami-event-origine="header" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Raccontaci</a>
@@ -528,6 +530,10 @@
         <div class="t-cta">Apri strumento <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
       </a>
     </div>
+    <div class="flex gap-3 items-start rounded-xl px-4 py-3 mt-6" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);">
+      <span class="flex-shrink-0 uppercase tracking-wide" style="font-weight:800;font-size:11px;color:#F59E0B;line-height:20px;">Nuovo</span>
+      <p style="font-size:14px;color:rgba(255,255,255,.85);">Convertitori in Excel: CSV e JSON in un Excel ordinato. <a href="/convertitori-in-excel/" data-umami-event="home-convertitori" style="color:#F59E0B;text-decoration:underline;">Scopri</a></p>
+    </div>
     <div class="guide-testa"><div class="label">Le guide</div><a href="/guida/" style="font-size:13px;font-weight:600;color:#93c5fd;">Tutte le guide</a></div>
     <div class="guide-righe">
       <a href="/errori-fattura-elettronica/" class="tool-card compatta"><span class="g-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p class="t-name">Errori di scarto della fattura elettronica</p><span class="t-cta"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span></a>
@@ -626,6 +632,7 @@
         <a href="/fattura-elettronica-pdf/" class="footer-link">Fattura elettronica in PDF</a>
         <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
         <a href="/fatture-xml-bonifici/" class="footer-link">Fatture XML in bonifici</a>
+        <a href="/convertitori-in-excel/" class="footer-link">Convertitori in Excel</a>
       </div>
       <div>
         <div class="footer-col-title">Risorse</div>
