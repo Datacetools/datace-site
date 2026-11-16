@@ -145,6 +145,7 @@ _Q_ABI_CAB_RE = re.compile('ABI\\s+(\\d{5})\\s+CAB\\s+(\\d{5})')
 
 def _is_quietanza(page_text):
     return 'QUIETANZA DI VERSAMENTO' in page_text and 'PROTOCOLLO TELEMATICO' in page_text
+_SEMBRA_F24_RE = re.compile('cod(?:ice|\\.)\\s*tributo|quietanza\\s+di\\s+versamento|modello\\s+di\\s+pagamento', re.IGNORECASE)
 
 def _testata_quietanza(page_text):
     prot = _Q_PROTOCOLLO_RE.search(page_text)
@@ -274,6 +275,7 @@ def parse_pdf(source, progress_cb=None, stats=None, nome=None) -> list:
         text_pages = 0
         controllate, non_tornano = (0, [])
         quietanze, pagine_deleghe = ([], 0)
+        pagine_f24, pagine_in_errore = (0, 0)
         logger.info('Inizio parsing (%d pagine)', total)
         for page_idx, page in enumerate(pdf.pages, start=1):
             if progress_cb:
@@ -283,6 +285,7 @@ def parse_pdf(source, progress_cb=None, stats=None, nome=None) -> list:
                 page_text = page.extract_text() or ''
                 if page_text.strip():
                     text_pages += 1
+                pagine_f24 += bool(_SEMBRA_F24_RE.search(page_text))
                 banca = _extract_banca(page_text)
                 anno_page = next(iter(_YEAR_RE.findall(page_text)), None)
                 if not anno_page:
@@ -378,8 +381,10 @@ def parse_pdf(source, progress_cb=None, stats=None, nome=None) -> list:
                     rows.append({'Banca': banca, 'File': filename, 'Pagina': page_idx, 'Data versamento': data_vers, 'Sezione': sezione, 'Codice tributo': trib, 'Descrizione': desc, 'Anno': anno, 'Importo Debito (EUR)': imp_deb, 'Importo Credito (EUR)': imp_cre})
             except (ValueError, TypeError, AttributeError, KeyError) as e:
                 logger.warning('Pagina %d saltata per errore atteso: %s', page_idx, type(e).__name__)
+                pagine_in_errore += 1
             except Exception as e:
                 logger.error('Pagina %d - errore inatteso: %s', page_idx, type(e).__name__)
+                pagine_in_errore += 1
             finally:
                 if testata:
                     controllate += 1
@@ -405,6 +410,8 @@ def parse_pdf(source, progress_cb=None, stats=None, nome=None) -> list:
         stats['pagine_non_tornano'] = non_tornano
         stats['quietanze'] = quietanze
         stats['pagine_deleghe'] = pagine_deleghe
+        stats['pagine_f24'] = pagine_f24
+        stats['pagine_in_errore'] = pagine_in_errore
     gc.collect()
     return rows
 _FILL_MAP = {k: PatternFill('solid', fgColor=v.lstrip('#')) for k, v in SEZIONE_COLORI.items()}

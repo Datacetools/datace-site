@@ -48,6 +48,7 @@ def _elabora(nomi, tipi, files, credito_negativo):
     all_rows, parse_errors, total_pages, text_pages, pdf_letti = ([], 0, 0, 0, 0)
     impronte, doppioni, controllate, non_tornano = (set(), 0, 0, [])
     quietanze, pagine_deleghe = ([], 0)
+    pagine_f24, pagine_in_errore = (0, 0)
     for posizione, (nome, tipo, raw) in enumerate(zip(nomi, tipi, files)):
         raw = bytes(raw)
         if tipo not in ('application/pdf', 'application/octet-stream'):
@@ -75,15 +76,26 @@ def _elabora(nomi, tipi, files, credito_negativo):
             all_rows.extend(rows)
             quietanze += stats.get('quietanze', [])
             pagine_deleghe += stats.get('pagine_deleghe', 0)
+            pagine_f24 += stats.get('pagine_f24', 0)
+            pagine_in_errore += stats.get('pagine_in_errore', 0)
         except Exception:
             parse_errors += 1
     text_flag = _text_layer_flag(text_pages, total_pages)
     if not all_rows:
+
+        def nessuna_riga(codice, messaggio):
+            e = _errore(422, codice, 'data_parse', messaggio)
+            e.detail.update(page_count_bucket=_page_bucket(total_pages), has_text_layer=text_flag)
+            return e
         if text_flag == 'false':
-            raise _errore(422, 'no_text_layer', 'data_parse', 'Non abbiamo trovato nessun F24 in questo file. Controlla che sia il PDF del modello F24 e non una scansione o una foto.')
+            raise nessuna_riga('no_text_layer', 'Non abbiamo trovato nessun F24 in questo file. Controlla che sia il PDF del modello F24 e non una scansione o una foto.')
         if parse_errors:
-            raise _errore(422, 'unsupported_layout', 'data_parse', 'Impossibile leggere i file: assicurati che siano F24 PDF non cifrati.')
-        raise _errore(422, 'parse_no_data', 'data_parse', 'Non abbiamo trovato nessun F24 in questo file. Controlla che sia il PDF del modello F24 e non una scansione o una foto.')
+            raise nessuna_riga('unsupported_layout', 'Impossibile leggere i file: assicurati che siano F24 PDF non cifrati.')
+        if pagine_in_errore:
+            raise nessuna_riga('page_read_error', 'Non siamo riusciti a leggere le pagine di questo PDF. Riprova; se succede ancora, il file potrebbe avere un formato che lo strumento non conosce.')
+        if pagine_f24:
+            raise nessuna_riga('rows_not_read', 'Questo PDF sembra un F24, ma non siamo riusciti a leggere le righe dei versamenti. Potrebbe avere un formato che lo strumento non conosce.')
+        raise nessuna_riga('not_f24', 'Questo PDF non sembra un modello F24. Datace legge deleghe e quietanze F24 in PDF digitale: controlla di aver scelto il file giusto.')
     try:
         excel = export_excel_bytes(all_rows, credito_negativo=credito_negativo, quietanze=quietanze)
     except Exception:

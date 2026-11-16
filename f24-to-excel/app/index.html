@@ -399,7 +399,7 @@ const SECTION_COLORS = {
 const TOOL = "f24";
 const TOOL_VERSION = "1.04"; // = VERSIONE di invio.py (f24-splitter-web/browser) e la pagina Aggiornamenti
 const ALLOWED_STAGES = ["upload_validation","pdf_read","text_extract","data_parse","excel_gen","download","unknown"];
-const ALLOWED_ERROR_CODES = ["too_many_files","file_too_large","empty_or_corrupt","not_a_pdf","no_text_layer","unsupported_layout","parse_no_data","selection_too_large","server_error","network_error","unknown"];
+const ALLOWED_ERROR_CODES = ["too_many_files","file_too_large","empty_or_corrupt","not_a_pdf","no_text_layer","unsupported_layout","parse_no_data","not_f24","rows_not_read","page_read_error","selection_too_large","server_error","network_error","unknown"];
 const ALLOWED_PARAMS = ["tool","stage","error_code","file_type","file_count","file_size_bucket","page_count_bucket","has_text_layer","processing_time_bucket","tool_version"];
 
 function safeTrack(event, params) {
@@ -652,7 +652,7 @@ async function elabora() {
 
     if (!res.ok) {
       let msg = `Errore ${res.status}`;
-      let error_code = "unknown", stage = "unknown";
+      let error_code = "unknown", stage = "unknown", page_count_bucket, has_text_layer;
       try {
         const err = await res.json();
         const d = err && err.detail;
@@ -660,13 +660,16 @@ async function elabora() {
           if (d.message)    msg        = d.message;     // SOLO per la UI
           if (d.error_code) error_code = d.error_code;  // per analytics (enum)
           if (d.stage)      stage      = d.stage;        // per analytics (enum)
+          // brief 136: solo sugli errori senza righe, stessi valori del successo
+          if (d.page_count_bucket) page_count_bucket = pageBucketSafe(d.page_count_bucket);
+          if (["true","false","partial","unknown"].includes(d.has_text_layer)) has_text_layer = d.has_text_layer;
         } else if (typeof d === "string") {
           msg = d; // retro-compat; mostrato all'utente, MAI inviato a Umami
         }
       } catch(_) {}
       stopProgress();
       setLoading(false);
-      safeTrack("processing_error", { tool: TOOL, stage, error_code, processing_time_bucket: timeBucket(performance.now() - _t0) });
+      safeTrack("processing_error", { tool: TOOL, stage, error_code, page_count_bucket, has_text_layer, processing_time_bucket: timeBucket(performance.now() - _t0) });
       showError(msg, error_code === 'file_too_large' && res.status === 413 ? 'Selezione troppo grande' : TITOLI[error_code]);
       return;
     }
@@ -780,6 +783,7 @@ const TITOLI = {
   not_a_pdf: 'File non valido', no_text_layer: 'Nessun F24 trovato', parse_no_data: 'Nessun F24 trovato',
   file_too_large: 'File troppo grande', too_many_files: 'Troppi file',
   empty_or_corrupt: 'PDF non leggibile', unsupported_layout: 'PDF non leggibile',
+  not_f24: 'Non è un F24', rows_not_read: 'F24 non letto', page_read_error: 'PDF non leggibile',   // brief 136
 };
 function showError(msg, titolo = 'Non è andata a buon fine') { avviso(titolo, msg); }   // /comune/avviso.js
 
