@@ -37,6 +37,7 @@ APP = {
     "bonifici-massivi-xml/app/index.html": ("Bonifici massivi XML", "Da Excel a XML SEPA (CBI) · pronto per l'home banking"),
     "csv-in-excel/app/index.html": ("CSV in Excel", "Apri un CSV in Excel senza guai"),
     "json-in-excel/app/index.html": ("JSON in Excel", "Trasforma un JSON in una tabella Excel"),
+    "pulisci-per-ia/app/index.html": ("Pulisci prima dell'IA", "Togli i caratteri invisibili e copri i dati personali di un testo prima di darlo a un chatbot."),
 }
 # Voce del menu della sezione in cui si è: bianca e in grassetto, senza effetto al passaggio.
 ATTIVA = {"guida": ("/guida/", "Guide"), "errori-fattura-elettronica": ("/guida/", "Guide"), "chi-siamo": ("/chi-siamo/", "Chi sono")}

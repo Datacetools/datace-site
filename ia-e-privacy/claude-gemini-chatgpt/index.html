@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Claude, Gemini e ChatGPT: cosa fanno con le tue conversazioni | Guida Datace</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Addestramento, conservazione e lettura delle chat nei servizi di IA più usati, piani gratuiti e a pagamento." />
+  <link rel="canonical" href="https://datacetools.com/ia-e-privacy/claude-gemini-chatgpt/" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article" />
+  <meta property="og:url"         content="https://datacetools.com/ia-e-privacy/claude-gemini-chatgpt/" />
+  <meta property="og:title"       content="Claude, Gemini e ChatGPT: cosa fanno con le tue conversazioni | Guida Datace" />
+  <meta property="og:description" content="Addestramento, conservazione e lettura delle chat nei servizi di IA più usati, piani gratuiti e a pagamento." />
+  <meta property="og:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Datace: strumenti gratuiti per aziende e commercialisti" />
+  <meta name="twitter:image" content="https://datacetools.com/images/og-datace.png" />
+  <meta name="twitter:card"       content="summary_large_image" />
+
+  <link rel="stylesheet" href="/tailwind.css" />
+  <style>
+    :root{--navy:#060E1F;--navy2:#0A1628;--navy3:#0F2040;--gold:#F59E0B;--teal:#1d7a94;--border:rgba(255,255,255,0.07);--muted:rgba(255,255,255,0.62);}
+    *{box-sizing:border-box;}body{font-family:'Inter',sans-serif;}
+    .logo-bar{transform-box:fill-box;transform-origin:left center;}
+    .logo-bar-1{animation:barStream 2.8s ease-in-out infinite 0s;}
+    .logo-bar-2{animation:barStream 2.8s ease-in-out infinite .22s;}
+    .logo-bar-3{animation:barStream 2.8s ease-in-out infinite .44s;}
+    @keyframes barStream{0%,100%{transform:scaleX(1);opacity:1;}30%{transform:scaleX(0.32);opacity:0.5;}60%{transform:scaleX(1);opacity:1;}}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:500;color:#93c5fd;letter-spacing:.04em;}
+    .pill-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;align-items:start;}
+    .footer-col-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:16px;}
+    .footer-link{display:block;font-size:14px;color:rgba(255,255,255,.62);margin-bottom:10px;text-decoration:none;transition:color .2s ease;}
+    .footer-link:hover{color:white;}
+    .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.2);}
+    @media(max-width:768px){.footer-grid{grid-template-columns:1fr;gap:32px;}.footer-bottom{flex-direction:column;gap:8px;text-align:center;}}
+    /* CORPO CHIARO (lettura) */
+    .prose h2{font-size:1.4rem;font-weight:800;color:#0f2040;letter-spacing:-.01em;margin:2.2rem 0 .8rem;}
+    .prose h3{font-size:1.08rem;font-weight:700;color:#1c3461;margin:1.6rem 0 .5rem;}
+    .prose p{color:#475569;line-height:1.85;margin-bottom:.85rem;font-size:1rem;}
+    .prose ul{list-style:disc;padding-left:1.5rem;color:#475569;line-height:1.85;margin-bottom:1rem;}
+    .prose li{margin-bottom:.4rem;}
+    .prose pre{background:#0f2040;color:#e2e8f0;border-radius:12px;padding:14px 18px;margin-bottom:1rem;overflow-x:auto;font-size:.92rem;line-height:1.7;}
+    .prose code{background:#e2e8f0;color:#0f2040;border-radius:6px;padding:1px 6px;font-size:.92em;}
+    .prose strong{color:#0f2040;}
+    .prose a{color:#1d7a94;text-decoration:underline;}
+    .card{background:white;border:1px solid #e5e7eb;border-radius:18px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+    .faq-q{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:18px 20px;}
+    .faq-q summary{font-weight:600;color:#0f2040;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+    .faq-q summary::-webkit-details-marker{display:none;}
+    .faq-q p{margin-top:10px;color:#475569;font-size:.92rem;line-height:1.7;}
+    .prose ol{list-style:decimal;padding-left:1.5rem;color:#475569;line-height:1.85;margin-bottom:1rem;}
+    .prose a{overflow-wrap:anywhere;}
+    .tabella{overflow-x:auto;margin-bottom:1rem;}
+    .prose table{border-collapse:collapse;width:100%;min-width:520px;font-size:.8rem;line-height:1.55;}
+    .prose th,.prose td{border:1px solid #e5e7eb;padding:6px 8px;text-align:left;vertical-align:top;color:#475569;}
+    .prose th{background:#f8fafc;color:#0f2040;font-weight:700;}
+    .faq-q[open] summary .chev{transform:rotate(180deg);}
+    .chev{transition:transform .2s;color:#94a3b8;flex-shrink:0;}
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="26d9f814-f30d-47a4-ad79-f339262e3fa7" data-domains="datacetools.com"></script>
+</head>
+<body class="antialiased" style="background:#f1f5f9;">
+
+<!-- HEADER -->
+<!-- DATACE HEADER START -->
+<header style="background:rgba(6,14,31,.85);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(16px);" class="sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <svg class="w-9 h-9 flex-shrink-0" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+          <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#iconBg)"/>
+        <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#sg)"/>
+        <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+        <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+      </svg>
+      <div class="flex flex-col leading-tight">
+        <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+      </div>
+    </a>
+    <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" style="color:rgba(255,255,255,.62);">
+      <a href="/#strumenti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Strumenti</a>
+      <a href="/convertitori-in-excel/" class="hidden lg:inline" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Convertitori</a>
+      <a href="/guida/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Guide</a>
+      <a href="/chi-siamo/" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Chi sono</a>
+      <a href="/raccontaci/" class="hidden lg:inline" data-umami-event="raccontaci-link" data-umami-event-origine="header" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Raccontaci</a>
+      <a href="/#contatti" style="transition:color .2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.62)'">Contatti</a>
+    </nav>
+    <a href="/#strumenti" style="background:white;color:#0f2040;font-weight:700;font-size:13px;padding:9px 20px;border-radius:12px;letter-spacing:.01em;transition:all .2s ease;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Inizia ora</a>
+  </div>
+</header>
+<!-- DATACE HEADER END -->
+
+<!-- BREADCRUMB -->
+<div style="background:var(--navy2);border-bottom:1px solid var(--border);" class="py-2 px-6">
+  <div class="max-w-5xl mx-auto text-xs flex items-center gap-1.5" style="color:rgba(255,255,255,.55);">
+    <a href="/">Datace</a><span>/</span><a href="/guida/">Guide</a><span>/</span><a href="/ia-e-privacy/">IA e privacy</a><span>/</span>
+    <span style="color:rgba(255,255,255,.6);">Claude, Gemini e ChatGPT: cosa fanno con le tue conversazioni</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="px-6 py-16" style="background:linear-gradient(135deg,#0f2040 0%,#0A1628 55%,#060E1F 100%);position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20%;left:-5%;width:50%;height:80%;background:radial-gradient(ellipse,rgba(29,122,148,.16) 0%,transparent 65%);"></div>
+  <div class="max-w-3xl mx-auto" style="position:relative;z-index:1;color:white;">
+    <div class="mb-4 flex items-center gap-3">
+      <span class="pill"><span class="pill-dot"></span> Guida pratica</span>
+      <span style="font-size:12px;color:var(--muted);">Lettura 7 min</span>
+    </div>
+    <h1 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;">Claude, Gemini e ChatGPT: cosa fanno con le tue conversazioni</h1>
+    <p style="color:rgba(255,255,255,.6);font-size:1.05rem;line-height:1.7;margin-top:14px;max-width:42rem;">Addestramento, conservazione e lettura delle chat nei servizi di IA più usati, piani gratuiti e a pagamento.</p>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section style="background:#f1f5f9;" class="px-6 py-14">
+  <div class="max-w-5xl mx-auto grid lg:grid-cols-3 gap-10">
+    <article class="prose lg:col-span-2 card" style="padding:36px 40px;min-width:0;">
+      <p>Quando scrivi a un chatbot o carichi un file, quella conversazione non resta per forza tra te e lui. I servizi più usati la conservano per un tempo, a volte la usano per migliorare i modelli e in alcuni casi la fanno leggere a persone. Le regole sono diverse da servizio a servizio. Questa guida riporta cosa dicono le pagine ufficiali di Claude, di Gemini e di ChatGPT.</p>
+      <h2 style="margin-top:0;">Cinque domande da fare a ogni servizio</h2>
+      <ol><li><strong>Le mie conversazioni servono ad addestrare i modelli?</strong> E questa è un'impostazione che posso cambiare?</li><li><strong>Per quanto tempo restano conservate?</strong></li><li><strong>Possono leggerle delle persone?</strong></li><li><strong>Se le cancello, cosa cambia?</strong></li><li><strong>Il mio piano (gratuito, a pagamento, aziendale) ha regole diverse?</strong></li></ol>
+      <h2>Claude (Anthropic)</h2>
+      <p>Le informazioni vengono dall'annuncio di Anthropic sulle condizioni per i consumatori, del 28 agosto 2025, e dalla pagina «Privacy», con data 8 giugno 2026 e modifiche in vigore dall'8 luglio 2026.</p>
+      <p><strong>A chi si applicano.</strong> Le condizioni sull'addestramento valgono per i piani Free, Pro e Max, e per Claude Code usato con questi account. Non valgono per Team, Enterprise e API (anche tramite Amazon Bedrock e Google Vertex), per il piano per il governo e per quello per l'istruzione: Anthropic scrive che non si applicano ai servizi regolati dai suoi termini commerciali. Pagare un abbonamento Pro o Max, quindi, non cambia di per sé queste regole.</p>
+      <p><strong>Addestramento.</strong> L'utente sceglie se consentire che le sue conversazioni servano ad addestrare i modelli: i nuovi utenti alla registrazione, quelli esistenti dovevano farlo entro l'8 ottobre 2025. La scelta si può cambiare in ogni momento nelle impostazioni sulla privacy. Anthropic non indica quale sia l'impostazione di partenza: la vedi nelle tue impostazioni. Se disattivi l'addestramento, i dati già usati restano nei modelli già addestrati.</p>
+      <p><strong>Conservazione.</strong> Con il consenso all'addestramento, cinque anni (anche per i feedback). Senza consenso, il periodo di 30 giorni già in vigore.</p>
+      <p><strong>Cancellare.</strong> Una conversazione cancellata non viene usata per addestramenti futuri. Anthropic non indica dopo quanto tempo i dati spariscono dai sistemi.</p>
+      <p><strong>Cosa non è indicato.</strong> Anthropic non scrive, in queste pagine, se persone dell'azienda leggano le conversazioni, né se esistano eccezioni per l'Europa o un'età minima.</p>
+      <h2>Gemini (Google)</h2>
+      <p>Le informazioni vengono dal «Gemini Apps Privacy Hub» di Google (aggiornato il 19 novembre 2026) e dall'informativa collegata (16 novembre 2026). Nel sito inglese l'impostazione sulla cronologia si chiama «History».</p>
+      <p><strong>Persone che leggono le chat.</strong> Google scrive: «A subset of chats are reviewed by human reviewers». Le chat riviste restano fino a tre anni e non si cancellano quando cancelli la cronologia. Nella stessa pagina c'è un avviso: non inserire informazioni riservate che non vorresti far vedere a un revisore.</p>
+      <p><strong>Cronologia attiva.</strong> Le chat restano nella cronologia e si cancellano in automatico dopo 18 mesi (si può cambiare). Google usa il contenuto delle chat future per addestrare i suoi modelli.</p>
+      <p><strong>Cronologia spenta.</strong> Le chat future non compaiono nella cronologia e, dice Google, non servono ad addestrare i modelli, a meno che tu lasci un feedback. Restano comunque conservate nel tuo account per circa due mesi.</p>
+      <p><strong>In ogni caso.</strong> Indipendentemente dalle impostazioni, Google usa le chat per risponderti e per «proteggere Google, gli utenti e il pubblico».</p>
+      <p><strong>Account di lavoro o scuola.</strong> Le condizioni possono essere diverse: Google rimanda al «Generative AI in Google Workspace Privacy Hub». Nello Spazio economico europeo e in Svizzera il servizio è gestito da Google Ireland Limited.</p>
+      <p><strong>Cosa non è indicato.</strong> Il valore di partenza della cronologia, le differenze per gli abbonamenti a pagamento, regole specifiche per l'Italia e un'età minima.</p>
+      <h2>ChatGPT (OpenAI)</h2>
+      <p>Le informazioni vengono dall'«Informativa sulla privacy dell'Europa» di OpenAI. Il testo non riporta una data di aggiornamento.</p>
+      <p><strong>A chi si applica.</strong> L'informativa non vale per i contenuti che OpenAI tratta per i clienti delle offerte commerciali, come le API: lì contano gli accordi con il cliente. In un account ChatGPT Enterprise o business, gli amministratori dell'account possono accedere e controllare l'account, contenuti compresi.</p>
+      <p><strong>Cosa raccoglie.</strong> I testi che scrivi e i file, le immagini, l'audio e i video che carichi, più i dati dei servizi che colleghi. In più, dati tecnici come indirizzo IP, browser e dispositivo, e una posizione approssimativa ricavata dall'indirizzo IP.</p>
+      <p><strong>Addestramento.</strong> OpenAI scrive che può usare i contenuti dell'utente per migliorare i servizi, per esempio per addestrare i modelli che alimentano ChatGPT. La scelta si fa nei controlli dei dati dell'account e si può cambiare. Usa i contenuti anche se lasci un feedback a una risposta. Il testo non dice quale sia l'impostazione di partenza: la vedi nelle tue impostazioni. La «Chat temporanea» non compare nella cronologia e non serve a migliorare i modelli.</p>
+      <p><strong>Conservazione e cancellazione.</strong> Per le chat normali non c'è un periodo fisso: restano finché non le elimini. Se elimini una conversazione, OpenAI scrive che la toglie dai suoi sistemi entro 30 giorni, con due eccezioni: i dati che deve conservare più a lungo (per esempio per una violazione delle regole, un obbligo di legge come una citazione in giudizio, o i pagamenti) e quelli già resi anonimi e separati dall'account, quando avevi consentito l'uso dei contenuti per migliorare i modelli. Le chat temporanee si cancellano da sole entro 30 giorni, con le stesse eccezioni per sicurezza e legge.</p>
+      <p><strong>Persone che leggono le chat.</strong> Il testo non dice se persone di OpenAI leggano le conversazioni. Dice che l'azienda può monitorare i contenuti inviati per prevenire frodi e abusi.</p>
+      <p><strong>Annunci.</strong> Per gli utenti Free e Go, OpenAI raccoglie anche la cronologia degli annunci visti e gli interessi. Dove la funzione è disponibile e l'utente ha dato il consenso, le chat passate servono a rendere gli annunci più pertinenti.</p>
+      <p><strong>Memoria.</strong> Se la funzione è attiva, ChatGPT ricorda dettagli di una chat per usarli nelle chat future. Si può disattivare e cancellare.</p>
+      <p><strong>Dove vanno i dati.</strong> I dati sono trattati anche fuori dallo Spazio economico europeo, per esempio negli Stati Uniti, con le decisioni di adeguatezza della Commissione europea o le clausole contrattuali tipo. Per chi risiede nel SEE, il titolare del trattamento è OpenAI Ireland Limited.</p>
+      <p><strong>Cosa non è indicato.</strong> Il valore di partenza dell'addestramento, se i piani Plus, Pro e business cambiano le regole sull'addestramento, se persone leggano le chat e la data dell'informativa.</p>
+      <h2>Il confronto, in una tabella</h2>
+      <div class="tabella"><table><thead><tr><th></th><th>Claude (Free, Pro, Max)</th><th>Gemini</th><th>ChatGPT</th></tr></thead><tbody><tr><td>Serve ad addestrare i modelli?</td><td>Dipende dalla scelta dell'utente</td><td>Sì con cronologia attiva; no con cronologia spenta, salvo feedback</td><td>Dipende da un'impostazione dell'utente (valore di partenza non indicato); no con la chat temporanea</td></tr><tr><td>Conservazione</td><td>30 giorni, o 5 anni con consenso</td><td>18 mesi (cronologia attiva), circa 2 mesi (spenta)</td><td>Nessun periodo fisso finché non elimini; chat temporanee 30 giorni</td></tr><tr><td>Lettura da parte di persone</td><td>Non indicato</td><td>Sì, un sottoinsieme; chat riviste fino a 3 anni</td><td>Non indicato; monitoraggio dei contenuti contro frodi e abusi</td></tr><tr><td>Cancellare</td><td>Non usata per addestramenti futuri</td><td>Le chat riviste restano fino a 3 anni</td><td>Tolta dai sistemi entro 30 giorni, salvo obblighi di legge o sicurezza e dati già resi anonimi</td></tr><tr><td>Piani per aziende</td><td>Team, Enterprise e API hanno condizioni commerciali proprie</td><td>Gli account di lavoro possono avere condizioni diverse</td><td>API e offerte commerciali hanno accordi propri; gli amministratori di un account business accedono ai contenuti</td></tr></tbody></table></div>
+      <h2>Gratuito o a pagamento: cosa cambia davvero</h2>
+      <p>La domanda giusta non è se paghi, ma quale contratto hai. Per Claude, i piani Pro e Max sono a pagamento ma restano sotto le condizioni per i consumatori. Le condizioni per le aziende sono un'altra cosa e vanno lette per intero. Per Gemini, un account di lavoro può avere trattamenti diversi, e l'informativa non dice cosa cambia con un abbonamento personale. Per ChatGPT, il testo che abbiamo non dice se gli abbonamenti Plus e Pro cambino le regole sull'addestramento; dice invece che gli utenti Free e Go vedono annunci e che per loro raccoglie anche gli interessi. Un piano aziendale non è una garanzia automatica: è un contratto diverso, e si legge.</p>
+      <h2>Cosa fare in pratica</h2>
+      <ul><li>Guarda oggi le impostazioni sulla privacy di ogni servizio che usi in ufficio e annota cosa hai scelto.</li><li>Non caricare file con dati di terzi su un account personale gratuito se non sai cosa fa il servizio.</li><li>Per i file con dati di clienti o dipendenti, chiedi al tuo consulente privacy quale servizio e quale piano usare.</li><li>In ChatGPT la «Chat temporanea» evita la cronologia e l'addestramento, ma il contenuto resta nei sistemi fino a 30 giorni: non rende innocuo un file con dati di terzi.</li></ul>
+      <h2>Fonti</h2>
+      <ul><li>Anthropic, «Updates to our consumer terms» (28/8/2025): <a href="https://www.anthropic.com/news/updates-to-our-consumer-terms" target="_blank" rel="noopener">https://www.anthropic.com/news/updates-to-our-consumer-terms</a></li><li>Anthropic, pagina Privacy (8/6/2026): <a href="https://privacy.claude.com/en/articles/10301952" target="_blank" rel="noopener">https://privacy.claude.com/en/articles/10301952</a></li><li>Google, Gemini Apps Privacy Hub (aggiornato 19/11/2026): <a href="https://support.google.com/gemini/answer/13594961" target="_blank" rel="noopener">https://support.google.com/gemini/answer/13594961</a></li><li>OpenAI, informativa sulla privacy dell'Europa: <a href="https://openai.com/policies/eu-privacy-policy/" target="_blank" rel="noopener">https://openai.com/policies/eu-privacy-policy/</a></li></ul>
+    </article>
+
+    <!-- SIDEBAR -->
+    <aside class="lg:col-span-1 flex flex-col gap-5">
+      <div class="card">
+        <h3 class="font-bold mb-4 text-sm" style="color:#0f2040;">IA e privacy dei tuoi file</h3>
+        <ul class="flex flex-col gap-3 text-sm">
+          <li><a href="/ia-e-privacy/" style="color:#64748b;">Intelligenza artificiale e privacy (indice)</a></li><li><a href="/ia-e-privacy/cosa-non-dare-a-un-chatbot/" style="color:#64748b;">Cosa non dare a un chatbot: i rischi per la privacy dei tuoi file</a></li><li><a href="/ia-e-privacy/claude-gemini-chatgpt/" style="color:#1d7a94;font-weight:600;">Claude, Gemini e ChatGPT: cosa fanno con le tue conversazioni</a></li><li><a href="/ia-e-privacy/deepseek-fuori-ue/" style="color:#64748b;">DeepSeek e i servizi di IA fuori dall'Unione europea: cosa sapere prima di usarli</a></li><li><a href="/ia-e-privacy/istruzioni-nascoste/" style="color:#64748b;">Istruzioni nascoste nei file: cosa sono e come ridurre il rischio</a></li><li><a href="/ia-e-privacy/legge-italiana-garante/" style="color:#64748b;">La legge italiana sull'intelligenza artificiale: cosa dice a chi lavora in ufficio</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="font-bold mb-4 text-sm" style="color:#0f2040;">Altre guide</h3>
+        <ul class="flex flex-col gap-3 text-sm">
+          <li><a href="/guida/" style="color:#1d7a94;font-weight:600;">Tutte le guide Datace</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+
+<!-- SU MISURA -->
+<section style="background:#f8fafc;border-top:1px solid #e5e7eb;" class="px-6 py-14">
+  <div class="max-w-3xl mx-auto" style="background:white;border:1px solid #e5e7eb;border-radius:18px;padding:32px;text-align:center;">
+    <h2 class="text-2xl font-extrabold mb-3" style="color:#0f2040;">Il tuo caso è diverso?</h2>
+    <p style="font-size:15px;color:#475569;line-height:1.7;margin-bottom:24px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Raccontaci il tuo caso:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+      <a href="https://www.linkedin.com/in/davide-sgroia/" aria-label="Profilo LinkedIn di Davide S." target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="ia-privacy-claude-gemini-chatgpt" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#0f2040;border:1px solid #0f2040;color:white;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20IA%20e%20privacy&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email" data-umami-event-pagina="ia-privacy-claude-gemini-chatgpt" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .2s;background:#F59E0B;border:1px solid #F59E0B;color:#0f2040;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Scrivici il tuo caso
+      </a>
+    </div>
+    <p style="font-size:13px;color:#64748b;margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20su%20misura%20-%20Guida%20IA%20e%20privacy&amp;body=Buongiorno%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="ia-privacy-claude-gemini-chatgpt" style="color:#b45309;">info@datacetools.com</a></p>
+  </div>
+</section>
+
+<!-- NEWSLETTER (brief 105; il modulo è uno solo: /comune/newsletter.js) -->
+<section style="background:white;border-top:1px solid #e5e7eb;" class="px-6 py-14">
+  <div class="max-w-3xl mx-auto" style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:18px;padding:32px;">
+    <p style="font-size:15px;color:#475569;line-height:1.7;margin-bottom:16px;"><strong style="color:#0f2040;">Vuoi sapere quando esce una guida o uno strumento nuovo?</strong> Una mail al mese al massimo.</p>
+    <div data-newsletter="ia-privacy-claude-gemini-chatgpt" data-tema="chiaro"></div>
+    <script src="/comune/newsletter.js"></script>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- DATACE FOOTER START -->
+<footer style="background:#04080F;border-top:1px solid rgba(255,255,255,.06);" class="px-6 pt-16 pb-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="footer-grid">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fIconBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f2040"/><stop offset="100%" stop-color="#1c3461"/></linearGradient>
+              <linearGradient id="fsg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FBBF24"/></linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="12" fill="url(#fIconBg)"/>
+            <rect class="logo-bar logo-bar-1" x="10" y="11" width="28" height="6" rx="3" fill="url(#fsg)"/>
+            <rect class="logo-bar logo-bar-2" x="10" y="21" width="20" height="6" rx="3" fill="white"/>
+            <rect class="logo-bar logo-bar-3" x="10" y="31" width="12" height="6" rx="3" fill="white" fill-opacity="0.35"/>
+          </svg>
+          <div>
+            <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
+            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Strumenti</div>
+        <a href="/f24-to-excel/" class="footer-link">F24 PDF in Excel</a>
+        <a href="/fattura-elettronica-excel/" class="footer-link">Fattura elettronica in Excel</a>
+        <a href="/fattura-elettronica-pdf/" class="footer-link">Fattura elettronica in PDF</a>
+        <a href="/bonifici-massivi-xml/" class="footer-link">Bonifici massivi XML</a>
+        <a href="/fatture-xml-bonifici/" class="footer-link">Fatture XML in bonifici</a>
+        <a href="/convertitori-in-excel/" class="footer-link">Convertitori in Excel</a>
+        <a href="/pulisci-per-ia/" class="footer-link">Pulisci prima dell'IA</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Risorse</div>
+        <a href="/guida/" class="footer-link">Guide</a>
+        <a href="/ia-e-privacy/" class="footer-link">IA e privacy</a>
+        <a href="/aggiornamenti/" class="footer-link">Aggiornamenti</a>
+        <a href="/chi-siamo/" class="footer-link">Chi sono</a>
+        <a href="/raccontaci/" class="footer-link" data-umami-event="raccontaci-link" data-umami-event-origine="footer">Raccontaci come lavori</a>
+        <a href="/newsletter/" class="footer-link">Newsletter</a>
+        <a href="/privacy/" class="footer-link">Informativa privacy</a>
+        <a href="/condizioni/" class="footer-link">Condizioni d'uso</a>
+        <a href="/cosa-fa-datace/" class="footer-link">Cosa fa Datace dei tuoi file</a>
+        <a href="/#contatti" class="footer-link">Contatti</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
+      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+    </div>
+  </div>
+</footer>
+<!-- DATACE FOOTER END -->
+
+</body>
+</html>
