@@ -113,10 +113,10 @@
     .faq-item[open] summary .faq-icon { transform:rotate(45deg); }
     .faq-icon { transition:transform 0.2s ease; }
     .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; align-items:start; }
-    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-bottom:16px; }
+    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.62); margin-bottom:16px; }
     .footer-link { display:block; font-size:14px; color:rgba(255,255,255,.62); margin-bottom:10px; text-decoration:none; transition:color .2s ease; }
     .footer-link:hover { color:white; }
-    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
+    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.62); }
     @media (max-width:768px) { .footer-grid { grid-template-columns:1fr; gap:32px; } .footer-bottom { flex-direction:column; gap:8px; text-align:center; } }
 
     @media (prefers-reduced-motion: reduce) { .logo-bar { animation:none; } }
@@ -181,6 +181,7 @@
           </a>
           <a href="#come-funziona" class="btn-secondary">Come funziona</a>
         </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:12px;">Gratuito, senza registrazione</p>
       </div>
 
       <div class="f24hub-wrap">
@@ -242,41 +243,17 @@
 </section>
 
 
-<!-- STATS BAR -->
-<div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
-  <div class="max-w-4xl mx-auto fascia grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-    <div><div class="stat-num">Gratuito</div><div class="stat-sub">senza registrazione</div></div>
-    <div><div class="stat-num">10 MB</div><div class="stat-sub">per file,<br/>100 MB in tutto</div></div>
-    <div><div class="stat-num">50</div><div class="stat-sub">File elaborabili<br/>in un colpo solo</div></div>
-    <div><div class="stat-num">5</div><div class="stat-sub">Fogli Excel<br/>strutturati</div></div>
-  </div>
-</div>
-
-
 <!-- COME FUNZIONA -->
-<section id="come-funziona" class="px-6 py-20" style="background:var(--navy);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Il processo</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Come funziona</h2>
-      <p style="color:var(--muted);margin-top:8px;">Tre passaggi</p>
+<section id="come-funziona" class="px-6 py-12" style="background:var(--navy);">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-8">
+      <div class="label mb-4">Il processo</div>
+      <h2>Come funziona</h2>
     </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">1</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Carica le fatture XML</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Trascina uno o più file XML o <strong style="color:white;">.p7m</strong> firmati. Puoi scegliere fino a <strong style="color:white;">50 file insieme</strong>.</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Estrazione automatica</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Lo strumento legge il tracciato FatturaPA: fornitore, cliente, righe, riepiloghi IVA e scadenze. Prima di scaricare vedi l'anteprima e un riepilogo con documenti, imponibile, IVA e totale, e tre grafici: per fornitore o cliente, per mese e per aliquota.</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scarica l'Excel</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scarichi l'Excel su cinque fogli, oppure uno ZIP con l'Excel, gli XML e gli allegati.</p>
-      </div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div><div><div class="passo-n">01</div><h3>Carica le fatture XML</h3><p>Trascina uno o più file XML o <strong style="color:white;">.p7m</strong> firmati. Puoi scegliere fino a <strong style="color:white;">50 file insieme</strong>.</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div><div class="passo-n">02</div><h3>Estrazione automatica</h3><p>Lo strumento legge il tracciato FatturaPA: fornitore, cliente, righe, riepiloghi IVA e scadenze. Prima di scaricare vedi l'anteprima e un riepilogo con documenti, imponibile, IVA e totale, e tre grafici: per fornitore o cliente, per mese e per aliquota.</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><div><div class="passo-n">03</div><h3>Scarica l'Excel</h3><p>Scarichi l'Excel su cinque fogli, oppure uno ZIP con l'Excel, gli XML e gli allegati.</p></div></div>
     </div>
   </div>
 </section>
@@ -284,10 +261,10 @@
 
 <!-- COSA OTTIENI -->
 <section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Output</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Cosa contiene il file Excel</h2>
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-12">
+      <div class="label mb-4">Output</div>
+      <h2>Cosa contiene il file Excel</h2>
       <p style="color:var(--muted);margin-top:8px;">Un Excel strutturato su 5 fogli, pronto per le tue analisi</p>
     </div>
     <div class="grid md:grid-cols-3 gap-5 mb-8">
@@ -343,10 +320,10 @@
 
 <!-- FORMATI SUPPORTATI -->
 <section class="px-6 py-20" style="background:var(--navy);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-12">
-      <div class="label mb-4" style="justify-content:center;">Compatibilità</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Formati e documenti supportati</h2>
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-12">
+      <div class="label mb-4">Compatibilità</div>
+      <h2>Formati e documenti supportati</h2>
       <p style="color:var(--muted);margin-top:8px;">Compatibile con il tracciato ufficiale FatturaPA dell'Agenzia delle Entrate</p>
     </div>
     <div class="grid md:grid-cols-3 gap-5">
@@ -393,11 +370,11 @@
 
 <!-- ARTICOLO SEO -->
 <section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
+  <div class="max-w-5xl mx-auto stretto">
     <article>
       <div class="label mb-4">Guida</div>
-      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin-bottom:8px;">La Fattura Elettronica XML: struttura, tracciato e come gestire i dati in Excel</h2>
-      <p style="color:rgba(255,255,255,.55);font-size:13px;margin-bottom:40px;">Guida pratica per commercialisti e responsabili amministrativi</p>
+      <h2>La Fattura Elettronica XML: struttura, tracciato e come gestire i dati in Excel</h2>
+      <p style="color:rgba(255,255,255,.62);font-size:13px;margin-bottom:40px;">Guida pratica per commercialisti e responsabili amministrativi</p>
       <div style="font-size:14px;line-height:1.8;color:var(--muted);">
 
         <div style="margin-bottom:36px;">
@@ -437,9 +414,9 @@
 
 
 <!-- ALTRI STRUMENTI -->
-<section style="background:var(--navy);border-top:1px solid var(--border);" class="px-6 py-16">
-  <div class="max-w-3xl mx-auto">
-    <h2 style="font-size:clamp(1.4rem,2.6vw,1.8rem);font-weight:800;letter-spacing:-.02em;margin-bottom:16px;">Hai altro da fare con queste fatture?</h2>
+<section style="background:var(--navy);border-top:1px solid var(--border);" class="px-6 py-20">
+  <div class="max-w-5xl mx-auto stretto">
+    <h2>Hai altro da fare con queste fatture?</h2>
     <div style="font-size:14px;line-height:1.8;color:var(--muted);">
       <p>Leggere una fattura senza aprire l'XML: <a href="/fattura-elettronica-pdf/" data-umami-event="vetrina-correlato" data-umami-event-da="fattura-excel" data-umami-event-a="fattura-pdf" style="color:#93c5fd;">Fattura elettronica in PDF</a> la trasforma in un PDF leggibile.</p>
       <p style="margin-top:14px;">Pagare i fornitori: <a href="/fatture-xml-bonifici/" data-umami-event="vetrina-correlato" data-umami-event-da="fattura-excel" data-umami-event-a="fatture-bonifici" style="color:#93c5fd;">Fatture XML in bonifici</a> (beta) prepara lo scadenzario e il file dei bonifici per la banca.</p>
@@ -450,77 +427,77 @@
 
 <!-- FAQ -->
 <section id="faq" style="background:var(--navy);border-top:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
-    <div class="text-center mb-12">
-      <div class="label mb-4" style="justify-content:center;">FAQ</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Domande frequenti</h2>
+  <div class="max-w-5xl mx-auto stretto">
+    <div class="mb-12">
+      <div class="label mb-4">FAQ</div>
+      <h2>Domande frequenti</h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;">
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Come si converte una fattura elettronica XML in Excel?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Apri <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="/fattura-elettronica-excel/app/" style="color:#93c5fd;">lo strumento</a> e scegli il file XML: il tuo browser legge il tracciato FatturaPA ed estrae automaticamente tutti i dati, scaricando un file Excel strutturato su 5 fogli. Senza installazioni.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Sono supportati i file .p7m firmati digitalmente?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì. Sono supportate sia le fatture <strong style="color:white;">XML</strong> semplici sia quelle <strong style="color:white;">.xml.p7m</strong> firmate digitalmente, come quelle scaricate dallo SdI o dal cassetto fiscale.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">I file delle fatture vengono salvati?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Le fatture vengono lette e convertite dal browser, sul tuo computer. Datace non le riceve e quindi non può conservarle: non esiste un archivio e non c'è registrazione.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Oltre all'Excel, lo strumento mostra dei grafici?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, in forma semplice. Dopo la lettura vedi documenti, imponibile, IVA e totale, e tre grafici a barre: per fornitore o cliente, per mese e per aliquota IVA. Le note di credito sono sottratte. Doppioni, documenti in altra valuta e documenti di altro tipo, come acconti e autofatture, non entrano nei totali, e la pagina te lo dice. Sono numeri di controllo calcolati nel tuo browser: non sostituiscono la contabilità.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Posso convertire più fatture insieme?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, fino a <strong style="color:white;">50 file contemporaneamente</strong>. Tutte le fatture vengono unificate in un unico Excel. Sono gestiti anche i file XML che contengono più fatture (lotti): ogni fattura finisce su una riga separata.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quali dati vengono estratti dalla fattura?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Fornitore e cliente con partita IVA e codice fiscale, tipo, numero e data del documento, le righe con quantità e prezzi, i riepiloghi IVA per aliquota con natura ed esigibilità, e la data di scadenza più lontana. Modalità e importi delle singole rate non sono nell'Excel.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Ci sono limiti di dimensione?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì: fino a 50 file per volta, ciascuno fino a 10 MB e 100 MB in tutto.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quali browser sono supportati?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Chrome, Edge, Firefox, Brave e Opera. Safari e i browser di iPhone e iPad non sono ancora supportati.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quanto ci mette?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Prima di partire lo strumento ti dice quanto tempo serve. Per la prima apertura il browser scarica circa 15 MB, poi di solito li tiene.</div>
       </details>
     </div>
-    <div class="text-center" style="margin-top:40px;">
+    <div style="margin-top:40px;">
       <a data-umami-event="apri-strumento" data-umami-event-tool="fattura" href="/fattura-elettronica-excel/app/" class="btn-primary">
         Converti ora
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -549,10 +526,10 @@
           </svg>
           <div>
             <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
-            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+            <div style="color:rgba(255,255,255,.62);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
           </div>
         </div>
-        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
       </div>
       <div>
         <div class="footer-col-title">Strumenti</div>
@@ -580,7 +557,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
-      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+      <span style="color:rgba(255,255,255,.62);">Made in Italy</span>
     </div>
   </div>
 </footer>

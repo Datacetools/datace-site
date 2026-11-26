@@ -160,10 +160,10 @@
     .faq-icon { transition:transform 0.2s ease; }
 
     .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; align-items:start; }
-    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-bottom:16px; }
+    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.62); margin-bottom:16px; }
     .footer-link { display:block; font-size:14px; color:rgba(255,255,255,.62); margin-bottom:10px; text-decoration:none; transition:color .2s ease; }
     .footer-link:hover { color:white; }
-    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
+    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.62); }
 
     @media (max-width: 768px) {
       .footer-grid { grid-template-columns:1fr; gap:32px; }
@@ -232,6 +232,7 @@
           </a>
           <a href="#come-funziona" class="btn-secondary">Come funziona</a>
         </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:12px;">Gratuito, senza registrazione</p>
         <p style="font-size:12px;color:var(--muted);margin-top:12px;">Richiede PDF digitali con testo selezionabile. I PDF scansionati non sono supportati.</p>
       </div>
 
@@ -291,41 +292,17 @@
     </div>
   </div>
 </section>
-<!-- STATS BAR -->
-<div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
-  <div class="max-w-4xl mx-auto fascia grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-    <div><div class="stat-num">Gratuito</div><div class="stat-sub">senza registrazione</div></div>
-    <div><div class="stat-num">100 PDF</div><div class="stat-sub">per volta</div></div>
-    <div><div class="stat-num">4.000+</div><div class="stat-sub">Codici tributo<br/>riconosciuti</div></div>
-    <div><div class="stat-num">20 MB</div><div class="stat-sub">per ogni PDF</div></div>
-  </div>
-</div>
-
-
 <!-- COME FUNZIONA -->
-<section id="come-funziona" class="px-6 py-20" style="background:var(--navy);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Il processo</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Come funziona</h2>
-      <p style="color:var(--muted);margin-top:8px;">Tre passaggi</p>
+<section id="come-funziona" class="px-6 py-12" style="background:var(--navy);">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-8">
+      <div class="label mb-4">Il processo</div>
+      <h2>Come funziona</h2>
     </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">1</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scegli i PDF F24</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Trascina uno o più PDF del modello F24 Ordinario, fino a 100 per volta.</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Estrazione automatica</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Lo strumento legge codici tributo, importi a debito e a credito, sezione, anno e banca, e confronta i totali con quelli stampati sulla delega.</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scarica l'Excel</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scarichi l'Excel e a schermo vedi debiti, crediti compensati e saldo.</p>
-      </div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div><div><div class="passo-n">01</div><h3>Scegli i PDF F24</h3><p>Trascina uno o più PDF del modello F24 Ordinario, fino a 100 per volta.</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div><div class="passo-n">02</div><h3>Estrazione automatica</h3><p>Lo strumento legge codici tributo, importi a debito e a credito, sezione, anno e banca, e confronta i totali con quelli stampati sulla delega. Riconosce oltre 4.000 codici tributo.</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><div><div class="passo-n">03</div><h3>Scarica l'Excel</h3><p>Scarichi l'Excel e a schermo vedi debiti, crediti compensati e saldo.</p></div></div>
     </div>
   </div>
 </section>
@@ -333,10 +310,10 @@
 
 <!-- COSA OTTIENI -->
 <section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Output</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Cosa contiene il file Excel</h2>
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-12">
+      <div class="label mb-4">Output</div>
+      <h2>Cosa contiene il file Excel</h2>
       <p style="color:var(--muted);margin-top:8px;">Un Excel strutturato su 3 fogli, pronto per le tue analisi</p>
     </div>
     <div class="grid md:grid-cols-3 gap-5 mb-8">
@@ -379,13 +356,13 @@
 
 <!-- TIPI DI F24 -->
 <section class="px-6 py-20" style="background:var(--navy);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-12">
-      <div class="label mb-4" style="justify-content:center;">Compatibilità</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Il modello che leggiamo</h2>
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-12">
+      <div class="label mb-4">Compatibilità</div>
+      <h2>Il modello che leggiamo</h2>
       <p style="color:var(--muted);margin-top:8px;">Modello F24 letto dallo strumento</p>
     </div>
-    <div class="max-w-md mx-auto">
+    <div class="max-w-md">
       <div class="dark-card">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <span style="width:36px;height:36px;border-radius:12px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--gold);">F</span>
@@ -400,18 +377,18 @@
         </ul>
       </div>
     </div>
-    <p style="font-size:13px;color:var(--muted);text-align:center;margin-top:20px;">Leggiamo l'F24 Ordinario. Per altri modelli non garantiamo il risultato: confronta ogni riga dell'Excel con il PDF.</p>
+    <p style="font-size:13px;color:var(--muted);margin-top:20px;">Leggiamo l'F24 Ordinario. Per altri modelli non garantiamo il risultato: confronta ogni riga dell'Excel con il PDF.</p>
   </div>
 </section>
 
 
 <!-- ARTICOLO SEO -->
 <section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
+  <div class="max-w-5xl mx-auto stretto">
     <article>
       <div class="label mb-4">Guida</div>
-      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin-bottom:8px;">Il modello F24: struttura, sezioni e come gestire i dati in Excel</h2>
-      <p style="color:rgba(255,255,255,.55);font-size:13px;margin-bottom:40px;">Guida pratica per commercialisti e responsabili amministrativi</p>
+      <h2>Il modello F24: struttura, sezioni e come gestire i dati in Excel</h2>
+      <p style="color:rgba(255,255,255,.62);font-size:13px;margin-bottom:40px;">Guida pratica per commercialisti e responsabili amministrativi</p>
       <div style="font-size:14px;line-height:1.8;color:var(--muted);">
 
         <div style="margin-bottom:36px;">
@@ -464,70 +441,70 @@
 
 <!-- FAQ -->
 <section id="faq" style="background:var(--navy);border-top:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
-    <div class="text-center mb-12">
-      <div class="label mb-4" style="justify-content:center;">FAQ</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Domande frequenti</h2>
+  <div class="max-w-5xl mx-auto stretto">
+    <div class="mb-12">
+      <div class="label mb-4">FAQ</div>
+      <h2>Domande frequenti</h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;">
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Come si converte un F24 PDF in Excel?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Apri lo <a data-umami-event="apri-strumento" data-umami-event-tool="f24" href="/f24-to-excel/app/" style="color:#93c5fd;">strumento F24 PDF in Excel</a>, scegli il PDF e ottieni un file Excel strutturato su 3 fogli. In pochi passaggi, senza installazioni.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quali tipi di F24 sono supportati?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Lo strumento legge l'F24 Ordinario, con tutte le sezioni: erario, regioni, IMU, INPS, altri enti. Per altri modelli non garantiamo il risultato: confronta sempre le righe dell'Excel con il PDF.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">I file PDF vengono salvati?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. I PDF vengono letti dal browser, sul tuo computer. Datace non li riceve e quindi non può conservarli: non esiste un archivio e non c'è registrazione.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quanto tempo serve?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Prima di partire lo strumento ti dice quanto tempo serve. Su un computer recente 205 pagine richiedono circa 40 secondi; su uno più lento di più. In Firefox richiede circa il 60% in più. La prima volta il browser scarica circa 25 MB, poi di solito li tiene.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quali browser sono supportati?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Chrome, Edge, Firefox, Brave e Opera. Safari e i browser di iPhone e iPad non sono ancora supportati.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Posso convertire più F24 insieme?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, fino a 100 PDF alla volta. I dati riconosciuti vengono unificati in un unico Excel con tre fogli: Dettaglio, Riepilogo e Per Anno. Se ci sono quietanze di versamento si aggiunge il foglio Quietanze.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Funziona con F24 scansionati?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Servono PDF digitali con testo selezionabile, generati dall'Agenzia delle Entrate o dal software di pagamento (Fisconline, Entratel). I PDF da scansione non contengono testo estraibile.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Ci sono limiti di dimensione?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì: fino a 100 PDF per volta, ciascuno fino a 20 MB e 100 MB in tutto.</div>
       </details>
     </div>
-    <div class="text-center" style="margin-top:40px;">
+    <div style="margin-top:40px;">
       <a data-umami-event="apri-strumento" data-umami-event-tool="f24" href="/f24-to-excel/app/" class="btn-primary">
         Converti ora
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -556,10 +533,10 @@
           </svg>
           <div>
             <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
-            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+            <div style="color:rgba(255,255,255,.62);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
           </div>
         </div>
-        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
       </div>
       <div>
         <div class="footer-col-title">Strumenti</div>
@@ -587,7 +564,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
-      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+      <span style="color:rgba(255,255,255,.62);">Made in Italy</span>
     </div>
   </div>
 </footer>

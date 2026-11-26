@@ -184,7 +184,7 @@
     .footer-col-title {
       font-size: 11px; font-weight: 700;
       letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(255,255,255,.55); margin-bottom: 16px;
+      color: rgba(255,255,255,.62); margin-bottom: 16px;
     }
     .footer-link {
       display: block; font-size: 14px;
@@ -198,7 +198,7 @@
       border-top: 1px solid rgba(255,255,255,.06);
       display: flex; align-items: center;
       justify-content: space-between;
-      font-size: 13px; color: rgba(255,255,255,.2);
+      font-size: 13px; color: rgba(255,255,255,.62);
     }
 
     /* ── Logo bars ── */
@@ -360,7 +360,7 @@
     .badge-green { background:rgba(34,197,94,.12); color:#86efac; border:1px solid rgba(34,197,94,.2); }
     .badge-blue  { background:rgba(96,165,250,.12); color:#93c5fd; border:1px solid rgba(96,165,250,.2); }
     .badge-beta  { background:rgba(245,158,11,.12); color:#fcd34d; border:1px solid rgba(245,158,11,.3); } /* ambra del sito, testo 11,3:1 (brief 069) */
-    .badge-dashed { background:transparent; border:1px dashed rgba(255,255,255,.1); color:rgba(255,255,255,.55); }
+    .badge-dashed { background:transparent; border:1px dashed rgba(255,255,255,.1); color:rgba(255,255,255,.62); }
 
     /* Coming soon card */
     .card-soon {
@@ -482,7 +482,7 @@
         </div>
 
         <div style="display:flex;flex-wrap:wrap;gap:16px 28px;">
-          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55);">
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.62);">
             <svg width="13" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             Il file è elaborato dal browser e non viene inviato a Datace.
           </span>
@@ -524,101 +524,89 @@
 </section>
 
 <!-- COME FUNZIONA -->
-<section id="come-funziona" class="px-6 py-20" style="background:var(--navy);border-top:1px solid var(--border);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Il processo</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Come funziona</h2>
+<section id="come-funziona" class="px-6 py-12" style="background:var(--navy);border-top:1px solid var(--border);">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-8">
+      <div class="label mb-4">Il processo</div>
+      <h2>Come funziona</h2>
     </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">1</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scegli</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Trascina un file CSV o incolla il testo</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Controlla</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Separatore e codifica sono trovati da soli: se serve li cambi e l&#x27;anteprima si aggiorna</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scarica</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Ricevi un Excel con gli zeri, i codici e gli accenti come nel file</p>
-      </div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div><div><div class="passo-n">01</div><h3>Scegli</h3><p>Trascina un file CSV o incolla il testo</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div><div class="passo-n">02</div><h3>Controlla</h3><p>Separatore e codifica sono trovati da soli: se serve li cambi e l&#x27;anteprima si aggiorna</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><div><div class="passo-n">03</div><h3>Scarica</h3><p>Ricevi un Excel con gli zeri, i codici e gli accenti come nel file</p></div></div>
     </div>
   </div>
 </section>
 
 <!-- COSA FA E LIMITI -->
 <section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin-bottom:20px;">Cosa sistema</h2>
+  <div class="max-w-5xl mx-auto stretto">
+    <h2>Cosa sistema</h2>
     <ul style="font-size:14px;line-height:1.8;color:var(--muted);list-style:disc;padding-left:20px;">
         <li style="margin-top:0px;"><strong style="color:white;">Accenti</strong>: il file con le lettere accentate si legge con la codifica giusta (UTF-8, Windows-1252 o UTF-16), senza simboli strani al posto delle lettere.</li>
         <li style="margin-top:10px;"><strong style="color:white;">Colonne</strong>: il separatore (punto e virgola, virgola, tabulazione o barra verticale) è riconosciuto, e ogni valore va nella sua colonna.</li>
         <li style="margin-top:10px;"><strong style="color:white;">Zeri iniziali</strong>: CAP, partite IVA e codici come 00123 restano 00123.</li>
         <li style="margin-top:10px;"><strong style="color:white;">Numeri lunghi</strong>: IBAN e numeri da 16 cifre non diventano 1,23E+15.</li>
     </ul>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin:48px 0 20px;">Numeri e date</h2>
+    <h2 style="margin-top:48px;">Numeri e date</h2>
     <div style="font-size:14px;line-height:1.8;color:var(--muted);"><p>Una colonna di soli numeri diventa numerica, con lo stesso numero di decimali per tutta la colonna. Una colonna di sole date scritte come 2026-11-13 diventa una colonna di date di Excel. Tutto il resto resta testo, come nel file: così nessun valore cambia.</p></div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin:48px 0 20px;">Limiti</h2>
+    <h2 style="margin-top:48px;">Limiti</h2>
     <div style="font-size:14px;line-height:1.8;color:var(--muted);"><p>Fino a 100 MB per file e 1.048.576 righe (il massimo di Excel). I numeri con il punto delle migliaia (1.234,56), con segno +, % o € restano testo. Le date come 13/11/2026 restano testo, perché giorno e mese si possono confondere. Una cella oltre i 32.767 caratteri, il limite di Excel, dà un errore. Non si sceglie il tipo colonna per colonna.</p></div>
   </div>
 </section>
 
 <!-- FAQ -->
 <section id="faq" style="background:var(--navy);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
-    <div class="text-center mb-12">
-      <div class="label mb-4" style="justify-content:center;">FAQ</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Domande frequenti</h2>
+  <div class="max-w-5xl mx-auto stretto">
+    <div class="mb-12">
+      <div class="label mb-4">FAQ</div>
+      <h2>Domande frequenti</h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;">
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Perché le lettere accentate diventano simboli strani?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Il file è salvato con una codifica diversa da quella che Excel si aspetta. Lo strumento la riconosce da solo e la puoi cambiare dall&#x27;elenco.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Perché Excel mette tutto in una colonna?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Il separatore del file non è quello che Excel si aspetta. Lo strumento lo trova da solo e lo puoi cambiare dall&#x27;elenco.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Come tengo gli zeri all&#x27;inizio di un codice?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Scegli il file nello strumento: i valori con zeri iniziali restano testo e gli zeri restano.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">I miei file vengono inviati a un server?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Il file è elaborato dal browser e non viene inviato a Datace.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Posso incollare il testo invece di scegliere il file?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì: incolla il testo nella casella e ottieni la stessa anteprima.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">È gratuito?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, senza registrazione.</div>
       </details>
     </div>
-    <div class="text-center" style="margin-top:40px;">
+    <div style="margin-top:40px;">
       <a data-umami-event="apri-strumento" data-umami-event-tool="csvexcel" href="/csv-in-excel/app/" class="btn-primary">
         Apri lo strumento
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -648,10 +636,10 @@
           </svg>
           <div>
             <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
-            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+            <div style="color:rgba(255,255,255,.62);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
           </div>
         </div>
-        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
       </div>
       <div>
         <div class="footer-col-title">Strumenti</div>
@@ -679,7 +667,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
-      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+      <span style="color:rgba(255,255,255,.62);">Made in Italy</span>
     </div>
   </div>
 </footer>

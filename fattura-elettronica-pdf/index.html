@@ -105,10 +105,10 @@
     .faq-item[open] summary .faq-icon { transform:rotate(45deg); }
     .faq-icon { transition:transform 0.2s ease; }
     .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; align-items:start; }
-    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-bottom:16px; }
+    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.62); margin-bottom:16px; }
     .footer-link { display:block; font-size:14px; color:rgba(255,255,255,.62); margin-bottom:10px; text-decoration:none; transition:color .2s ease; }
     .footer-link:hover { color:white; }
-    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
+    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.62); }
     @media (max-width:768px) { .footer-grid { grid-template-columns:1fr; gap:32px; } .footer-bottom { flex-direction:column; gap:8px; text-align:center; } }
 
     @media (prefers-reduced-motion: reduce) { .logo-bar { animation:none; } }
@@ -217,28 +217,16 @@
 
 
 <!-- COME FUNZIONA -->
-<section id="come-funziona" class="px-6 py-20" style="background:var(--navy);border-top:1px solid var(--border);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Il processo</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Come funziona</h2>
+<section id="come-funziona" class="px-6 py-12" style="background:var(--navy);border-top:1px solid var(--border);">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-8">
+      <div class="label mb-4">Il processo</div>
+      <h2>Come funziona</h2>
     </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">1</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scegli i file</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scegli o trascina fatture XML, P7M o uno ZIP con più fatture.</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Guarda l'anteprima</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Vedi l'elenco delle fatture lette e l'anteprima del PDF di quella selezionata.</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Scarica</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scarica il PDF di una fattura, oppure tutte insieme in un unico ZIP.</p>
-      </div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div><div><div class="passo-n">01</div><h3>Scegli i file</h3><p>Scegli o trascina fatture XML, P7M o uno ZIP con più fatture.</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div><div class="passo-n">02</div><h3>Guarda l'anteprima</h3><p>Vedi l'elenco delle fatture lette e l'anteprima del PDF di quella selezionata.</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><div><div class="passo-n">03</div><h3>Scarica</h3><p>Scarica il PDF di una fattura, oppure tutte insieme in un unico ZIP.</p></div></div>
     </div>
   </div>
 </section>
@@ -246,14 +234,14 @@
 
 <!-- COSA MOSTRA IL PDF E LIMITI -->
 <section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
+  <div class="max-w-5xl mx-auto stretto">
     <div class="label mb-4">Il PDF</div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin-bottom:20px;">Cosa mostra il PDF</h2>
+    <h2>Cosa mostra il PDF</h2>
     <div style="font-size:14px;line-height:1.8;color:var(--muted);">
       <p>Cedente e cessionario, numero, data e tipo del documento, righe con gli sconti, riepilogo IVA, totale, pagamenti e dati di trasmissione. I codici (tipo di documento, modalità di pagamento, natura, regime fiscale e altri) sono spiegati con le descrizioni dello schema ufficiale dell'Agenzia delle Entrate. Ciò che il file contiene e il PDF non mostra, per esempio alcuni dati del trasporto, compare nell'avviso «Non mostrato nel PDF» della pagina e in fondo al PDF, sotto «Nel file ma non in questo PDF». Gli allegati sono elencati con nome, formato e descrizione.</p>
       <p style="margin-top:14px;">Se il file è firmato, il PDF lo segnala ma non verifica la firma.</p>
     </div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin:48px 0 20px;">Limiti</h2>
+    <h2 style="margin-top:48px;">Limiti</h2>
     <div style="font-size:14px;line-height:1.8;color:var(--muted);">
       <p>Fino a 10 MB per ogni file XML. In una scelta, fino a 50.000 file contando quelli dentro gli ZIP, e 1 GB in tutto; gli ZIP dentro altri ZIP non vengono letti.</p>
       <p style="margin-top:14px;">Per aprire una fattura anche con il servizio dell'Agenzia delle Entrate, leggi la guida su <a href="/guida/come-aprire-fattura-elettronica-xml-p7m/" style="color:#93c5fd;">come aprire una fattura elettronica XML o P7M</a>.</p>
@@ -263,9 +251,9 @@
 
 
 <!-- ALTRI STRUMENTI -->
-<section style="background:var(--navy);border-top:1px solid var(--border);" class="px-6 py-16">
-  <div class="max-w-3xl mx-auto">
-    <h2 style="font-size:clamp(1.4rem,2.6vw,1.8rem);font-weight:800;letter-spacing:-.02em;margin-bottom:16px;">Hai altro da fare con queste fatture?</h2>
+<section style="background:var(--navy);border-top:1px solid var(--border);" class="px-6 py-20">
+  <div class="max-w-5xl mx-auto stretto">
+    <h2>Hai altro da fare con queste fatture?</h2>
     <div style="font-size:14px;line-height:1.8;color:var(--muted);">
       <p>Avere fornitori, righe, IVA e scadenze in un foglio: <a href="/fattura-elettronica-excel/" data-umami-event="vetrina-correlato" data-umami-event-da="fattura-pdf" data-umami-event-a="fattura-excel" style="color:#93c5fd;">Fattura elettronica in Excel</a></p>
       <p style="margin-top:14px;">Pagare i fornitori: <a href="/fatture-xml-bonifici/" data-umami-event="vetrina-correlato" data-umami-event-da="fattura-pdf" data-umami-event-a="fatture-bonifici" style="color:#93c5fd;">Fatture XML in bonifici</a> (beta) prepara lo scadenzario e il file dei bonifici per la banca.</p>
@@ -276,63 +264,63 @@
 
 <!-- FAQ -->
 <section id="faq" style="background:var(--navy);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
-    <div class="text-center mb-12">
-      <div class="label mb-4" style="justify-content:center;">FAQ</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Domande frequenti</h2>
+  <div class="max-w-5xl mx-auto stretto">
+    <div class="mb-12">
+      <div class="label mb-4">FAQ</div>
+      <h2>Domande frequenti</h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;">
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Come si apre una fattura elettronica XML?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Scegli il file nello strumento: la pagina lo legge e lo mostra come PDF leggibile. Funziona anche con i file P7M e con gli ZIP che contengono più fatture.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Che differenza c'è tra XML e P7M?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Il P7M è il file XML dentro una busta di firma digitale. Lo strumento toglie la busta e legge la fattura; il PDF dice se il file è firmato ma non verifica la firma.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Posso convertire più fatture insieme?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì: scegli più file o uno ZIP. Vedi l'elenco con l'anteprima e scarichi i PDF uno alla volta o tutti insieme in uno ZIP.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">I miei file vengono inviati a un server?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Il file è elaborato dal browser e non viene inviato a Datace.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Il PDF sostituisce il file XML?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Il PDF è una visualizzazione leggibile del contenuto; il file della fattura resta l'XML. Lo ricorda anche l'Agenzia delle Entrate nella guida «La fattura elettronica e i servizi gratuiti» (dicembre 2025): «il file da inviare al SdI è quello XML».</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Cosa non mostra il PDF?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Mostra i dati principali e i codici spiegati. Alcuni dati meno comuni, per esempio quelli del trasporto, non sono nel PDF: la pagina li elenca sotto «Non mostrato nel PDF» e in fondo al PDF, sotto «Nel file ma non in questo PDF», così sai cosa manca. Degli allegati compaiono nome, formato e descrizione, non il contenuto.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">È gratuito?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, senza registrazione.</div>
       </details>
     </div>
-    <div class="text-center" style="margin-top:40px;">
+    <div style="margin-top:40px;">
       <a data-umami-event="apri-strumento" data-umami-event-tool="fatturapdf" href="/fattura-elettronica-pdf/app/" class="btn-primary">
         Apri lo strumento
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -361,10 +349,10 @@
           </svg>
           <div>
             <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
-            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+            <div style="color:rgba(255,255,255,.62);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
           </div>
         </div>
-        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
       </div>
       <div>
         <div class="footer-col-title">Strumenti</div>
@@ -392,7 +380,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
-      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+      <span style="color:rgba(255,255,255,.62);">Made in Italy</span>
     </div>
   </div>
 </footer>

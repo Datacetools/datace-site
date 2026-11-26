@@ -139,7 +139,7 @@
     .footer-col-title {
       font-size: 11px; font-weight: 700;
       letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(255,255,255,.55); margin-bottom: 16px;
+      color: rgba(255,255,255,.62); margin-bottom: 16px;
     }
     .footer-link {
       display: block; font-size: 14px;
@@ -153,7 +153,7 @@
       border-top: 1px solid rgba(255,255,255,.06);
       display: flex; align-items: center;
       justify-content: space-between;
-      font-size: 13px; color: rgba(255,255,255,.2);
+      font-size: 13px; color: rgba(255,255,255,.62);
     }
 
     /* ── Logo bars ── */
@@ -200,7 +200,6 @@
     .hero {
       background: var(--navy);
       position:relative; overflow:hidden;
-      min-height: 92vh;
       display:flex; align-items:center;
     }
     .hero::before {
@@ -246,20 +245,7 @@
     }
     .btn-secondary:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.35); }
 
-    /* ── Stats ── */
-    .stats-section {
-      background:rgba(255,255,255,.025);
-      border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-    }
-    .kpi-block { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; }
-    .kpi-block .stat-num { min-height:3rem; display:flex; align-items:center; justify-content:center; }
-    .kpi-block .kpi-desc { font-size:13px;color:rgba(255,255,255,.62);margin-top:6px; }
 
-    .stat-num {
-      font-size:3rem; font-weight:800; line-height:1;
-      background:linear-gradient(135deg,#fff,#93c5fd);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
 
     /* ── Tool cards premium ── */
     .tool-card {
@@ -312,10 +298,9 @@
       font-size:10px; font-weight:700; letter-spacing:.05em;
       padding:3px 9px; border-radius:999px;
     }
-    .badge-green { background:rgba(34,197,94,.12); color:#86efac; border:1px solid rgba(34,197,94,.2); }
     .badge-blue  { background:rgba(96,165,250,.12); color:#93c5fd; border:1px solid rgba(96,165,250,.2); }
     .badge-beta  { background:rgba(245,158,11,.12); color:#fcd34d; border:1px solid rgba(245,158,11,.3); } /* ambra del sito, testo 11,3:1 (brief 069) */
-    .badge-dashed { background:transparent; border:1px dashed rgba(255,255,255,.1); color:rgba(255,255,255,.55); }
+    .badge-dashed { background:transparent; border:1px dashed rgba(255,255,255,.1); color:rgba(255,255,255,.62); }
 
     /* Coming soon card */
     .card-soon {
@@ -327,23 +312,11 @@
       min-height:200px;
     }
 
-    /* ── Pillars ── */
-    .pillar {
-      border:1px solid var(--border);
-      border-radius:20px; padding:32px;
-      background:rgba(255,255,255,.02);
-      transition: border-color .25s ease;
-    }
-    .pillar:hover { border-color:rgba(255,255,255,.12); }
-    .pillar-icon {
-      width:52px; height:52px; border-radius:16px;
-      background:rgba(28,52,97,.5); border:1px solid rgba(255,255,255,.06);
-      display:flex; align-items:center; justify-content:center;
-      margin-bottom:20px;
-    }
-    .pillar h3 { font-size:18px; font-weight:700; margin:0 0 10px; }
-    .pillar p  { font-size:14px; color:var(--muted); line-height:1.7; margin:0; }
 
+    /* Cinque strumenti senza buchi: tre sopra e due più larghi sotto (brief 150) */
+    .strumenti-griglia { display:grid; gap:16px; grid-template-columns:1fr; }
+    @media (min-width:640px) { .strumenti-griglia { grid-template-columns:repeat(2,1fr); } .strumenti-griglia > :last-child { grid-column:1 / -1; } }
+    @media (min-width:1024px) { .strumenti-griglia { grid-template-columns:repeat(6,1fr); } .strumenti-griglia > * { grid-column:span 2; } .strumenti-griglia > :nth-child(n+4) { grid-column:span 3; } }
     /* ── Divider ── */
     .divider { border:none; border-top:1px solid var(--border); margin:0; }
 
@@ -360,13 +333,9 @@
 
     /* ── Mobile (in fondo: deve vincere sulle regole componente sopra) ── */
     @media (max-width: 768px) {
-      .hero { min-height: auto; padding-top: 60px; padding-bottom: 60px; }
+      .hero { min-height: auto; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-      .stats-section .grid { gap: 0; } /* tre celle in riga anche a 390 px */
-      .stats-section .stat-num { font-size: 1.5rem !important; min-height: 2rem; }
-      .stats-section .kpi-desc { font-size: 12px; text-align: center; }
-      .pillar { padding: 24px; }
       .tool-card { padding: 22px; }
       .tool-card.compatta { padding:14px 16px; }
       .guide-righe { grid-template-columns:1fr; }
@@ -420,13 +389,13 @@
   <div class="hero-glow-teal"></div>
   <div class="hero-glow-gold"></div>
   <div class="hero-grid"></div>
-  <div class="max-w-6xl mx-auto w-full py-24">
+  <div class="max-w-6xl mx-auto w-full py-12">
     <div class="grid lg:grid-cols-2 gap-16 items-center">
       <div>
         <!-- Pill -->
         <div class="mb-7"><span class="pill"><span class="pill-dot"></span> 5 strumenti · Made in Italy</span></div>
 
-        <h1 style="font-size:clamp(2.4rem,5vw,4rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;" class="mb-6">Documenti complessi,<br><span class="grad-text">trasformati in dati.</span></h1>
+        <h1 style="font-size:clamp(2.2rem,4vw,3.25rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;" class="mb-6">Documenti complessi,<br><span class="grad-text">trasformati in&nbsp;dati.</span></h1>
 
         <p style="font-size:1.05rem;color:rgba(255,255,255,.62);line-height:1.8;" class="mb-8 max-w-lg">Precisi, trasparenti, e i tuoi file restano sul tuo computer.</p>
 
@@ -436,15 +405,11 @@
         </div>
 
         <div style="display:flex;flex-wrap:wrap;gap:16px 28px;">
-          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55);">
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.62);">
             <svg width="13" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             Nessuna installazione
           </span>
-          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55);">
-            <svg width="13" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            I tuoi file restano sul tuo computer
-          </span>
-          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55);">
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.62);">
             <svg width="13" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             Pensato per documenti italiani
           </span>
@@ -453,9 +418,9 @@
       <div class="hub-wrap">
         <svg class="hub-svg home-anim" viewBox="0 0 560 380" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Datace trasforma PDF, XML ed Excel in Excel, XML e dati strutturati" font-family="Inter,system-ui,sans-serif">
           <!-- la finestra del browser: i documenti non ne escono -->
-          <rect x="16" y="28" width="528" height="332" rx="20" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.1)"/>
-          <path d="M16 66H544" stroke="rgba(255,255,255,.08)"/>
-          <circle cx="40" cy="47" r="4" fill="rgba(255,255,255,.15)"/><circle cx="54" cy="47" r="4" fill="rgba(255,255,255,.15)"/><circle cx="68" cy="47" r="4" fill="rgba(255,255,255,.15)"/>
+          <rect x="16" y="28" width="528" height="332" rx="20" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.18)"/>
+          <path d="M16 66H544" stroke="rgba(255,255,255,.14)"/>
+          <circle cx="40" cy="47" r="4" fill="rgba(255,255,255,.26)"/><circle cx="54" cy="47" r="4" fill="rgba(255,255,255,.26)"/><circle cx="68" cy="47" r="4" fill="rgba(255,255,255,.26)"/>
           <g transform="translate(330 39)"><path d="M3 7V5a4 4 0 018 0v2M2 7h10v8H2z" stroke="#86efac" stroke-width="1.4" stroke-linejoin="round"/></g>
           <text class="win-lbl" x="348" y="51" font-size="11" font-weight="600" fill="#86efac">Resta sul tuo computer</text>
 
@@ -468,12 +433,12 @@
 
           <!-- la tabella: ogni turno si riempie -->
           <g transform="translate(-35 0)">
-          <rect x="230" y="130" width="170" height="130" rx="16" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)"/>
-          <rect x="246" y="148" width="28" height="6" rx="3" fill="rgba(255,255,255,.32)"/><rect x="300" y="148" width="24" height="6" rx="3" fill="rgba(255,255,255,.32)"/><rect x="350" y="148" width="30" height="6" rx="3" fill="rgba(255,255,255,.32)"/>
-          <path d="M230 162H400" stroke="rgba(255,255,255,.1)"/>
-            <g class="doc-row doc-row1"><rect x="246" y="176" width="38" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="300" y="176" width="30" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="350" y="176" width="40" height="6" rx="3" fill="rgba(255,255,255,.18)"/></g>
-            <g class="doc-row doc-row2"><rect x="246" y="204" width="30" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="300" y="204" width="36" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="350" y="204" width="34" height="6" rx="3" fill="rgba(255,255,255,.18)"/></g>
-            <g class="doc-row doc-row3"><rect x="246" y="232" width="44" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="300" y="232" width="26" height="6" rx="3" fill="rgba(255,255,255,.18)"/><rect x="350" y="232" width="38" height="6" rx="3" fill="rgba(255,255,255,.18)"/></g>
+          <rect x="230" y="130" width="170" height="130" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.18)"/>
+          <rect x="246" y="148" width="28" height="6" rx="3" fill="rgba(255,255,255,.5)"/><rect x="300" y="148" width="24" height="6" rx="3" fill="rgba(255,255,255,.5)"/><rect x="350" y="148" width="30" height="6" rx="3" fill="rgba(255,255,255,.5)"/>
+          <path d="M230 162H400" stroke="rgba(255,255,255,.18)"/>
+            <g class="doc-row doc-row1"><rect x="246" y="176" width="38" height="6" rx="3" fill="rgba(255,255,255,.32)"/><rect x="300" y="176" width="30" height="6" rx="3" fill="rgba(255,255,255,.32)"/><rect x="350" y="176" width="40" height="6" rx="3" fill="rgba(255,255,255,.32)"/></g>
+            <g class="doc-row doc-row2"><rect x="246" y="204" width="30" height="6" rx="3" fill="rgba(255,255,255,.32)"/><rect x="300" y="204" width="36" height="6" rx="3" fill="rgba(255,255,255,.32)"/><rect x="350" y="204" width="34" height="6" rx="3" fill="rgba(255,255,255,.32)"/></g>
+            <g class="doc-row doc-row3"><rect x="246" y="232" width="44" height="6" rx="3" fill="rgba(255,255,255,.32)"/><rect x="300" y="232" width="26" height="6" rx="3" fill="rgba(255,255,255,.32)"/><rect x="350" y="232" width="38" height="6" rx="3" fill="rgba(255,255,255,.32)"/></g>
           </g>
 
           <!-- risultati, uno per turno -->
@@ -490,27 +455,18 @@
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-section px-6 py-12">
-  <div class="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center">
-    <div class="kpi-block"><div class="stat-num">100+</div><div class="kpi-desc">File elaborati</div></div>
-    <div class="kpi-block" style="border-left:1px solid rgba(255,255,255,.07);border-right:1px solid rgba(255,255,255,.07);"><div class="stat-num">0</div><div class="kpi-desc">File salvati</div></div>
-    <div class="kpi-block"><div class="stat-num" style="font-size:2.5rem">Gratuito</div><div class="kpi-desc">Senza registrazione</div></div>
-  </div>
-</div>
-
 <!-- SUITE -->
-<section id="strumenti" class="px-6 py-24" style="background:var(--navy);">
+<section id="strumenti" class="px-6 py-20" style="background:var(--navy);">
   <div class="max-w-5xl mx-auto">
-    <div class="mb-14"><div class="label mb-4">Gli strumenti</div><h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;" class="max-w-xl">Ogni strumento.<br>Un problema risolto.</h2></div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="mb-12"><div class="label mb-4">Gli strumenti</div><h2>Ogni strumento.<br>Un problema risolto.</h2></div>
+    <div class="strumenti-griglia">
       <a href="/f24-to-excel/" class="tool-card fade-up d1">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;"><div class="t-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" fill="rgba(245,158,11,.15)"/><path d="M14 2v6h6M8 13h8M8 17h5" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#F59E0B" stroke-width="1.8" stroke-linejoin="round"/></svg></div><span class="t-badge badge-green">Disponibile</span></div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;"><div class="t-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" fill="rgba(245,158,11,.15)"/><path d="M14 2v6h6M8 13h8M8 17h5" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#F59E0B" stroke-width="1.8" stroke-linejoin="round"/></svg></div></div>
         <div><p class="t-name">F24 PDF in Excel</p><p class="t-desc">Da PDF F24 a Excel su 3 fogli. Più F24 in un solo file, meno lavoro manuale.</p></div>
         <div class="t-cta">Apri strumento <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
       </a>
       <a href="/fattura-elettronica-excel/" class="tool-card fade-up d2">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;"><div class="t-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" fill="rgba(29,122,148,.2)"/><path d="M14 2v6h6" stroke="#1d7a94" stroke-width="1.8" stroke-linecap="round"/><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#1d7a94" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12l2.5 2.5L8 17M12.5 17H16" stroke="#2a9db5" stroke-width="1.8" stroke-linecap="round"/></svg></div><span class="t-badge badge-green">Disponibile</span></div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;"><div class="t-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" fill="rgba(29,122,148,.2)"/><path d="M14 2v6h6" stroke="#1d7a94" stroke-width="1.8" stroke-linecap="round"/><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#1d7a94" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12l2.5 2.5L8 17M12.5 17H16" stroke="#2a9db5" stroke-width="1.8" stroke-linecap="round"/></svg></div></div>
         <div><p class="t-name">Fattura elettronica in Excel</p><p class="t-desc">Fatture XML e .p7m &rarr; Excel su 5 fogli: Riepilogo, Righe, IVA, SdI, Allegati.</p></div>
         <div class="t-cta">Apri strumento <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
       </a>
@@ -520,7 +476,7 @@
         <div class="t-cta">Apri strumento <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
       </a>
       <a href="/bonifici-massivi-xml/" class="tool-card fade-up d1">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;"><div class="t-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M3 10l9-6 9 6" stroke="#1d7a94" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v8m4.67-8v8m4.66-8v8M19 10v8M3 20h18" stroke="#2a9db5" stroke-width="1.8" stroke-linecap="round"/></svg></div><span class="t-badge badge-green">Disponibile</span></div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;"><div class="t-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M3 10l9-6 9 6" stroke="#1d7a94" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v8m4.67-8v8m4.66-8v8M19 10v8M3 20h18" stroke="#2a9db5" stroke-width="1.8" stroke-linecap="round"/></svg></div></div>
         <div><p class="t-name">Bonifici massivi XML</p><p class="t-desc">Excel &rarr; file XML SEPA (CBI) per l'home banking. Stipendi e fornitori, controllo IBAN.</p></div>
         <div class="t-cta">Apri strumento <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
       </a>
@@ -540,34 +496,24 @@
 </section>
 
 <!-- COME FUNZIONA -->
-<section id="come-funziona" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-24">
+<section id="come-funziona" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-12">
   <div class="max-w-5xl mx-auto">
-    <div class="mb-14"><div class="label mb-4">Il processo</div><h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.02em;" class="max-w-xl">Da file grezzo a output strutturato.</h2></div>
+    <div class="mb-8"><div class="label mb-4">Il processo</div><h2>Da file grezzo a output strutturato.</h2></div>
     <div class="grid sm:grid-cols-3 gap-6">
-      <div class="fade-up d1 text-center"><div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div><div style="font-size:11px;font-weight:700;letter-spacing:.15em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:10px;">01</div><h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Scegli i tuoi file</h3><p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;">PDF, XML o Excel, trascinati o selezionati dal computer.</p></div>
-      <div class="fade-up d2 text-center"><div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div style="font-size:11px;font-weight:700;letter-spacing:.15em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:10px;">02</div><h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Lo strumento legge e struttura</h3><p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;">Ricava le informazioni rilevanti e le organizza in tabelle.</p></div>
-      <div class="fade-up d3 text-center"><div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><div style="font-size:11px;font-weight:700;letter-spacing:.15em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:10px;">03</div><h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Scarica Excel o XML</h3><p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;">Excel su più fogli, oppure il file XML per la banca, pronti per l'uso.</p></div>
+      <div class="passo fade-up d1"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div><div><div class="passo-n">01</div><h3>Scegli i tuoi file</h3><p>PDF, XML o Excel, trascinati o selezionati dal computer.</p></div></div>
+      <div class="passo fade-up d2"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div><div class="passo-n">02</div><h3>Lo strumento legge e struttura</h3><p>Ricava le informazioni rilevanti e le organizza in tabelle.</p></div></div>
+      <div class="passo fade-up d3"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><div><div class="passo-n">03</div><h3>Scarica Excel o XML</h3><p>Excel su più fogli, oppure il file XML per la banca, pronti per l'uso.</p></div></div>
     </div>
   </div>
 </section>
 
 <!-- PILLARS -->
-<section id="chi-siamo" class="px-6 py-24" style="background:var(--navy);">
-  <div class="max-w-5xl mx-auto">
-    <div class="mb-14"><div class="label mb-4">Perch&eacute; Datace</div><h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.02em;" class="max-w-lg">Costruito per ridurre lavoro manuale e controlli ripetitivi.</h2></div>
-    <div class="grid sm:grid-cols-3 gap-5">
-      <div class="pillar fade-up d1"><div class="pillar-icon"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div><h3>Semplice</h3><p>Pochi passaggi dal file al risultato, anche con più file.</p></div>
-      <div class="pillar fade-up d2"><div class="pillar-icon"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div><h3>Resta sul tuo computer</h3><p>I file sono elaborati dal browser e non vengono inviati a Datace.</p></div>
-      <div class="pillar fade-up d3"><div class="pillar-icon"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/></svg></div><h3>Documenti italiani</h3><p>Progettato per F24, FatturaPA e bonifici SEPA in formato CBI. Strumenti pensati per flussi e formati italiani.</p></div>
-    </div>
-  </div>
-</section>
 
 <!-- COS'È DATACE -->
 <section id="cos-e-datace" class="px-6 py-20" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);">
-  <div class="max-w-3xl mx-auto">
+  <div class="max-w-5xl mx-auto stretto">
     <div class="label mb-4">In breve</div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin-bottom:20px;">Cos'&egrave; Datace</h2>
+    <h2>Cos'&egrave; Datace</h2>
     <div style="font-size:14px;line-height:1.8;color:var(--muted);">
       <p style="margin-bottom:16px;">Datace &egrave; un insieme di strumenti online gratuiti che trasformano documenti fiscali e amministrativi italiani, come PDF e XML, in Excel e dati strutturati. Si usano online, senza installare nulla e senza registrazione.</p>
       <p style="margin-bottom:16px;">Oggi sono disponibili la conversione di F24 PDF in Excel, l'estrazione dei dati dalle fatture elettroniche XML e .p7m, la creazione dei file XML per i bonifici massivi, la fattura elettronica XML in PDF leggibile e, in beta, lo scadenzario fornitori con il file dei bonifici a partire dalle fatture XML.</p>
@@ -578,9 +524,9 @@
 
 <!-- CONTATTI -->
 <section id="contatti" class="contact-section px-6 py-20">
-  <div class="max-w-xl mx-auto">
+  <div class="max-w-5xl mx-auto stretto">
     <div class="label mb-4">Contatti</div>
-    <h2 style="font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:12px;">Hai un caso diverso?</h2>
+    <h2>Hai un caso diverso?</h2>
     <p style="font-size:15px;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:32px;">Formato particolare, altro gestionale, report da preparare ogni mese: costruiamo soluzioni su misura. Raccontaci il tuo caso:</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px;">
       <a href="https://www.linkedin.com/in/davide-sgroia/" aria-label="Profilo LinkedIn di Davide S." target="_blank" rel="noopener" data-umami-event="contatto-linkedin" data-umami-event-pagina="home" style="display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s,border-color .2s,opacity .2s;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:white;" onmouseover="this.style.background='rgba(255,255,255,.1)';this.style.borderColor='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
@@ -616,10 +562,10 @@
           </svg>
           <div>
             <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
-            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+            <div style="color:rgba(255,255,255,.62);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
           </div>
         </div>
-        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
       </div>
       <div>
         <div class="footer-col-title">Strumenti</div>
@@ -647,7 +593,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
-      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+      <span style="color:rgba(255,255,255,.62);">Made in Italy</span>
     </div>
   </div>
 </footer>

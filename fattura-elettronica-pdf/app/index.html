@@ -29,7 +29,7 @@
     .nav-voce { text-align: left; padding: 10px 12px; border-radius: 12px; border: 1px solid transparent; background: none; color: rgba(255,255,255,.7); font: inherit; font-size: 14px; }
     .nav-voce[aria-pressed="true"] { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.4); color: var(--gold); }
     .nav-piede { margin-top: auto; display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
-    .nav-piede a { color: rgba(255,255,255,.4); text-decoration: none; }
+    .nav-piede a { color: rgba(255,255,255,.62); text-decoration: none; }
     .nav-piede a:hover { color: white; }
     .lavoro { margin-left: var(--nav); min-height: 100vh; padding: calc(var(--testa) + 12px) 16px 16px; }
     #pdf { display: flex; flex-direction: column; gap: 10px; }
@@ -44,7 +44,6 @@
     /* Pulsanti: oro come «Genera il file», bianco come i pulsanti del suo riquadro (Bonifici). */
     .btn-oro, .btn-bianco { font: inherit; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 12px; border: 0; background: var(--gold); color: var(--navy); cursor: pointer; white-space: nowrap; }
     .btn-bianco { font-weight: 600; padding: 8px 16px; border: 1px solid #5b6b88; background: white; color: #334155; }
-    .btn-oro:disabled, .btn-bianco:disabled { opacity: .4; cursor: default; }
     /* Etichette come in Bonifici: rosso per ciò che non si legge, ambra per «da guardare». */
     .chip { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 999px; border: 1px solid; vertical-align: 1px; }
     .chip-bad  { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
@@ -110,13 +109,13 @@
       </svg>
       <div class="flex flex-col leading-tight">
         <span style="color:white;" class="text-lg font-bold tracking-widest uppercase">Datace</span>
-        <span style="color:rgba(255,255,255,.35);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
+        <span style="color:rgba(255,255,255,.62);" class="text-[9px] font-medium tracking-[0.2em] uppercase">Documenti in dati strutturati</span>
       </div>
     </a>
     <div style="width:1px;height:32px;background:rgba(255,255,255,.1);" class="mx-2 hidden sm:block"></div>
     <div class="hidden sm:flex flex-col leading-tight">
       <span style="color:white;font-weight:700;font-size:15px;">Fattura elettronica in PDF</span>
-      <span style="color:rgba(255,255,255,.45);font-size:11px;">Il file è elaborato dal browser e non viene inviato a Datace.</span>
+      <span style="color:rgba(255,255,255,.62);font-size:11px;">Il file è elaborato dal browser e non viene inviato a Datace.</span>
     </div>
     <div class="ml-auto flex items-center gap-3">
       <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);">
@@ -162,9 +161,7 @@
         </div>
       </div>
       <label id="zona" class="drop-zone p-10 text-center block">
-        <svg class="icona-carica mx-auto w-12 h-12 mb-4" style="color:#cbd5e1;" fill="none" stroke="currentColor" viewBox="0 0 48 48">
-          <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg class="icona-carica mx-auto w-12 h-12 mb-4" style="color:#F59E0B;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
         </svg>
         <p style="font-weight:600;color:#334155;">Trascina qui le fatture o lo ZIP</p>
         <p style="font-size:13px;color:var(--muted);margin-top:4px;">oppure <span style="color:var(--teal);text-decoration:underline;">sceglile dal computer</span></p>

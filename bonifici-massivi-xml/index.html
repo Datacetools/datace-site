@@ -86,7 +86,7 @@
 
   <!-- Tailwind compilato (sorgente: _tailwind/bonifici-vetrina.css) e Inter servito dal sito:
        nessuna richiesta a CDN o a Google Fonts. -->
-  <link rel="stylesheet" href="tailwind.css" />
+  <link rel="stylesheet" href="/tailwind.css" />
   <link rel="stylesheet" href="/comune/vetrina.css" />
 
   <style>
@@ -114,10 +114,10 @@
     .faq-item[open] summary .faq-icon { transform:rotate(45deg); }
     .faq-icon { transition:transform 0.2s ease; }
     .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; align-items:start; }
-    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-bottom:16px; }
+    .footer-col-title { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.62); margin-bottom:16px; }
     .footer-link { display:block; font-size:14px; color:rgba(255,255,255,.62); margin-bottom:10px; text-decoration:none; transition:color .2s ease; }
     .footer-link:hover { color:white; }
-    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.2); }
+    .footer-bottom { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.62); }
     @media (max-width:768px) { .footer-grid { grid-template-columns:1fr; gap:32px; } .footer-bottom { flex-direction:column; gap:8px; text-align:center; } }
 
     @media (prefers-reduced-motion: reduce) { .logo-bar { animation:none; } }
@@ -238,41 +238,17 @@
 </section>
 
 
-<!-- STATS BAR -->
-<div style="background:rgba(255,255,255,.025);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-10">
-  <div class="max-w-4xl mx-auto fascia grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-    <div><div class="stat-num">Gratuito</div><div class="stat-sub">senza abbonamento,<br/>senza registrazione</div></div>
-    <div><div class="stat-num">1</div><div class="stat-sub">file per tutta<br/>la distinta</div></div>
-    <div><div class="stat-num">10.000</div><div class="stat-sub">bonifici<br/>per file</div></div>
-    <div><div class="stat-num">CBI 00.04.01</div><div class="stat-sub">il formato delle<br/>banche italiane</div></div>
-  </div>
-</div>
-
-
 <!-- COME FUNZIONA -->
-<section id="come-funziona" class="px-6 py-20" style="background:var(--navy);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Il processo</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Come funziona</h2>
-      <p style="color:var(--muted);margin-top:8px;">Tre passaggi, dal foglio Excel all'home banking</p>
+<section id="come-funziona" class="px-6 py-12" style="background:var(--navy);">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-8">
+      <div class="label mb-4">Il processo</div>
+      <h2>Come funziona</h2>
     </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">1</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Compila il modello</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Nel foglio <strong style="color:white;">Distinta</strong> i dati di chi paga, nel foglio <strong style="color:white;">Beneficiari</strong> un bonifico per riga. La Distinta si compila una volta e si riusa ogni mese.</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(28,52,97,.5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:var(--gold);">2</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Seleziona e controlla</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Apri il modello compilato: la pagina verifica ogni IBAN e ogni importo e mostra la distinta con il totale, prima del download.</p>
-      </div>
-      <div class="dark-card text-center">
-        <div style="width:52px;height:52px;border-radius:16px;background:rgba(29,122,148,.3);border:1px solid rgba(29,122,148,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><span style="font-size:18px;font-weight:800;color:#2a9db5;">3</span></div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Importa in banca</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Scarica l'XML e importalo nell'home banking, dove lo autorizzi con la tua firma. Datace non invia nulla alla banca e non ha accesso al conto.</p>
-      </div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div><div><div class="passo-n">01</div><h3>Compila il modello</h3><p>Nel foglio <strong style="color:white;">Distinta</strong> i dati di chi paga, nel foglio <strong style="color:white;">Beneficiari</strong> un bonifico per riga. La Distinta si compila una volta e si riusa ogni mese.</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div><div class="passo-n">02</div><h3>Seleziona e controlla</h3><p>Apri il modello compilato: la pagina verifica ogni IBAN e ogni importo e mostra la distinta con il totale, prima del download.</p></div></div>
+      <div class="passo"><div class="passo-ico"><svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><div><div class="passo-n">03</div><h3>Importa in banca</h3><p>Scarica l'XML e importalo nell'home banking, dove lo autorizzi con la tua firma. Datace non invia nulla alla banca e non ha accesso al conto.</p></div></div>
     </div>
   </div>
 </section>
@@ -280,10 +256,10 @@
 
 <!-- PRIVACY: DOVE VIENE ELABORATO IL FILE -->
 <section class="px-6 py-20" style="background:var(--navy);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Trattamento dei dati</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Dove viene elaborato il file</h2>
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-12">
+      <div class="label mb-4">Trattamento dei dati</div>
+      <h2>Dove viene elaborato il file</h2>
       <p style="color:var(--muted);margin-top:8px;">Una distinta di stipendi contiene dati personali: per questo conta dove viene elaborata.</p>
     </div>
     <div class="grid md:grid-cols-3 gap-5 mb-8">
@@ -300,17 +276,17 @@
         <p style="font-size:13px;color:var(--muted);line-height:1.6;">Rileviamo statistiche di navigazione, senza cookie. Se invii un feedback, riceviamo il testo che scrivi. Il contenuto dei file non viene mai registrato.</p>
       </div>
     </div>
-    <p class="text-center"><a href="/cosa-fa-datace/" style="color:#93c5fd;text-decoration:underline;font-size:14px;">Cosa fa Datace dei tuoi file</a></p>
+    <p><a href="/cosa-fa-datace/" style="color:#93c5fd;text-decoration:underline;font-size:14px;">Cosa fa Datace dei tuoi file</a></p>
   </div>
 </section>
 
 
 <!-- COSA OTTIENI -->
 <section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-14">
-      <div class="label mb-4" style="justify-content:center;">Il modello</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Cosa si compila, cosa si ottiene</h2>
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-12">
+      <div class="label mb-4">Il modello</div>
+      <h2>Cosa si compila, cosa si ottiene</h2>
       <p style="color:var(--muted);margin-top:8px;">Un Excel a due fogli in ingresso, un file XML pronto per la banca in uscita</p>
     </div>
     <div class="grid md:grid-cols-3 gap-5 mb-8">
@@ -360,11 +336,11 @@
 
 <!-- ARTICOLO SEO -->
 <section style="background:var(--navy);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
+  <div class="max-w-5xl mx-auto stretto">
     <article>
       <div class="label mb-4">Guida</div>
-      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin-bottom:8px;">Bonifici massivi con file XML: cos'è la distinta SEPA e come si prepara</h2>
-      <p style="color:rgba(255,255,255,.55);font-size:13px;margin-bottom:40px;">Guida pratica per uffici amministrativi, consulenti del lavoro e commercialisti</p>
+      <h2>Bonifici massivi con file XML: cos'è la distinta SEPA e come si prepara</h2>
+      <p style="color:rgba(255,255,255,.62);font-size:13px;margin-bottom:40px;">Guida pratica per uffici amministrativi, consulenti del lavoro e commercialisti</p>
       <div style="font-size:14px;line-height:1.8;color:var(--muted);">
 
         <div style="margin-bottom:36px;">
@@ -406,77 +382,77 @@
 
 <!-- FAQ -->
 <section id="faq" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);" class="px-6 py-20">
-  <div class="max-w-3xl mx-auto">
-    <div class="text-center mb-12">
-      <div class="label mb-4" style="justify-content:center;">FAQ</div>
-      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.02em;">Domande frequenti</h2>
+  <div class="max-w-5xl mx-auto stretto">
+    <div class="mb-12">
+      <div class="label mb-4">FAQ</div>
+      <h2>Domande frequenti</h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;">
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Cos'è un file XML per bonifici massivi?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">È una distinta di bonifici in formato SEPA XML: raccoglie molti pagamenti in un solo file che si importa nell'home banking e si autorizza con una firma sola, invece di inserire i bonifici uno per uno.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quale formato genera lo strumento?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Il formato CBI <strong style="color:white;">CBIPaymentRequest.00.04.01</strong>, cioè la versione italiana dello standard europeo ISO 20022 pain.001 per i bonifici SEPA, usata dagli home banking delle banche italiane.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Cos'è il CUC e dove lo trovo?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Il CUC (Codice Unico CBI) è il codice che identifica l'azienda nei file per la banca. Lo assegna la banca ed è <strong style="color:white;">diverso per ogni banca</strong>. Si trova tra i dati dell'azienda nel corporate banking, di norma nel contratto, oppure si chiede alla banca. <a href="/guida/codice-cuc-cbi-dove-trovarlo/" style="color:#93c5fd;">Guida completa sul CUC</a>.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Lo strumento invia i bonifici alla banca?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Genera solo il file XML: sei tu a importarlo nell'home banking e ad autorizzarlo. Datace non ha accesso al tuo conto.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Il file Excel viene inviato a Datace?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Il modello compilato viene letto e convertito dal browser, sul tuo computer.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">I dati dei beneficiari vengono salvati?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">No. Datace non riceve il file e quindi non può conservarne il contenuto: non esiste un archivio dei beneficiari e non c'è registrazione.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quali dati raccoglie Datace?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Datace rileva statistiche di navigazione, senza cookie: indicano quali pagine e quali strumenti vengono utilizzati e non contengono il contenuto dei file, né nomi, IBAN o importi. Se invii un feedback, riceviamo il testo che scrivi. I dettagli sono nell'<a href="/privacy/" style="color:#93c5fd;">informativa sulla privacy</a>.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">Quali browser sono supportati?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Chrome, Edge, Firefox, Brave e Opera. Safari e i browser di iPhone e iPad non sono ancora supportati.</div>
       </details>
       <details class="faq-item" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
         <summary style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;" onmouseover="this.parentElement.style.borderColor='rgba(255,255,255,.12)'" onmouseout="this.parentElement.style.borderColor='rgba(255,255,255,.07)'">
           <span style="font-weight:600;font-size:14px;padding-right:16px;">È gratuito?</span>
-          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.55);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <svg class="faq-icon w-5 h-5 flex-shrink-0" style="color:rgba(255,255,255,.62);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         </summary>
         <div style="padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.7;">Sì, è gratuito e non richiede registrazione. Ogni file può contenere fino a <strong style="color:white;">10.000 bonifici</strong>.</div>
       </details>
     </div>
-    <div class="text-center" style="margin-top:40px;">
+    <div style="margin-top:40px;">
       <a data-umami-event="apri-strumento" data-umami-event-tool="bonifici" href="/bonifici-massivi-xml/app/" class="btn-primary">
         Crea il file XML
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -505,10 +481,10 @@
           </svg>
           <div>
             <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
-            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+            <div style="color:rgba(255,255,255,.62);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
           </div>
         </div>
-        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
       </div>
       <div>
         <div class="footer-col-title">Strumenti</div>
@@ -536,7 +512,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
-      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+      <span style="color:rgba(255,255,255,.62);">Made in Italy</span>
     </div>
   </div>
 </footer>

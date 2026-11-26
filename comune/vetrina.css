@@ -83,3 +83,15 @@
 .fascia > div + div { border-left:1px solid rgba(255,255,255,.07); }
 .fascia .stat-num { font-size:1.75rem; font-weight:800; line-height:1.1; background:linear-gradient(135deg,#fff,#93c5fd); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .fascia .stat-sub { font-size:13px; color:var(--muted); margin-top:6px; }
+
+/* ── Armonia (brief 150): un solo titolo di sezione in home, vetrine e Convertitori, e i testi
+   stretti allineati a sinistra con il resto. La pagina inglese (lang=en) non li prende. ── */
+html:lang(it) section h2 { font-size:clamp(1.75rem,3.2vw,2.5rem); font-weight:800; line-height:1.15; letter-spacing:-.02em; margin-bottom:20px; }
+.stretto > * { max-width:48rem; }
+
+/* «Il processo» compatto di home, vetrine e Convertitori (brief 150-151): icona a sinistra del testo */
+.passo { display:flex; gap:14px; align-items:flex-start; }
+.passo-ico { width:44px; height:44px; border-radius:16px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:rgba(28,52,97,.5); border:1px solid rgba(255,255,255,.07); }
+.passo-n { font-size:11px; font-weight:700; letter-spacing:.15em; color:rgba(255,255,255,.62); margin-bottom:4px; }
+.passo h3 { font-size:15px; font-weight:700; margin:0 0 4px; }
+.passo p { font-size:13px; color:rgba(255,255,255,.62); line-height:1.6; margin:0; }

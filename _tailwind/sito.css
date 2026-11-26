@@ -1,5 +1,5 @@
 /* SORGENTE del CSS condiviso dalle pagine del sito (/tailwind.css): home, vetrine di F24 e
-   Fattura, guide, pagine informative. Non le app né la vetrina di Bonifici, che hanno il loro.
+   Fattura, guide, pagine informative. Non le app, che hanno il loro.
    Si ricompila dalla radice del sito, con Tailwind v4.3.3, ogni volta che in una di queste
    pagine si aggiunge o si toglie una classe (la CLI è in f24-splitter-web/browser):
 
@@ -13,6 +13,7 @@
 @import "tailwindcss" source(none);
 @source "../index.html";
 @source "../aggiornamenti/index.html";
+@source "../bonifici-massivi-xml/index.html";
 @source "../chi-siamo/index.html";
 @source "../errori-fattura-elettronica/index.html";
 @source "../condizioni/index.html";

@@ -78,7 +78,7 @@
     .calcolo { display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:16px; }
     .voce { flex:1 1 0; min-width:0; container-type:inline-size; }
     .voce-saldo { flex-grow:1.6; }
-    .op { font-size:22px; font-weight:700; color:rgba(255,255,255,.4); flex-shrink:0; }
+    .op { font-size:22px; font-weight:700; color:rgba(255,255,255,.62); flex-shrink:0; }
     /* Un importo non va mai a capo e sta nella sua colonna: «€ 123.456.789,01» (16 caratteri
        da 0,6 em) entra se la cifra è al massimo un decimo della larghezza (10cqi). */
     .voce .kpi-v { font-size:18px; font-size:clamp(13px,10cqi,18px); overflow-wrap:normal; white-space:nowrap; }
@@ -160,15 +160,13 @@
          ondragleave="handleDragLeave(event)"
          ondrop="handleDrop(event)">
 
-      <svg class="mx-auto w-12 h-12 mb-4" style="color:rgba(255,255,255,.2);" fill="none" stroke="currentColor" viewBox="0 0 48 48">
-        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg class="mx-auto w-12 h-12 mb-4" style="color:#F59E0B;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
       </svg>
       <p style="font-weight:600;color:rgba(255,255,255,.7);">Trascina i PDF qui</p>
       <p style="font-size:13px;color:var(--muted);margin-top:4px;">oppure <span style="color:var(--teal);text-decoration:underline;">clicca per selezionare</span></p>
     </div>
 
-    <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.6);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;text-align:center;"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg><span><strong style="color:white;">Il file è elaborato dal browser e non viene inviato a Datace.</strong></span> <a href="/privacy/" style="color:#F59E0B;text-decoration:underline;">Privacy</a></p>
+    <p class="frase-privacy" style="font-size:12px;color:rgba(255,255,255,.62);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;text-align:center;"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg><span><strong style="color:white;">Il file è elaborato dal browser e non viene inviato a Datace.</strong></span> <a href="/privacy/" style="color:#F59E0B;text-decoration:underline;">Privacy</a></p>
     <input id="file-input" type="file" accept=".pdf,application/pdf"
            multiple class="hidden" onchange="handleFileSelect(this.files)" />
 
@@ -186,7 +184,7 @@
             onclick="elabora()"
             disabled
             class="mt-6 w-full py-3.5 px-6 rounded-xl font-bold text-sm transition-all duration-200"
-            style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.3);cursor:not-allowed;border:1px solid rgba(255,255,255,.08);">
+            style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.62);cursor:not-allowed;border:1px solid rgba(255,255,255,.08);">
       <span id="btn-label" class="flex items-center justify-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -266,7 +264,7 @@
         </div>
       </div>
       <div class="flex gap-3 items-start">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(29,122,148,.2);border:1px solid rgba(29,122,148,.3);">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(29,122,148,.12);border:1px solid rgba(29,122,148,.3);">
           <span style="font-weight:800;font-size:14px;color:#2a9db5;">3</span>
         </div>
         <div>
@@ -315,7 +313,7 @@
         Raccontaci il tuo caso
       </a>
     </div>
-    <p style="font-size:13px;color:rgba(255,255,255,.4);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="tool-f24" style="color:#F59E0B;">info@datacetools.com</a></p>
+    <p style="font-size:13px;color:rgba(255,255,255,.62);margin-top:16px;">oppure scrivi a <a href="mailto:info@datacetools.com?subject=Richiesta%20soluzione%20su%20misura%20-%20Datace&amp;body=Ciao%20Davide%2C%0A%0A1.%20Di%20cosa%20mi%20occupo%3A%20%0A2.%20Che%20file%20o%20gestionale%20uso%3A%20%0A3.%20Quanto%20tempo%20ci%20perdo%20al%20mese%3A%20%0A%0AGrazie" data-umami-event="contatto-email-testo" data-umami-event-pagina="tool-f24" style="color:#F59E0B;">info@datacetools.com</a></p>
   </section>
 
 </main>
@@ -338,10 +336,10 @@
           </svg>
           <div>
             <div style="color:white;font-weight:700;font-size:15px;letter-spacing:.15em;text-transform:uppercase;">Datace</div>
-            <div style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
+            <div style="color:rgba(255,255,255,.62);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:2px;">Documenti in dati strutturati</div>
           </div>
         </div>
-        <p style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.62);line-height:1.7;max-width:240px;">Strumenti professionali per automatizzare il lavoro documentale italiano.</p>
       </div>
       <div>
         <div class="footer-col-title">Strumenti</div>
@@ -369,7 +367,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Datace. Tutti i diritti riservati.</span>
-      <span style="color:rgba(255,255,255,.12);">Made in Italy</span>
+      <span style="color:rgba(255,255,255,.62);">Made in Italy</span>
     </div>
   </div>
 </footer>
@@ -558,9 +556,9 @@ function renderFileList() {
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/>
         </svg>
         <span style="font-size:13px;color:rgba(255,255,255,.8);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(f.name)}</span>
-        <span style="font-size:12px;color:rgba(255,255,255,.3);flex-shrink:0;">${formatBytes(f.size)}</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.62);flex-shrink:0;">${formatBytes(f.size)}</span>
       </div>
-      <button onclick="removeFile(${i})" style="color:rgba(255,255,255,.3);margin-left:12px;flex-shrink:0;transition:color .2s;background:none;border:none;cursor:pointer;"
+      <button onclick="removeFile(${i})" style="color:rgba(255,255,255,.62);margin-left:12px;flex-shrink:0;transition:color .2s;background:none;border:none;cursor:pointer;"
               onmouseover="this.style.color='#fca5a5'" onmouseout="this.style.color='rgba(255,255,255,.3)'" title="Rimuovi">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -574,7 +572,7 @@ function updateButton() {
   const btn = document.getElementById('btn-elabora');
   if (selectedFiles.length === 0) {
     btn.disabled = true;
-    btn.style.cssText = 'background:rgba(255,255,255,.06);color:rgba(255,255,255,.25);cursor:not-allowed;border:1px solid rgba(255,255,255,.06);';
+    btn.style.cssText = 'background:rgba(255,255,255,.06);color:rgba(255,255,255,.62);cursor:not-allowed;border:1px solid rgba(255,255,255,.06);';
     btn.onmouseover = btn.onmouseout = null;
   } else {
     btn.disabled = false;

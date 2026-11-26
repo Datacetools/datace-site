@@ -48,7 +48,7 @@
     h.style.cssText = 'font-size:17px;font-weight:700;margin:0 0 4px;';
     const p = document.createElement('p');
     p.textContent = testo;
-    p.style.cssText = 'font-size:13px;color:rgba(255,255,255,.45);margin:0;';
+    p.style.cssText = 'font-size:13px;color:rgba(255,255,255,.62);margin:0;';
     voce.append(h, p);
     voci.append(voce);
     if (!aperto) {
