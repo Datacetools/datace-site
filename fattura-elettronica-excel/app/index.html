@@ -635,7 +635,7 @@ const TESTI = {
                            : `${n} documenti di altro tipo (per esempio acconti o autofatture), non sommati.`,
   hRicevute: "Imponibile per fornitore", hEmesse: "Imponibile per cliente",
   bRicevute: "Fatture ricevute", bEmesse: "Fatture emesse",
-  tu: (nome, pct) => `Il soggetto più presente è ${nome} (${pct}% dei documenti).`,
+  tu: (nome, pct) => `${nome} compare nel ${pct}% dei documenti: i grafici lo considerano la tua azienda.`,
   misti: "I file sembrano misti: scegli se guardare le fatture ricevute o emesse.",
   esclusi: n => n === 1 ? '1 documento non riguarda il soggetto scelto: non è nel grafico per controparte.'
                         : `${n} documenti non riguardano il soggetto scelto: non sono nel grafico per controparte.`,
