@@ -299,6 +299,11 @@
     if (mail && !email.checkValidity()) { mostra("L'email non sembra corretta: controllala oppure lasciala vuota.", false); email.focus(); return; }
     if (mail && !consenso.checked) { mostra("Per lasciare l'email serve il consenso: spunta la casella sotto l'email, oppure lascia l'email vuota.", false); consenso.focus(); return; }
 
+    // Tutto vuoto: non si invia (ogni invio consuma la quota di Formspree; brief 153)
+    const risposte = form.querySelector('input[name="ruolo"]:checked, input[name="aziende_clienti"]:checked, input[name="documenti"]:checked')
+      || ['documenti_altro', 'attivita_piu_lunga', 'come_oggi'].some(n => form.elements[n].value.trim());
+    if (!risposte && !mail) { mostra('Compila almeno una risposta prima di inviare.', false); return; }
+
     // Il campo nascosto compilato è un robot: non si invia nulla a Formspree
     if (form.elements._gotcha.value) { form.reset(); mostra(OK, true); return; }
 

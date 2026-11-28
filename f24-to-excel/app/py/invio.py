@@ -53,13 +53,13 @@ def _elabora(nomi, tipi, files, credito_negativo):
         raw = bytes(raw)
         if tipo not in ('application/pdf', 'application/octet-stream'):
             if not (nome or '').lower().endswith('.pdf'):
-                raise _errore(400, 'not_a_pdf', 'upload_validation', 'Questo file non è un PDF. Scegli il PDF del modello F24.')
+                raise _errore(400, 'not_a_pdf', 'upload_validation', f'Questo file non è un PDF: {nome}. Scegli il PDF del modello F24.')
         if len(raw) > MAX_SIZE_BYTES:
             raise _errore(400, 'file_too_large', 'upload_validation', f'Uno dei file supera i {MAX_SIZE_MB} MB consentiti.')
         if len(raw) < 4:
             raise _errore(400, 'empty_or_corrupt', 'upload_validation', 'Uno dei file è vuoto o corrotto.')
         if not raw.startswith(b'%PDF'):
-            raise _errore(400, 'not_a_pdf', 'upload_validation', 'Questo file non è un PDF. Scegli il PDF del modello F24.')
+            raise _errore(400, 'not_a_pdf', 'upload_validation', f'Questo file non è un PDF: {nome}. Scegli il PDF del modello F24.')
         impronta = hashlib.sha256(raw).digest()
         doppioni += impronta in impronte
         impronte.add(impronta)

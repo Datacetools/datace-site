@@ -377,6 +377,7 @@
 <!-- Controllo del browser prima di tutto (vecchio stile: gira ovunque), poi il motore -->
 <script src="controllo.js"></script>
 <script src="/comune/avviso.js"></script>
+<script src="/comune/feedback.js" defer></script>
 <script type="module" src="motore.min.js"></script>
 
 <!-- ─── JAVASCRIPT ────────────────────────────────────────────────────────── -->
@@ -708,7 +709,7 @@ async function elabora() {
       });
 
       setLoading(false);
-      showSuccess(`Excel scaricato! ${rows} righe estratte da ${selectedFiles.length} file.`);
+      showSuccess(`Excel scaricato! ${rows} ${rows === '1' ? 'riga estratta' : 'righe estratte'} da ${selectedFiles.length} file.`);
       if (riepilogo) showRiepilogo(riepilogo);
     });
 

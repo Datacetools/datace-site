@@ -423,6 +423,7 @@
 <!-- Controllo del browser prima di tutto (vecchio stile: gira ovunque), poi il motore -->
 <script src="controllo.js"></script>
 <script src="/comune/avviso.js"></script>
+<script src="/comune/feedback.js" defer></script>
 <script src="/comune/vista.js"></script>
 <script type="module" src="motore.min.js"></script>
 
@@ -623,7 +624,7 @@ async function loadPreview() {
    sono tutti qui, in TESTI: li scrive il manager. */
 const TESTI = {
   titolo: "Analisi dei documenti letti",
-  base: (n, letti) => `Calcolati su ${n} ${n === 1 ? 'documento' : 'documenti'} di ${letti} letti, al netto delle note di credito.`,
+  base: (n, letti) => `Calcolati su ${n} ${n === 1 ? 'documento' : 'documenti'} di ${letti} ${Number(letti) === 1 ? 'letto' : 'letti'}, al netto delle note di credito.`,
   vuoto: "Nessun documento da sommare in questo caricamento.",
   doc: "Documenti", imp: "Imponibile", iva: "IVA in fattura", tot: "Totale",
   reverse: n => `${n} con reverse charge: sulla parte in reverse charge l'IVA in fattura è 0.`,
@@ -812,7 +813,7 @@ async function elabora(zip = false) {
       safeTrack("download_started", { tool: TOOL }); safeTrack("processing_success", { tool: TOOL, processing_time_bucket: timeBucket(performance.now() - _t0) });
       URL.revokeObjectURL(url);
       setLoading(false);
-      showSuccess(`${zip ? 'ZIP' : 'Excel'} scaricato! ${fatture} ${fatture === 1 ? "documento estratto" : "documenti estratti"} da ${selectedFiles.length - scartati.n} file su ${selectedFiles.length}.`);
+      showSuccess(`${zip ? 'ZIP' : 'Excel'} scaricato! ${fatture} ${fatture === '1' ? "documento estratto" : "documenti estratti"} da ${selectedFiles.length - scartati.n} file su ${selectedFiles.length}.`);
       avvisaScartati(scartati.n, scartati.nomi);
       // I grafici al centro dello schermo (brief 119); se non ci sono documenti nell'analisi, non si muove nulla.
       if (!document.getElementById('an-contenuto').classList.contains('hidden')) mostraInVista(document.getElementById('analisi-section'));
